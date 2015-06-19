@@ -5,6 +5,11 @@ class ApplicationController < ActionController::Base
 
 	before_filter :configure_permitted_parameters, if: :devise_controller?
 
+	private
+		def track_activity(trackable, action = params[:action])
+			current_user.activities.create! action: action, trackable: trackable
+		end
+
 	protected
  		def configure_permitted_parameters
 			devise_parameter_sanitizer.for(:sign_up) { |u| 
