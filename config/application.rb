@@ -24,6 +24,7 @@ module AvtomatKalashnikova
     config.active_record.raise_in_transactional_callbacks = true
 
     # Serve assets on heroku
-    config.serve_static_assets = true
+    config.serve_static_files = true
+    config.assets.paths << Rails.root.join('vendor', 'assets')
   end
 end
