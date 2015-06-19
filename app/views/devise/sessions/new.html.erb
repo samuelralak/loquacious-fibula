@@ -14,7 +14,7 @@
           <div class="panel-body">
             <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
               <div class="form-group">
-                <%= f.email_field :email, autofocus: true, class: 'form-control', placeholder: 'Email' %>
+                <%= f.text_field :login, autofocus: true, class: 'form-control', placeholder: 'Username' %>
               </div><!-- /form-group -->
 
               <div class="form-group">
