@@ -1,16 +1,3 @@
-/*
- * dependencies.css v1.1
- * All css dependencies place here
- *
- * License:
- * For License Information check out - https://wrapbootstrap.com
- * 
- * Copyright 2014, Stilearning
- * http://stilearning.com
- */
-
-
-
 @import url('ionicons.min.css');
 
 @import url('all.css');
@@ -29,5 +16,3 @@
 @import url('messenger-theme-flat.css');
 @import url('messenger-theme-future.css');
 @import url('messenger-theme-air.css');
-
-/*@import url('../../');
