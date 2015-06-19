@@ -14,3 +14,12 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require_tree .
+
+$(function() {
+	'use strict';
+
+	$('.iCheck').iCheck({
+		checkboxClass: 'icheckbox_flat',
+		radioClass: 'iradio_flat',
+    });
+})
