@@ -22,6 +22,9 @@ gem 'devise', '~> 3.5.1'
 # docs generator
 gem 'sdoc', '~> 0.4.0', group: :doc
 
+#production
+gem 'rails_12factor', group: :production
+
 group :development, :test do
   gem 'byebug'
   gem 'web-console', '~> 2.0'
