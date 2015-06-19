@@ -291,7 +291,7 @@ body{
 		position: relative;
 		margin: 0;
 		padding: 0;
-		height: 60px;
+		height: 50px;
 		text-align: center;
 		z-index: 100;
 	}
@@ -314,6 +314,15 @@ body{
 			z-index: 5;
 		}
 	
+	.content-header a {
+		color:  #ecf0f1;
+		font-weight: 500 !important;
+	}
+
+	.content-header a:hover,
+	.content-header a:focus {
+		color: #428bca;
+	}
 	.content-spliter{
 		position: relative;
 		width: 100%;
@@ -361,7 +370,7 @@ body{
 					position: relative;
 					width: 100%;
 					padding: 10px;
-					height: 56px;
+					height: 50px;
 
 					z-index: 99;
 				}
