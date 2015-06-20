@@ -1,0 +1,12 @@
+<% flash.each do |type, message| %>
+	<div class="container">
+		<div class="row">
+			<br />
+			<div style="margin-bottom: -50px" class="col-lg-12 col-md-11 col-sm-10">
+				<div class="alert <%= bootstrap_class_for(type) %> alert-icon">
+					<%= message %>
+				</div>
+			</div>
+		</div>
+	</div>
+<% end %>
