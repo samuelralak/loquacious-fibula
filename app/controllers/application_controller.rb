@@ -10,6 +10,11 @@ class ApplicationController < ActionController::Base
 			current_user.activities.create! action: action, trackable: trackable
 		end
 
+		# Redirect to sign in page after successful sign out
+		def after_sign_out_path_for(resource_or_scope)
+			new_user_session_path
+		end
+
 	protected
  		def configure_permitted_parameters
 			devise_parameter_sanitizer.for(:sign_up) { |u| 
