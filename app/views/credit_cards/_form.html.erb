@@ -1,0 +1,69 @@
+<%= form_for(@credit_card) do |f| %>
+  <% if @credit_card.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@credit_card.errors.count, "error") %> prohibited this credit_card from being saved:</h2>
+
+      <ul>
+      <% @credit_card.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :bin %><br>
+    <%= f.number_field :bin %>
+  </div>
+  <div class="field">
+    <%= f.label :card_number %><br>
+    <%= f.text_field :card_number %>
+  </div>
+  <div class="field">
+    <%= f.label :card_holder %><br>
+    <%= f.text_field :card_holder %>
+  </div>
+  <div class="field">
+    <%= f.label :cvv %><br>
+    <%= f.number_field :cvv %>
+  </div>
+  <div class="field">
+    <%= f.label :expiry %><br>
+    <%= f.date_select :expiry %>
+  </div>
+  <div class="field">
+    <%= f.label :brand %><br>
+    <%= f.text_field :brand %>
+  </div>
+  <div class="field">
+    <%= f.label :card_type %><br>
+    <%= f.text_field :card_type %>
+  </div>
+  <div class="field">
+    <%= f.label :bank %><br>
+    <%= f.text_field :bank %>
+  </div>
+  <div class="field">
+    <%= f.label :country_code %><br>
+    <%= f.text_field :country_code %>
+  </div>
+  <div class="field">
+    <%= f.label :country_name %><br>
+    <%= f.text_field :country_name %>
+  </div>
+  <div class="field">
+    <%= f.label :state %><br>
+    <%= f.text_field :state %>
+  </div>
+  <div class="field">
+    <%= f.label :city %><br>
+    <%= f.text_field :city %>
+  </div>
+  <div class="field">
+    <%= f.label :zip %><br>
+    <%= f.text_field :zip %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

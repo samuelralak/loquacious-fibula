@@ -1,0 +1,69 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Bin:</strong>
+  <%= @credit_card.bin %>
+</p>
+
+<p>
+  <strong>Card number:</strong>
+  <%= @credit_card.card_number %>
+</p>
+
+<p>
+  <strong>Card holder:</strong>
+  <%= @credit_card.card_holder %>
+</p>
+
+<p>
+  <strong>Cvv:</strong>
+  <%= @credit_card.cvv %>
+</p>
+
+<p>
+  <strong>Expiry:</strong>
+  <%= @credit_card.expiry %>
+</p>
+
+<p>
+  <strong>Brand:</strong>
+  <%= @credit_card.brand %>
+</p>
+
+<p>
+  <strong>Card type:</strong>
+  <%= @credit_card.card_type %>
+</p>
+
+<p>
+  <strong>Bank:</strong>
+  <%= @credit_card.bank %>
+</p>
+
+<p>
+  <strong>Country code:</strong>
+  <%= @credit_card.country_code %>
+</p>
+
+<p>
+  <strong>Country name:</strong>
+  <%= @credit_card.country_name %>
+</p>
+
+<p>
+  <strong>State:</strong>
+  <%= @credit_card.state %>
+</p>
+
+<p>
+  <strong>City:</strong>
+  <%= @credit_card.city %>
+</p>
+
+<p>
+  <strong>Zip:</strong>
+  <%= @credit_card.zip %>
+</p>
+
+<%= link_to 'Edit', edit_credit_card_path(@credit_card) %> |
+<%= link_to 'Back', credit_cards_path %>

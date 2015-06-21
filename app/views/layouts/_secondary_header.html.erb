@@ -1,16 +1,16 @@
 <div class="app-header">
 	<div class="container" style="margin-top: -6px">
 		<ul class="nav nav-pills nav-justified center-block center-box">
-			<li class="active">
-				<%= link_to "NEWS", '#' %>
+			<li class="<%= controller_name.eql?('activities') ? 'active': '' %>">
+				<%= link_to "NEWS", activities_path %>
 			</li>
 
-			<li>
-				<%= link_to "BUY", '#' %>
+			<li class="<%= controller_name.eql?('items') && action_name.eql?('buy') ? 'active': '' %>" >
+				<%= link_to "BUY", buy_items_path %>
 			</li>
 
-			<li>
-				<%= link_to "SELL", '#' %>
+			<li class="<%= controller_name.eql?('items') && action_name.eql?('sell') ? 'active': '' %>">
+				<%= link_to "SELL", sell_items_path %>
 			</li>
 
 			<li>

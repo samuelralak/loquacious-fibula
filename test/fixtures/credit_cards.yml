@@ -1,0 +1,31 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  bin: 1
+  card_number: MyString
+  card_holder: MyString
+  cvv: 1
+  expiry: 2015-06-21
+  brand: MyString
+  card_type: MyString
+  bank: MyString
+  country_code: MyString
+  country_name: MyString
+  state: MyString
+  city: MyString
+  zip: MyString
+
+two:
+  bin: 1
+  card_number: MyString
+  card_holder: MyString
+  cvv: 1
+  expiry: 2015-06-21
+  brand: MyString
+  card_type: MyString
+  bank: MyString
+  country_code: MyString
+  country_name: MyString
+  state: MyString
+  city: MyString
+  zip: MyString

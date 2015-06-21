@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150619161523) do
+ActiveRecord::Schema.define(version: 20150621095614) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,6 +27,36 @@ ActiveRecord::Schema.define(version: 20150619161523) do
 
   add_index "activities", ["trackable_type", "trackable_id"], name: "index_activities_on_trackable_type_and_trackable_id", using: :btree
   add_index "activities", ["user_id"], name: "index_activities_on_user_id", using: :btree
+
+  create_table "credit_cards", force: :cascade do |t|
+    t.integer  "bin"
+    t.string   "card_number"
+    t.string   "card_holder"
+    t.integer  "cvv"
+    t.date     "expiry"
+    t.string   "brand"
+    t.string   "card_type"
+    t.string   "bank"
+    t.string   "country_code"
+    t.string   "country_name"
+    t.string   "state"
+    t.string   "city"
+    t.string   "zip"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
+  create_table "items", force: :cascade do |t|
+    t.integer  "itemable_id"
+    t.string   "itemable_type"
+    t.float    "price"
+    t.integer  "user_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  add_index "items", ["itemable_type", "itemable_id"], name: "index_items_on_itemable_type_and_itemable_id", using: :btree
+  add_index "items", ["user_id"], name: "index_items_on_user_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -55,4 +85,5 @@ ActiveRecord::Schema.define(version: 20150619161523) do
   add_index "users", ["username"], name: "index_users_on_username", unique: true, using: :btree
 
   add_foreign_key "activities", "users"
+  add_foreign_key "items", "users"
 end
