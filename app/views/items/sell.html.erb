@@ -7,7 +7,82 @@
 				<%= render 'layouts/secondary_header', flash: flash %> 
 
 				<div class="app-body">
-					
+					 <!-- app content here -->
+					 <div class="center-block center-box">
+					 	<div class="row">
+					 		<div class="col-md-12">
+					 			<div class="card">
+                        			<div class="card-header">
+                            			<h2>My Items <br />
+                            				<small>
+                            					Ensure that the data attribute [data-identifier="true"] is set on one column header.
+                            				</small>
+                            			</h2>
+                        			</div>
+                        
+                        			<div class="table-responsive">
+                            			<table id="data-table-selection" class="table table-striped">
+                                			<thead>
+                                    			<tr>
+                                        			<th data-column-id="id" data-type="numeric" data-identifier="true">
+                                        				<%= check_box_tag 'accept' %>
+                                        			</th>
+                                        			<th data-column-id="type">Type</th>
+                                        			<th data-column-id="bin" data-order="desc">Bin</th>
+                                        			<th data-column-id="bin" data-order="desc">Expiry</th>
+                                        			<th data-column-id="bin" data-order="desc">Seller</th>
+                                        			<th data-column-id="bin" data-order="desc">Country</th>
+                                        			<th data-column-id="bin" data-order="desc">State</th>
+                                        			<th data-column-id="bin" data-order="desc">City</th>
+                                        			<th data-column-id="bin" data-order="desc">Zip</th>
+                                        			<th data-column-id="bin" data-order="desc">Price (<%= fa_icon 'bitcoin' %>)</th>
+                                    			</tr>
+                                			</thead>
+
+                                			<tbody>
+			                                    <tr>
+			                                        <td><%= check_box_tag 'accept' %></td>
+			                                        <td>DEBIT</td>
+			                                        <td>519123</td>
+			                                        <td>02/2018</td>
+			                                        <td>Samweis Gamji</td>
+			                                        <td>Canada</td>
+			                                        <td>Quebec</td>
+			                                        <td>Montreal</td>
+			                                        <td>65375</td>
+			                                        <td>0.04</td>
+			                                    </tr>
+			                                    <tr>
+			                                        <td><%= check_box_tag 'accept' %></td>
+			                                        <td>CREDIT</td>
+			                                        <td>453706</td>
+			                                        <td>02/2018</td>
+			                                        <td>Bilbo Baggins</td>
+			                                        <td>U.S.A</td>
+			                                        <td>New York</td>
+			                                        <td>New York</td>
+			                                        <td>65375</td>
+			                                        <td>0.08</td>
+			                                    </tr>
+			                                    <tr>
+			                                        <td><%= check_box_tag 'accept' %></td>
+			                                        <td>DEBIT</td>
+			                                        <td>531632</td>
+			                                        <td>02/2018</td>
+			                                        <td>Samuel Ralak</td>
+			                                        <td>Kenya</td>
+			                                        <td>Nairobi</td>
+			                                        <td>Nairobi</td>
+			                                        <td>65375</td>
+			                                        <td>0.06</td>
+			                                    </tr>
+			                                </tbody>
+                            			</table>
+                        			</div>
+                    			</div>
+					 		</div>
+					 	</div>
+					</div>
 				</div>
 			</div>
 		</section>
