@@ -14,6 +14,7 @@ gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.1.0'
 gem 'bootstrap-sass', '~> 3.3.4.1'
 gem 'font-awesome-rails', '~> 4.3.0.0'
+gem 'world-flags', '~> 0.6.5'
 
 # javascripts
 gem 'jquery-rails'

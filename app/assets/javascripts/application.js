@@ -15,12 +15,3 @@
 //= require turbolinks
 //= require bootstrap-sprockets
 //= require_tree .
-
-$(function() {
-	'use strict';
-
-	$('.iCheck').iCheck({
-		checkboxClass: 'icheckbox_flat',
-		radioClass: 'iradio_flat',
-    });
-})

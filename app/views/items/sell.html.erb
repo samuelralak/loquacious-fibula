@@ -10,9 +10,28 @@
 					 <!-- app content here -->
 					 <div class="center-block center-box">
 					 	<div class="row">
+					 		<div class="col-md-12" style="margin-bottom: 12px;">
+					 			<div class="pull-right">
+					 				<%= link_to "#{fa_icon 'plus'} Add CC".html_safe,  '#', class: "btn btn-success" %>
+					 			</div>
+					 			<div class="pull-left">
+					 				<form class="form-inline">
+					 					<div class="form-group">
+					 						<label class="sr-only">Search</label>
+					 						<input type="text" class="form-control" id="inputPassword2" placeholder="Password" style="width: 300px !important;">
+					 					</div>
+					 					<button type="submit" class="btn btn-default"><%= fa_icon 'search' %></button>
+					 				</form>
+					 			</div>
+					 		</div>
+
 					 		<div class="col-md-12">
 					 			<div class="card">
                         			<div class="card-header">
+                        				<div class="pull-right">
+                        					<%= link_to "#{fa_icon 'edit'} Edit".html_safe,  '#', class: "btn btn-primary btn-sm" %>
+                        					<%= link_to "#{fa_icon 'trash'}".html_safe,  '#', class: "btn btn-danger btn-sm" %>
+                        				</div>
                             			<h2>My Items <br />
                             				<small>
                             					Ensure that the data attribute [data-identifier="true"] is set on one column header.
@@ -30,12 +49,12 @@
                                         			<th data-column-id="type">Type</th>
                                         			<th data-column-id="bin" data-order="desc">Bin</th>
                                         			<th data-column-id="bin" data-order="desc">Expiry</th>
-                                        			<th data-column-id="bin" data-order="desc">Seller</th>
                                         			<th data-column-id="bin" data-order="desc">Country</th>
                                         			<th data-column-id="bin" data-order="desc">State</th>
                                         			<th data-column-id="bin" data-order="desc">City</th>
                                         			<th data-column-id="bin" data-order="desc">Zip</th>
                                         			<th data-column-id="bin" data-order="desc">Price (<%= fa_icon 'bitcoin' %>)</th>
+                                        			<th colspan="3"></th>
                                     			</tr>
                                 			</thead>
 
@@ -45,36 +64,48 @@
 			                                        <td>DEBIT</td>
 			                                        <td>519123</td>
 			                                        <td>02/2018</td>
-			                                        <td>Samweis Gamji</td>
-			                                        <td>Canada</td>
+			                                        <td><%= flag_list 16 do flags :ke end %></td>
 			                                        <td>Quebec</td>
 			                                        <td>Montreal</td>
 			                                        <td>65375</td>
 			                                        <td>0.04</td>
+			                                        <td>
+			                                        	<%= link_to "#{fa_icon 'eye'}".html_safe,  '#', class: "btn btn-default btn-sm" %>
+			                                        	<%= link_to "#{fa_icon 'edit'}".html_safe,  '#', class: "btn btn-primary btn-sm" %>
+			                                        	<%= link_to "#{fa_icon 'trash'}".html_safe,  '#', class: "btn btn-danger btn-sm" %>
+			                                        </td>
 			                                    </tr>
 			                                    <tr>
 			                                        <td><%= check_box_tag 'accept' %></td>
 			                                        <td>CREDIT</td>
 			                                        <td>453706</td>
 			                                        <td>02/2018</td>
-			                                        <td>Bilbo Baggins</td>
-			                                        <td>U.S.A</td>
+			                                        <td><%= flag_list 16 do flags :ke end %></td>
 			                                        <td>New York</td>
 			                                        <td>New York</td>
 			                                        <td>65375</td>
 			                                        <td>0.08</td>
+			                                        <td>
+			                                        	<%= link_to "#{fa_icon 'eye'}".html_safe,  '#', class: "btn btn-default btn-sm" %>
+			                                        	<%= link_to "#{fa_icon 'edit'}".html_safe,  '#', class: "btn btn-primary btn-sm" %>
+			                                        	<%= link_to "#{fa_icon 'trash'}".html_safe,  '#', class: "btn btn-danger btn-sm" %>
+			                                        </td>
 			                                    </tr>
 			                                    <tr>
 			                                        <td><%= check_box_tag 'accept' %></td>
 			                                        <td>DEBIT</td>
 			                                        <td>531632</td>
 			                                        <td>02/2018</td>
-			                                        <td>Samuel Ralak</td>
-			                                        <td>Kenya</td>
+			                                        <td><%= flag_list 16 do flags :ke end %></td>
 			                                        <td>Nairobi</td>
 			                                        <td>Nairobi</td>
 			                                        <td>65375</td>
 			                                        <td>0.06</td>
+			                                        <td>
+			                                        	<%= link_to "#{fa_icon 'eye'}".html_safe,  '#', class: "btn btn-default btn-sm" %>
+			                                        	<%= link_to "#{fa_icon 'edit'}".html_safe,  '#', class: "btn btn-primary btn-sm" %>
+			                                        	<%= link_to "#{fa_icon 'trash'}".html_safe,  '#', class: "btn btn-danger btn-sm" %>
+			                                        </td>
 			                                    </tr>
 			                                </tbody>
                             			</table>
