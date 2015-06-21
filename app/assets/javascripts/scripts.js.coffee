@@ -5,3 +5,8 @@ jQuery ->
 		$(this).before($(this).data('fields').replace(regexp, time))
 		event.preventDefault()
 		
+	$('form').on 'click', '.remove_fields', (event) -> 
+		parent = $(this).parent()
+		parents_parent = parent.parent()
+		parents_parent.hide()
+		event.preventDefault()

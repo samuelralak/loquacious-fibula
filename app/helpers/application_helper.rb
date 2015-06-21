@@ -36,14 +36,17 @@ module ApplicationHelper
   def link_to_add_field(name)
     id = SecureRandom.base64(10)
     html = <<-HTML
-      <div class="form-group" id: "#{id}" >
+      <div class="form-group" id: "group#{id}" >
         <label class="col-sm-2 control-label">BIN/IIN:</label>
-        <div class="col-sm-10">
+        <div class="col-sm-8">
           <input type='text', name="bin[]", placeholder="first 6 digits of your card number e.g 431940", class="form-control">
+        </div>
+        <div class="col-sm-2" style="padding-top: 10px !important;">
+          <a href='#' class='remove_fields' id="#{id}" style="color: #e74c3c !important;"><i class="fa fa-close"></i> remove </a>
         </div>
       </div>
     HTML
     html = html.html_safe
-    link_to(name, '#', class: 'add_fields', data: {id: id, fields: html.gsub("\n", "")})
+    link_to(name, '#', class: 'add_fields', style: 'margin-left: 17px', data: {id: id, fields: html.gsub("\n", "")})
   end
 end
