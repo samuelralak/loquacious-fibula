@@ -8,5 +8,5 @@ jQuery ->
 	$('form').on 'click', '.remove_fields', (event) -> 
 		parent = $(this).parent()
 		parents_parent = parent.parent()
-		parents_parent.hide()
+		parents_parent.remove()
 		event.preventDefault()

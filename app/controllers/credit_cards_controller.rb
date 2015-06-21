@@ -62,7 +62,7 @@ class CreditCardsController < ApplicationController
   end
 
   def process_bin
-    
+    logger.info "################# #{params}"
   end
 
   private

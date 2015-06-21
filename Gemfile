@@ -27,6 +27,9 @@ gem 'devise', '~> 3.5.1'
 # docs generator
 gem 'sdoc', '~> 0.4.0', group: :doc
 
+# HTTP REST APIs
+gem 'httparty', '~> 0.13.5'
+
 #production
 gem 'rails_12factor', group: :production
 

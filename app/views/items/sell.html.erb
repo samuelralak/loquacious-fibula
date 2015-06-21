@@ -128,9 +128,8 @@
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 				<h4 class="modal-title" id="myModalLabel">Modal title</h4>
 			</div>
-
+			<%= form_tag(process_bin_path, method: :post, class: "form-horizontal",  id: "binForm") do %>
 			<div class="modal-body">
-				<%= form_tag(process_bin_path, method: :post, class: "form-horizontal",  id: "binForm") do %>
 					<div class="form-group">
 						<label class="col-sm-2 control-label">BIN/IIN:</label>
 						<div class="col-sm-8">
@@ -139,13 +138,13 @@
 					</div>
 
 					<%= link_to_add_field "#{fa_icon 'plus-circle'} Add field".html_safe %>
-				<% end %>
 			</div>
 
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				<button type="button" class="btn btn-primary">Save changes</button>
+				<button data-disable-with="Processing..." name="button" type="submit" class="btn btn-primary">Process</button>
 			</div>
+			<% end %>
 		</div>
 	</div>
 </div>
