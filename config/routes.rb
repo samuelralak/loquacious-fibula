@@ -5,8 +5,9 @@ Rails.application.routes.draw do
 
   devise_for :users
 
-  get '/buy',  to: 'items#buy',  as: 'buy_items'
-  get '/sell', to: 'items#sell', as: 'sell_items'
+  get  '/buy',  	   to: 'items#buy',  			   as: 'buy_items'
+  get  '/sell', 	   to: 'items#sell', 			   as: 'sell_items'
+  post '/process_bin', to: 'credit_cards#process_bin', as: 'process_bin'
 
   root 'activities#index'
 end

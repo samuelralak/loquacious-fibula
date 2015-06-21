@@ -61,6 +61,10 @@ class CreditCardsController < ApplicationController
     end
   end
 
+  def process_bin
+    
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_credit_card

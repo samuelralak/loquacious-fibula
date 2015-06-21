@@ -12,7 +12,7 @@
 					 	<div class="row">
 					 		<div class="col-md-12" style="margin-bottom: 12px;">
 					 			<div class="pull-right">
-					 				<%= link_to "#{fa_icon 'plus'} Add CC".html_safe,  '#', class: "btn btn-success" %>
+					 				<%= link_to "#{fa_icon 'plus'} Add CC".html_safe,  '#', class: "btn btn-success", data: { toggle: 'modal', target: '#binModal'} %>
 					 			</div>
 					 			<div class="pull-left">
 					 				<form class="form-inline">
@@ -119,3 +119,33 @@
 		</section>
 	</div>
 </section>
+
+<!-- Modal -->
+<div class="modal fade" id="binModal" tabindex="-1" role="dialog" aria-labelledby="binModal">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title" id="myModalLabel">Modal title</h4>
+			</div>
+
+			<div class="modal-body">
+				<%= form_tag(process_bin_path, method: :post, class: "form-horizontal",  id: "binForm") do %>
+					<div class="form-group">
+						<label class="col-sm-2 control-label">BIN/IIN:</label>
+						<div class="col-sm-10">
+							<input type='text', name="bin[]", placeholder="first 6 digits of your card number e.g 431940", class="form-control">
+						</div>
+					</div>
+
+					<%= link_to_add_field "#{fa_icon 'plus-circle'} Add field".html_safe %>
+				<% end %>
+			</div>
+
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				<button type="button" class="btn btn-primary">Save changes</button>
+			</div>
+		</div>
+	</div>
+</div>
