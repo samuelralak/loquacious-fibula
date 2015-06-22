@@ -62,11 +62,20 @@ class CreditCardsController < ApplicationController
   end
 
   def process_bin
-    @credit_card = current_user.credit_cards.new
-    # @credit_cards
+    @credit_cards = []
+
     params[:bin].each do |p|
       response = HTTParty.get("http://www.binlist.net/json/#{p}")
-      logger.info response.inspect
+
+      if response.code.eql?(200)
+        response_body = JSON.parse(response.body, symbolize_names: true)
+        @credit_cards << response_body
+      end
+    end
+
+    if @credit_cards.size.eql?(0)
+      flash[:error] = "No results were found. please ensure that you entered a valid BIN number"
+      redirect_to sell_items_url
     end
   end
 
