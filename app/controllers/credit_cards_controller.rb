@@ -62,7 +62,12 @@ class CreditCardsController < ApplicationController
   end
 
   def process_bin
-    logger.info "################# #{params}"
+    @credit_card = current_user.credit_cards.new
+    # @credit_cards
+    params[:bin].each do |p|
+      response = HTTParty.get("http://www.binlist.net/json/#{p}")
+      logger.info response.inspect
+    end
   end
 
   private
