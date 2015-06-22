@@ -27,11 +27,15 @@ class CreditCardsController < ApplicationController
     @credit_cards = params[:credit_cards]
 
     @credit_cards.each do |cc|
+      expiry_date = cc["'expiry'"].map{|k,v| v}.join("-").to_date
+
       card = CreditCard.create!(
-        bin: cc[:bin], card_number: cc[:card_number], card_holder: cc[:card_holder], cvv: cc[:cvv], expiry: cc[:expiry],
-        brand: cc[:brand], card_type: cc[:card_type], bank: cc[:bank], country_code: cc[:country_code], country_name: cc[:country_name]
+        bin: cc["'bin'"], card_number: cc["'card_number'"], card_holder: cc["'card_holder'"], cvv: cc["'cvv'"], expiry: expiry_date,
+        brand: cc["'brand'"], card_type: cc["'card_type'"], bank: cc["'bank'"], country_code: cc["'country_code'"], 
+        country_name: cc["'country_name'"]
       )
-      item = card.items.create!(price: cc[:price], user_id: current_user.id)
+
+      item = card.items.create!(price: cc["'price'"], user_id: current_user.id)
       track_activity(card)
     end
 
