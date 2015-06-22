@@ -84,9 +84,9 @@
 				                                        <td><%= item.itemable.created_at.strftime("%a, %d %b %Y") %></td>
 				                                        <td><%= item.price %></td>
 				                                        <td>
-				                                        	<%= link_to "#{fa_icon 'eye'}".html_safe,  '#', class: "btn btn-default btn-sm" %>
-				                                        	<%= link_to "#{fa_icon 'edit'}".html_safe,  '#', class: "btn btn-primary btn-sm" %>
-				                                        	<%= link_to "#{fa_icon 'trash'}".html_safe,  '#', class: "btn btn-danger btn-sm" %>
+				                                        	<%= link_to "#{fa_icon 'eye'}".html_safe,  item, class: "btn btn-default btn-sm" %>
+				                                        	<%= link_to "#{fa_icon 'edit'}".html_safe, edit_item_path(item), class: "btn btn-primary btn-sm" %>
+				                                        	<%= link_to "#{fa_icon 'trash'}".html_safe, item, method: :delete, data: { confirm: 'Are you sure?' } , class: "btn btn-danger btn-sm" %>
 				                                        </td>
 				                                    </tr>
 				                             		<%end -%>
