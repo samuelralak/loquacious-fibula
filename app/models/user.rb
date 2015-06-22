@@ -6,6 +6,7 @@ class User < ActiveRecord::Base
 		:authentication_keys => [:login]
 
 	has_many :activities, inverse_of: :user
+	has_many :items
 
 	# Virtual attribute for authenticating by either username or email
 	# This is in addition to a real persisted field like 'username'

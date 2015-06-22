@@ -62,7 +62,7 @@ class ItemsController < ApplicationController
   end
 
   def sell
-    
+    @items = current_user.items.all
   end
 
   def buy
