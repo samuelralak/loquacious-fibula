@@ -70,7 +70,7 @@ class ItemsController < ApplicationController
   end
 
   def buy
-    
+    @items = Item.order("created_at desc")
   end
 
   private
