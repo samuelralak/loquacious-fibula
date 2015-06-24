@@ -66,7 +66,7 @@
 	                                        			<th data-column-id="bin" data-order="desc">BANK</th>
 	                                        			<th data-column-id="bin" data-order="desc">COUNTRY</th>
 	                                        			<th data-column-id="bin" data-order="desc">SELLER</th>
-	                                        			<th data-column-id="bin" data-order="desc">PRICE(<%= fa_icon 'bitcoin' %>)</th>
+	                                        			<th data-column-id="bin" data-order="desc">PRICE</th>
 	                                        			<th></th>
 	                                    			</tr>
 	                                			</thead>
@@ -84,7 +84,7 @@
 				                                        <td><%= item.itemable.bank %></td>
 				                                        <td><%= flag_list 16 do flags "#{item.itemable.country_code}".parameterize.underscore.to_sym end %></td>
 				                                        <td><%= item.user.username %></td>
-				                                        <td><%= item.price %></td>
+				                                        <td style="color: #e74c3c"><%= "#{fa_icon 'bitcoin'} #{item.price}".html_safe %></td>
 				                                        <td>
 				                                        	<%= link_to "#{fa_icon 'cart-plus'}".html_safe,  item, class: "btn btn-success btn-sm" %>
 				                                        </td>
