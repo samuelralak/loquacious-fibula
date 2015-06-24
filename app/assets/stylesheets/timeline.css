@@ -142,7 +142,7 @@
 
 		.panel .timeline-label:after {border-right-color: #f7f7f7}
 
-@media (min-width:768px) {.two-column.timeline}
+@media (min-width:768px) {}
 
 .two-column.timeline:before {left: 50%}
 
