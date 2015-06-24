@@ -7,7 +7,38 @@
 				<%= render 'layouts/secondary_header', flash: flash %> 
 
 				<div class="app-body">
-					<%= @activities.inspect %>
+					 <!-- app content here -->
+					 <div class="center-block center-box">
+					 	<div class="row">
+					 		<div class="col-md-12" style="margin-bottom: 12px;">
+					 			<div class="">
+					 				<div class="timeline">
+					 					<div class="timeline-header">
+					 						<div class="timeline-header-title bg-info">
+					 							Now
+					 						</div>
+					 					</div>
+
+					 					<% @activities.each do |activity| %>
+					 						<div class="timeline-entry">
+					 							<div class="timeline-stat">
+					 								<div class="timeline-icon"></div>
+					 								<div class="timeline-time">
+					 									<%= "#{time_ago_in_words(activity.created_at)} ago." %>
+					 								</div>
+					 							</div>
+					 						</div>
+
+					 						<div class="timeline-label">
+					 							<%= "#{fa_icon 'credit-card'}&nbsp; #{link_to activity.user.username, '#'}".html_safe %>
+					 							<%= render "activities/#{activity.trackable_type.underscore}/#{activity.action}", activity: activity %>
+					 						</div>
+					 					<% end -%>
+					 				</div>
+					 			</div>
+					 		</div>
+					 	</div>
+					 </div>
 				</div>
 			</div>
 		</section>
