@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  get 'shopping_cart/add_to_cart'
+
+  get 'shopping_cart/remove_from_cart'
+
   resources :credit_cards
   resources :items
   resources :activities

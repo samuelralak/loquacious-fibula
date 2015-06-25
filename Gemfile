@@ -33,6 +33,9 @@ gem 'httparty', '~> 0.13.5'
 # shopping cart
 gem 'acts_as_shopping_cart', '~> 0.3.0'
 
+# notifications
+gem 'toastr-rails-sass', '~> 2.1.3'
+
 #production
 gem 'rails_12factor', group: :production
 
