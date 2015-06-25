@@ -30,6 +30,9 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 # HTTP REST APIs
 gem 'httparty', '~> 0.13.5'
 
+# shopping cart
+gem 'acts_as_shopping_cart', '~> 0.3.0'
+
 #production
 gem 'rails_12factor', group: :production
 
