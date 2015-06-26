@@ -1,4 +1,8 @@
 class ShoppingCartController < ApplicationController
+	def view_cart
+		
+	end
+
 	def add_to_cart
 		shopping_cart = ShoppingCart.find_by(user_id: current_user.id)
 
@@ -18,7 +22,7 @@ class ShoppingCartController < ApplicationController
 		end
 
 		respond_to do |format|
-			# format.html { redirect_to buy_items_path }
+			format.html { redirect_to buy_items_path }
 			format.json { render json: { cart_item_count: @cart.shopping_cart_items.count } }
 		end
 	end
