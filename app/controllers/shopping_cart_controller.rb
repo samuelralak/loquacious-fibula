@@ -1,4 +1,6 @@
 class ShoppingCartController < ApplicationController
+	before_action :authenticate_user!
+	
 	def view_cart
 		@total = 0.00
 
