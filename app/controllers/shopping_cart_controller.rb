@@ -1,6 +1,13 @@
 class ShoppingCartController < ApplicationController
 	def add_to_cart
-		@cart = ShoppingCart.create
+		shopping_cart = ShoppingCart.find_by(user_id: current_user.id)
+
+		if shopping_cart
+			@cart = shopping_cart
+		else
+			@cart = current_user.create_shopping_cart!
+		end
+
 		@item = Item.find(params[:id])
 
 		if @item
@@ -11,8 +18,8 @@ class ShoppingCartController < ApplicationController
 		end
 
 		respond_to do |format|
-			format.html { redirect_to buy_items_path }
-			format.js
+			# format.html { redirect_to buy_items_path }
+			format.json { render json: { cart_item_count: @cart.shopping_cart_items.count } }
 		end
 	end
 

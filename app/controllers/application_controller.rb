@@ -4,6 +4,7 @@ class ApplicationController < ActionController::Base
 	protect_from_forgery with: :exception
 
 	before_filter :configure_permitted_parameters, if: :devise_controller?
+	before_filter :check_cart_items
 
 	private
 		def track_activity(trackable, action = params[:action])
@@ -13,6 +14,13 @@ class ApplicationController < ActionController::Base
 		# Redirect to sign in page after successful sign out
 		def after_sign_out_path_for(resource_or_scope)
 			new_user_session_path
+		end
+
+		def check_cart_items
+			if current_user
+				@cart = current_user.shopping_cart
+				@cart_items = @cart ? @cart.shopping_cart_items.count : 0
+			end
 		end
 
 	protected

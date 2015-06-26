@@ -12,14 +12,13 @@ jQuery ->
 		event.preventDefault()
 
 	$('.addToCart').on 'click', (event) -> 
-		console.log $(this).data('item')
+		item_id = $(this).data('item')
 		$.ajax
 			url: '/add_to_cart'
 			type: 'POST'
 			data:
-				id: $(this).data('item')
+				id: item_id
 			success: (data, status, response) ->
+				console.log data.cart_item_count
+				$('#cartItems').text(data.cart_item_count) 
 				toastr.success('Item successfully added to cart', {timeOut: 1000})
-			error: ->
-				toastr.success('An error occured while adding item')
-			dataType: "json"
