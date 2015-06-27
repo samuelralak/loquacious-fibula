@@ -1,4 +1,5 @@
 class DepositsController < ApplicationController
+    before_action :authenticate_user!
     before_action :set_btc_account, only: [:show]
     before_action :check_transactions, only: [:show]
     before_action :check_balance
