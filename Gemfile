@@ -33,6 +33,9 @@ gem 'httparty', '~> 0.13.5'
 # shopping cart
 gem 'acts_as_shopping_cart', '~> 0.3.0'
 
+# payment processing
+gem 'block_io', '~> 1.0.6'
+
 #production
 gem 'rails_12factor', group: :production
 
@@ -41,4 +44,3 @@ group :development, :test do
   gem 'web-console', '~> 2.0'
   gem 'spring'
 end
-

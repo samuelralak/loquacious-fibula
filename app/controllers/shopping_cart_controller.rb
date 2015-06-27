@@ -1,6 +1,6 @@
 class ShoppingCartController < ApplicationController
 	before_action :authenticate_user!
-	
+
 	def view_cart
 		@total = 0.00
 
@@ -41,8 +41,8 @@ class ShoppingCartController < ApplicationController
   		end
 
   		respond_to do |format|
-			# format.html { redirect_to buy_items_path }
-			format.json { render json: { cart_item_count: @cart.shopping_cart_items.count, item_price: @item.price} }
-		end
+				# format.html { redirect_to buy_items_path }
+				format.json { render json: { cart_item_count: @cart.shopping_cart_items.count, item_price: @item.price} }
+			end
   	end
 end
