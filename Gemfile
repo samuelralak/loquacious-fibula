@@ -36,6 +36,9 @@ gem 'acts_as_shopping_cart', '~> 0.3.0'
 # payment processing
 gem 'block_io', '~> 1.0.6'
 
+# env variables management
+gem 'figaro', '~> 1.1.1'
+
 #production
 gem 'rails_12factor', group: :production
 
