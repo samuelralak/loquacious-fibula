@@ -11,6 +11,8 @@ class User < ActiveRecord::Base
 	has_many :activities, inverse_of: :user
 	has_many :items
 
+	after_create :create_btc_account
+
 	# Virtual attribute for authenticating by either username or email
 	# This is in addition to a real persisted field like 'username'
 	attr_accessor :login
@@ -22,6 +24,36 @@ class User < ActiveRecord::Base
 			where(conditions.to_hash).where(["lower(username) = :value OR lower(email) = :value", { :value => login.downcase }]).first
 		else
 			where(conditions.to_hash).first
-      	end
     end
+  end
+
+	private
+		def create_btc_account
+			response = BlockIo.get_new_address(:label => self.username)
+
+			if response['status'].eql?('success')
+				data = response['data']
+
+				# create btc account
+				account = BtcAccount.create(
+					label: data['label'],
+					address: data['address'],
+					user_id: self.id
+				)
+
+				# fetch account btc_account_balance
+			 response = BlockIo.get_address_balance :labels => account.label
+
+			 # create btc account balance
+			 if response['status'].eql?('success')
+			   data = response['data']
+
+			   account_balance = BtcAccountBalance.create(
+			     available_balance: data['available_balance'],
+			     pending_received_balance: data['pending_received_balance'],
+					 btc_account_id: account.id
+			   )
+			 end
+			end
+		end
 end
