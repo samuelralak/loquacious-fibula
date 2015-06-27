@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  txn_id: MyString
+  time: 2015-06-28 00:44:21
+  sender: MyString
+  receiver: MyString
+  txn_type: MyString
+  status: MyString
+
+two:
+  txn_id: MyString
+  time: 2015-06-28 00:44:21
+  sender: MyString
+  receiver: MyString
+  txn_type: MyString
+  status: MyString

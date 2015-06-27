@@ -8,8 +8,9 @@ class User < ActiveRecord::Base
 	has_one	:shopping_cart, inverse_of: :user
 	has_one	:btc_account, inverse_of: :user
 
+	has_many :transactions, inverse_of: :user
 	has_many :activities, inverse_of: :user
-	has_many :items
+	has_many :items, inverse_of: :user
 
 	after_create :create_btc_account
 

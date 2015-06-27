@@ -1,2 +1,77 @@
-<h1>Deposits#show</h1>
-<p>Find me in app/views/deposits/show.html.erb</p>
+<section id="content" class="content content-lg">
+	<%= render 'layouts/main_header', flash: flash %>
+
+	<div class="content-splitter">
+		<section id="content-main" class="content-main">
+			<div class="content-app">
+				<div class="app-header">
+					<h3 class="app-title">Deposit</h3>
+				</div>
+				<%= render 'layouts/notice', flash: flash %>
+
+				<div class="app-body">
+					<div class="center-block center-box">
+						<div class="row">
+							<div class="col-md-12">
+								<div class="box">
+                                    <h3>Account details</h3>
+                                    <hr />
+                                    <div class="row">
+                                        <div class="col-md-4 deposits"><b>Label</b></div>
+                                        <div class="col-md-8 deposits"><%= @btc_account.label %></div>
+                                        <div class="col-md-4 deposits"><b>Address</b></div>
+                                        <div class="col-md-8 deposits">
+                                            <div style="background-color: #ddd; border-radius: 5px; padding: 3px;" >
+                                                <%= @btc_account.address %>
+                                            </div>
+                                            <i style="color: #3498db"><%= fa_icon 'info-circle' %> deposit coins to the above address</i>
+                                        </div>
+                                        <div class="col-md-4 deposits"><b>Available balance</b></div>
+                                        <div class="col-md-8 deposits"><%= @btc_account.btc_account_balance.available_balance %></div>
+                                        <div class="col-md-4 deposits"><b>Pending received balance</b></div>
+                                        <div class="col-md-8 deposits"><%= @btc_account.btc_account_balance.pending_received_balance %></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h2>Transactions <br/>
+                                            <small>
+                                                recent transactions.
+                                            </small>
+                                        </h2>
+                                    </div>
+
+                                    <div class="table-responsive">
+                                        <table id="data-table-selection" class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>TXN_ID</th>
+                                                    <th>TIME</th>
+                                                    <th>AMOUNT</th>
+                                                </tr>
+                                            </thead>
+
+                                            <tbody>
+                                                <% @transactions.each do |txn| %>
+                                                    <tr>
+                                                        <td><%= txn.try(:txn_id) %></td>
+                                                        <td><%= txn.try(:time) %></td>
+                                                        <td style="color: <%= txn.try(:txn_type) && txn.txn_type.eql?('received') ? 'green' : 'red' %>">
+                                                            <%= "#{txn.try(:txn_type) && txn.txn_type.eql?('received') ? '+' : '-'} #{txn.try(:amount)}" %></td>
+                                                    </tr>
+                                                <% end %>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <section>
+    </div>
+</div>

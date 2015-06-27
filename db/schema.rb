@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150627152110) do
+ActiveRecord::Schema.define(version: 20150627215505) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -29,8 +29,8 @@ ActiveRecord::Schema.define(version: 20150627152110) do
   add_index "activities", ["user_id"], name: "index_activities_on_user_id", using: :btree
 
   create_table "btc_account_balances", force: :cascade do |t|
-    t.float    "available_balance"
-    t.float    "pending_received_balance"
+    t.string   "available_balance"
+    t.string   "pending_received_balance"
     t.integer  "btc_account_id"
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
@@ -98,6 +98,21 @@ ActiveRecord::Schema.define(version: 20150627152110) do
 
   add_index "shopping_carts", ["user_id"], name: "index_shopping_carts_on_user_id", using: :btree
 
+  create_table "transactions", force: :cascade do |t|
+    t.string   "txn_id"
+    t.string   "amount"
+    t.datetime "time"
+    t.string   "sender"
+    t.string   "receiver"
+    t.string   "txn_type"
+    t.string   "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer  "user_id"
+  end
+
+  add_index "transactions", ["user_id"], name: "index_transactions_on_user_id", using: :btree
+
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
     t.string   "encrypted_password",     default: "", null: false
@@ -129,4 +144,5 @@ ActiveRecord::Schema.define(version: 20150627152110) do
   add_foreign_key "btc_accounts", "users"
   add_foreign_key "items", "users"
   add_foreign_key "shopping_carts", "users"
+  add_foreign_key "transactions", "users"
 end
