@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  available_balance: 1.5
+  pending_received_balance: 1.5
+  btc_account_id: 
+
+two:
+  available_balance: 1.5
+  pending_received_balance: 1.5
+  btc_account_id: 

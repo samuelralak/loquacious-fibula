@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150625234740) do
+ActiveRecord::Schema.define(version: 20150627152110) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,6 +27,26 @@ ActiveRecord::Schema.define(version: 20150625234740) do
 
   add_index "activities", ["trackable_type", "trackable_id"], name: "index_activities_on_trackable_type_and_trackable_id", using: :btree
   add_index "activities", ["user_id"], name: "index_activities_on_user_id", using: :btree
+
+  create_table "btc_account_balances", force: :cascade do |t|
+    t.float    "available_balance"
+    t.float    "pending_received_balance"
+    t.integer  "btc_account_id"
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+  end
+
+  add_index "btc_account_balances", ["btc_account_id"], name: "index_btc_account_balances_on_btc_account_id", using: :btree
+
+  create_table "btc_accounts", force: :cascade do |t|
+    t.string   "label"
+    t.string   "address"
+    t.integer  "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "btc_accounts", ["user_id"], name: "index_btc_accounts_on_user_id", using: :btree
 
   create_table "credit_cards", force: :cascade do |t|
     t.integer  "bin"
@@ -105,6 +125,8 @@ ActiveRecord::Schema.define(version: 20150625234740) do
   add_index "users", ["username"], name: "index_users_on_username", unique: true, using: :btree
 
   add_foreign_key "activities", "users"
+  add_foreign_key "btc_account_balances", "btc_accounts"
+  add_foreign_key "btc_accounts", "users"
   add_foreign_key "items", "users"
   add_foreign_key "shopping_carts", "users"
 end
