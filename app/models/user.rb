@@ -33,27 +33,20 @@ class User < ActiveRecord::Base
 
 			if response['status'].eql?('success')
 				data = response['data']
-
-				# create btc account
 				account = BtcAccount.create(
-					label: data['label'],
-					address: data['address'],
-					user_id: self.id
+					label: data['label'], address: data['address'], user_id: self.id
 				)
 
-				# fetch account btc_account_balance
-			 response = BlockIo.get_address_balance :labels => account.label
+				response = BlockIo.get_address_balance :labels => account.label
 
-			 # create btc account balance
-			 if response['status'].eql?('success')
-			   data = response['data']
-
-			   account_balance = BtcAccountBalance.create(
-			     available_balance: data['available_balance'],
-			     pending_received_balance: data['pending_received_balance'],
-					 btc_account_id: account.id
-			   )
-			 end
+				if response['status'].eql?('success')
+					data = response['data']
+					account_balance = BtcAccountBalance.create(
+						available_balance: data['available_balance'],
+						pending_received_balance: data['pending_received_balance'],
+						btc_account_id: account.id
+					)
+				end
 			end
 		end
 end
