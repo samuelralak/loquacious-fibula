@@ -8,7 +8,7 @@ class DepositsController < ApplicationController
     end
 
     def show
-        @transactions = Transaction.order('time')
+        @transactions = current_user.transactions.order('time')
     end
 
     private
