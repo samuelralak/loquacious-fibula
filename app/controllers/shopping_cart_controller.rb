@@ -4,8 +4,12 @@ class ShoppingCartController < ApplicationController
 	def view_cart
 		@total = 0.00
 
-		@cart.shopping_cart_items.each do |cart_item|
-			@total = @total + cart_item.item.price
+		if @cart
+			@cart.shopping_cart_items.each do |cart_item|
+				@total = @total + cart_item.item.try(:price).to_f
+			end
+
+			@total = ("%.20f" % @total).sub(/\.?0*$/, "")
 		end
 	end
 

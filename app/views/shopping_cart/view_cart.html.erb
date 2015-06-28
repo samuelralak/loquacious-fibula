@@ -7,61 +7,80 @@
 				<div class="app-header">
 					<h3 class="app-title">Your Cart</h3>
 				</div>
-				<%= render 'layouts/notice', flash: flash %> 
+				<%= render 'layouts/notice', flash: flash %>
 
 				<div class="app-body">
 					<div class="center-block center-box">
 						<div class="row">
-							<div class="col-md-12">
-								<div class="box">
-									<div class="card-header">
-	                        			<div class="pull-right">
-	                        				<%= link_to "#{fa_icon 'trash'} empty cart".html_safe,  '#', class: "btn btn-danger btn-sm" %>
-	                        			</div>
-	                        			<br />
-	                       			</div>
+							<% if !@cart.nil? %>
+								<div class="col-md-12">
+									<div class="box">
+										<div class="card-header">
+		                        			<div class="pull-right">
+		                        				<%= link_to "#{fa_icon 'trash'} empty cart".html_safe,  '#', class: "btn btn-danger btn-sm" %>
+		                        			</div>
+		                        			<br />
+		                       			</div>
 
-									<table class="table table-striped">
-										<thead>
-											<tr>
-												<th></th>
-												<th>TYPE</th>
-												<th>INFO</th>
-												<th>PRICE</th>
-												<th></th>
-											</tr>
-										</thead>
-
-										<tbody>
-											<% @cart.shopping_cart_items.each do |cart_item| %>
-												<tr id="<%= cart_item.id %>">
-													<td><%= check_box_tag 'accept' %></td>
-													<td><%= cart_item.item.itemable.card_type %></td>
-													<td>
-														<%= "#{cart_item.item.itemable.bin}|#{cart_item.item.itemable.country_name.upcase.gsub(' ', '')}|#{cart_item.item.itemable.expiry.strftime('%m%Y')}|#{cart_item.item.user.username.upcase}" %>
-													</td>
-													<td><%= "#{fa_icon 'bitcoin'} #{cart_item.item.price}".html_safe %></td>
-													<td><%= link_to "#{fa_icon 'trash'}".html_safe,  '#', class: "removeFromCart btn btn-danger btn-sm", data: { id: cart_item.item.id } %></td>
+										<table class="table table-striped">
+											<thead>
+												<tr>
+													<th></th>
+													<th>TYPE</th>
+													<th>INFO</th>
+													<th>PRICE</th>
+													<th></th>
 												</tr>
-											<% end %>
-											<tr>
-												<td colspan="3" align="right"><b>TOTAL:</b></td>
-												<td colspan="2"><%= "#{fa_icon 'bitcoin'} <span id='totalPrice'>#{@total}</span>".html_safe %></td>
-											</tr>
-										</tbody>
-									</table>
-									<br />
-									<div class="card-header">
-										<div class="pull-left">
-	                        				<%= link_to "#{fa_icon 'arrow-circle-o-left'} Continue shopping".html_safe,  buy_items_path, class: "btn btn-primary btn-sm" %>
-	                        			</div>
-	                        			<div class="pull-right">
-	                        				<%= link_to "Checkout #{fa_icon 'arrow-circle-o-right'} ".html_safe,  '#', class: "btn btn-success btn-sm" %>
-	                        			</div>
-	                        			<br />
-	                       			</div>
+											</thead>
+
+											<tbody>
+												<% @cart.shopping_cart_items.each do |cart_item| %>
+													<tr id="<%= cart_item.id %>">
+														<td><%= check_box_tag 'accept' %></td>
+														<td><%= cart_item.item.itemable.card_type %></td>
+														<td>
+															<%= "#{cart_item.item.itemable.bin}|#{cart_item.item.itemable.country_name.upcase.gsub(' ', '')}|#{cart_item.item.itemable.expiry.strftime('%m%Y')}|#{cart_item.item.user.username.upcase}" %>
+														</td>
+														<td><%= "#{fa_icon 'bitcoin'} #{cart_item.item.price}".html_safe %></td>
+														<td><%= link_to "#{fa_icon 'trash'}".html_safe,  '#', class: "removeFromCart btn btn-danger btn-sm", data: { id: cart_item.item.id } %></td>
+													</tr>
+												<% end %>
+												<tr>
+													<td colspan="3" align="right"><b>TOTAL:</b></td>
+													<td colspan="2"><%= "#{fa_icon 'bitcoin'} <span id='totalPrice'>#{@total}</span>".html_safe %></td>
+												</tr>
+											</tbody>
+										</table>
+										<br />
+										<div class="card-header">
+											<div class="pull-left">
+		                        				<%= link_to "#{fa_icon 'arrow-circle-o-left'} Continue shopping".html_safe,  buy_items_path, class: "btn btn-primary btn-sm" %>
+		                        			</div>
+		                        			<div class="pull-right">
+		                        				<%= link_to "Checkout #{fa_icon 'arrow-circle-o-right'} ".html_safe,  '#', class: "btn btn-success btn-sm" %>
+		                        			</div>
+		                        			<br />
+		                       			</div>
+									</div>
 								</div>
-							</div>
+							<% else %>
+								<div class="col-md-12">
+									<div class="panel panel-default magic-element isotope-item">
+										<a href="#" class="panel-body-heading bg-asbestos full-line">
+											<div class="pb-object pb-object-circle">
+												<i class="pbo-icon icon ion-ios7-help-outline text-inverse"></i>
+											</div>
+											<h3 class="pb-title text-inverse">
+												No Items in cart
+												<small class="text-inverse">You have not added any items in cart</small>
+											</h3>
+											<span class="pb-watermark">
+												<i class="icon ion-ios7-information"></i>
+											</span>
+										</a>
+									</div>
+								</div>
+							<% end %>
 						</div>
 					</div>
 				</div>

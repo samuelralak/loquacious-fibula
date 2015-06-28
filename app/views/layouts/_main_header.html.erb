@@ -16,7 +16,11 @@
     			</ul>
 
     			<ul class="nav navbar-nav navbar-right">
-    				<li><a href="<%= view_cart_path %>">(<span id="cartItems"><%= @cart_items %></span>) <%= fa_icon "shopping-cart" %> Cart</a></li>
+    				<li>
+						<a href="<%= view_cart_path %>">
+							(<span id="cartItems"><%= @cart_items %></span>) <%= fa_icon "shopping-cart" %> Cart
+						</a>
+					</li>
     				<li>
 						<a href="<%= deposit_path %>">
 							<%= fa_icon "bitcoin" %> <%= current_user.btc_account.btc_account_balance.available_balance %>
