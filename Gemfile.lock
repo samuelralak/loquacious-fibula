@@ -1,3 +1,10 @@
+GIT
+  remote: git://github.com/blockchain/api-v1-client-ruby.git
+  revision: ef0fbad1398f1f67955c48eb99a242610340f7cc
+  branch: master
+  specs:
+    blockchain (1.0.2)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -202,6 +209,7 @@ PLATFORMS
 DEPENDENCIES
   acts_as_shopping_cart (~> 0.3.0)
   block_io (~> 1.0.6)
+  blockchain!
   bootstrap-sass (~> 3.3.4.1)
   byebug
   coffee-rails (~> 4.1.0)

@@ -1,0 +1,29 @@
+class BlockChain
+    # fetching wallet balance as described on the BlockChain API
+    # https://blockchain.info/merchant/$guid/balance?password=$main_password
+    def get_wallet_balance
+
+    end
+
+    # listing addresses as described on the BlockChain API
+    # https://blockchain.info/merchant/$guid/list?password=$main_password
+    def get_wallet_addresses(confirmations = 0)
+
+    end
+
+    # getting the balance of an address as described on the BlockChain API
+    # https://blockchain.info/merchant/$guid/address_balance?password=$main_password&address=$address&confirmations=$confirmations
+    def get_address_balance(address, confirmations)
+
+    end
+
+    # make outgoing payments as described on the BlockChain API
+    # https://blockchain.info/merchant/$guid/payment?password=$main_password&second_password=$second_password&to=$address&amount=$amount&from=$from&fee=$fee&note=$note
+    def make_outgoing_payments(from_address, to_address)
+
+    end
+
+    def get_new_address()
+
+    end
+end
