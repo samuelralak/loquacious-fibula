@@ -40,6 +40,9 @@ gem 'blockchain', github: 'blockchain/api-v1-client-ruby', branch: 'master'
 # env variables management
 gem 'figaro', '~> 1.1.1'
 
+# admin
+gem 'activeadmin', github: 'activeadmin'
+
 #production
 gem 'rails_12factor', group: :production
 
