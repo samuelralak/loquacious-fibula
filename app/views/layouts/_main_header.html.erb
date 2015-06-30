@@ -32,7 +32,7 @@
     						<li><%= link_to "#{fa_icon 'bitcoin'}&nbsp;&nbsp; deposit".html_safe, deposit_path %></li>
 				            <li><%= link_to "#{fa_icon 'reorder'}&nbsp; orders".html_safe,  '#'%></li>
 				            <li role="separator" class="divider"></li>
-				            <li><%= link_to "#{fa_icon 'cog'}&nbsp; settings".html_safe,  '#'%></li>
+				            <li><%= link_to "#{fa_icon 'cog'}&nbsp; settings".html_safe,  edit_user_registration_path %></li>
 				            <li role="separator" class="divider"></li>
 				            <li>
 				            	<%= link_to "#{fa_icon 'sign-out'} sign out".html_safe,  destroy_user_session_path, method: "delete" %>

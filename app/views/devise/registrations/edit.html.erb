@@ -1,39 +1,88 @@
-<h2>Edit <%= resource_name.to_s.humanize %></h2>
+<section id="content" class="content content-lg">
+	<%= render 'layouts/main_header', flash: flash %>
 
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
-  <%= devise_error_messages! %>
+	<div class="content-splitter">
+		<section id="content-main" class="content-main">
+			<div class="content-app">
+				<div class="app-header">
+					<h3 class="app-title">Edit <%= resource_name.to_s.humanize %></h3>
+				</div>
+				<%= render 'layouts/notice', flash: flash %>
 
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true %>
-  </div>
+				<div class="app-body">
+					<div class="center-block center-box">
+						<div class="row">
+							<div class="col-md-12">
+								<div class="box">
+                                    <h3>Edit <%= resource_name.to_s.humanize %></h3>
+                                    <hr />
+                                    <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, class: 'form-horizontal' }) do |f| %>
+                                      <%= devise_error_messages! %>
 
-  <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
-    <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
-  <% end %>
+                                      <div class="form-group">
+                                        <%= f.label :email, class: 'col-sm-2' %>
+                                        <div class="col-sm-8">
+                                            <%= f.email_field :email, autofocus: true, class: 'form-control' %>
+                                        </div>
+                                      </div>
 
-  <div class="field">
-    <%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br />
-    <%= f.password_field :password, autocomplete: "off" %>
-  </div>
+                                      <div class="form-group">
+                                        <%= f.label :icq_number, class: 'col-sm-2' %>
+                                        <div class="col-sm-8">
+                                            <%= f.text_field :icq_number, autofocus: true, class: 'form-control' %>
+                                        </div>
+                                      </div>
 
-  <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "off" %>
-  </div>
+                                      <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+                                        <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+                                      <% end %>
 
-  <div class="field">
-    <%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br />
-    <%= f.password_field :current_password, autocomplete: "off" %>
-  </div>
+                                      <div class="form-group">
+                                        <%= f.label :password, class: 'col-sm-2' %>
+                                        <div class="col-sm-8">
+                                            <%= f.password_field :password, autocomplete: "off", class: 'form-control' %>
+                                            <i style="color: #3498db"><%= fa_icon 'info-circle' %> leave blank if you don't want to change it</i>
+                                        </div>
 
-  <div class="actions">
-    <%= f.submit "Update" %>
-  </div>
-<% end %>
+                                      </div>
 
-<h3>Cancel my account</h3>
+                                      <div class="form-group">
+                                        <%= f.label :password_confirmation, class: 'col-sm-2' %>
+                                        <div class="col-sm-8">
+                                            <%= f.password_field :password_confirmation, autocomplete: "off", class: 'form-control' %>
+                                        </div>
+                                      </div>
 
-<p>Unhappy? <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete %></p>
+                                      <div class="form-group">
+                                        <%= f.label :current_password, class: 'col-sm-2' %>
+                                        <div class="col-sm-8">
+                                            <%= f.password_field :current_password, autocomplete: "off", class: 'form-control' %>
+                                            <i style="color: #f39c12"><%= fa_icon 'exclamation-triangle' %> we need your current password to confirm your changes</i>
+                                        </div>
+                                      </div>
 
-<%= link_to "Back", :back %>
+                                      <div class="form-group">
+                                          <div class="col-sm-offset-2 col-sm-10">
+                                              <%= f.submit "Update", class: 'btn btn-info' %>
+                                          </div>
+                                      </div>
+                                    <% end %>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="box">
+                                    <h3>Cancel my account</h3>
+                                    <hr />
+                                    <p>Unhappy?
+                                        <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete, class: 'btn btn-danger' %></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
