@@ -6,28 +6,31 @@ ActiveAdmin.register_page "Dashboard" do
     div class: "blank_slate_container", id: "dashboard_default_message" do
       span class: "blank_slate" do
         span I18n.t("active_admin.dashboard_welcome.welcome")
-        small I18n.t("active_admin.dashboard_welcome.call_to_action")
       end
     end
 
     # Here is an example of a simple dashboard with columns and panels.
     #
-    # columns do
-    #   column do
-    #     panel "Recent Posts" do
-    #       ul do
-    #         Post.recent(5).map do |post|
-    #           li link_to(post.title, admin_post_path(post))
-    #         end
-    #       end
-    #     end
-    #   end
+     columns do
+       column do
+         panel "Recent Items" do
+           ul do
+             Item.order('created_at desc').map do |item|
+               li link_to(item.itemable.card_number, admin_item_path(item))
+             end
+           end
+         end
+       end
 
-    #   column do
-    #     panel "Info" do
-    #       para "Welcome to ActiveAdmin."
-    #     end
-    #   end
-    # end
+       column do
+           panel "New users" do
+             ul do
+               User.order('created_at desc').map do |user|
+                 li link_to(user.username, admin_user_path(user))
+               end
+             end
+           end
+       end
+     end
   end # content
 end
