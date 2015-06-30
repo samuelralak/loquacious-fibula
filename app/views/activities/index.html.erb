@@ -4,7 +4,7 @@
 	<div class="content-splitter">
 		<section id="content-main" class="content-main">
 			<div class="content-app">
-				<%= render 'layouts/secondary_header', flash: flash %> 
+				<%= render 'layouts/secondary_header', flash: flash %>
 
 				<div class="app-body">
 					 <!-- app content here -->
@@ -30,8 +30,7 @@
 					 						</div>
 
 					 						<div class="timeline-label">
-					 							<%= "#{fa_icon 'credit-card'}&nbsp; #{link_to activity.user.username, '#'}".html_safe %>
-					 							<%= render "activities/#{activity.trackable_type.underscore}/#{activity.action}", activity: activity %>
+												<%= render "activities/#{activity.trackable_type.underscore}/#{activity.action}", activity: activity %>
 					 						</div>
 					 					<% end -%>
 					 				</div>

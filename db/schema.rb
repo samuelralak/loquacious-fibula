@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150630131212) do
+ActiveRecord::Schema.define(version: 20150630204049) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -38,8 +38,10 @@ ActiveRecord::Schema.define(version: 20150630131212) do
     t.string   "trackable_type"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
+    t.integer  "admin_user_id"
   end
 
+  add_index "activities", ["admin_user_id"], name: "index_activities_on_admin_user_id", using: :btree
   add_index "activities", ["trackable_type", "trackable_id"], name: "index_activities_on_trackable_type_and_trackable_id", using: :btree
   add_index "activities", ["user_id"], name: "index_activities_on_user_id", using: :btree
 
@@ -60,6 +62,16 @@ ActiveRecord::Schema.define(version: 20150630131212) do
 
   add_index "admin_users", ["email"], name: "index_admin_users_on_email", unique: true, using: :btree
   add_index "admin_users", ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true, using: :btree
+
+  create_table "broadcasts", force: :cascade do |t|
+    t.string   "title"
+    t.text     "content"
+    t.integer  "admin_user_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  add_index "broadcasts", ["admin_user_id"], name: "index_broadcasts_on_admin_user_id", using: :btree
 
   create_table "btc_account_balances", force: :cascade do |t|
     t.string   "available_balance"
@@ -172,7 +184,9 @@ ActiveRecord::Schema.define(version: 20150630131212) do
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   add_index "users", ["username"], name: "index_users_on_username", unique: true, using: :btree
 
+  add_foreign_key "activities", "admin_users"
   add_foreign_key "activities", "users"
+  add_foreign_key "broadcasts", "admin_users"
   add_foreign_key "btc_account_balances", "btc_accounts"
   add_foreign_key "btc_accounts", "users"
   add_foreign_key "items", "users"
