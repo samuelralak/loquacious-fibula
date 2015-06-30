@@ -27,47 +27,14 @@
                                             <i style="color: #3498db"><%= fa_icon 'info-circle' %> deposit coins to the above address</i>
                                         </div>
                                         <div class="col-md-4 deposits"><b>Available balance</b></div>
-                                        <div class="col-md-8 deposits"><%= @btc_account.btc_account_balance.available_balance %></div>
+                                        <div class="col-md-8 deposits"><%= fa_icon 'bitcoin' %>&nbsp;<%= satoshi_to_bitcoin(@btc_account.btc_account_balance.available_balance) %></div>
                                         <div class="col-md-4 deposits"><b>Pending received balance</b></div>
-                                        <div class="col-md-8 deposits"><%= @btc_account.btc_account_balance.pending_received_balance %></div>
+                                        <div class="col-md-8 deposits"><%= fa_icon 'bitcoin' %>&nbsp;<%= @btc_account.btc_account_balance.pending_received_balance.to_f %></div>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="col-md-12">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <h2>Transactions <br/>
-                                            <small>
-                                                recent transactions.
-                                            </small>
-                                        </h2>
-                                    </div>
 
-                                    <div class="table-responsive">
-                                        <table id="data-table-selection" class="table table-striped">
-                                            <thead>
-                                                <tr>
-                                                    <th>TXN_ID</th>
-                                                    <th>TIME</th>
-                                                    <th>AMOUNT</th>
-                                                </tr>
-                                            </thead>
-
-                                            <tbody>
-                                                <% @transactions.each do |txn| %>
-                                                    <tr>
-                                                        <td><%= txn.try(:txn_id) %></td>
-                                                        <td><%= txn.try(:time) %></td>
-                                                        <td style="color: <%= txn.try(:txn_type) && txn.txn_type.eql?('received') ? 'green' : 'red' %>">
-                                                            <%= "#{txn.try(:txn_type) && txn.txn_type.eql?('received') ? '+' : '-'} #{txn.try(:amount)}" %></td>
-                                                    </tr>
-                                                <% end %>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>

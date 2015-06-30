@@ -5,6 +5,11 @@ class ApplicationController < ActionController::Base
 
 	before_filter :configure_permitted_parameters, if: :devise_controller?
 	before_filter :check_cart_items
+	before_filter :set_wallet
+
+	def blockchain_callback
+		puts params[:input_transaction_hash]
+	end
 
 	private
 		def track_activity(trackable, action = params[:action])
@@ -23,18 +28,22 @@ class ApplicationController < ActionController::Base
 			end
 		end
 
+		def set_wallet
+			@wallet = Blockchain::Wallet.new(ENV['BLOCKCHAIN_IDENTIFIER'], ENV['BLOCKCHAIN_PASSWORD'])
+		end
+
 	protected
  		def configure_permitted_parameters
-			devise_parameter_sanitizer.for(:sign_up) { |u| 
+			devise_parameter_sanitizer.for(:sign_up) { |u|
 				u.permit(
 					:username, :email, :icq_number, :password, :password_confirmation, :remember_me
-				) 
+				)
 			}
 
-			devise_parameter_sanitizer.for(:sign_in) { |u| 
+			devise_parameter_sanitizer.for(:sign_in) { |u|
 				u.permit(
 					:login, :username, :email, :password, :remember_me
-				) 
+				)
 			}
 		end
 end

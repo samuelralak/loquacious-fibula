@@ -30,24 +30,19 @@ class User < ActiveRecord::Base
 
 	private
 		def create_btc_account
-			response = BlockIo.get_new_address(:label => self.username)
+			wallet = Blockchain::Wallet.new(ENV['BLOCKCHAIN_IDENTIFIER'], ENV['BLOCKCHAIN_PASSWORD'])
+			response = wallet.new_address(self.username)
 
-			if response['status'].eql?('success')
-				data = response['data']
+			unless response.nil?
+				# create account
 				account = BtcAccount.create(
-					label: data['label'], address: data['address'], user_id: self.id
+					label: response.label, address: response.address, user_id: self.id
 				)
 
-				response = BlockIo.get_address_balance :labels => account.label
-
-				if response['status'].eql?('success')
-					data = response['data']
-					account_balance = BtcAccountBalance.create(
-						available_balance: data['available_balance'],
-						pending_received_balance: data['pending_received_balance'],
-						btc_account_id: account.id
-					)
-				end
+				# create account balance
+				account_balance = account.create_btc_account_balance(
+					available_balance: response.balance
+				)
 			end
 		end
 end
