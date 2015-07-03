@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150703123020) do
+ActiveRecord::Schema.define(version: 20150703123820) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -123,6 +123,18 @@ ActiveRecord::Schema.define(version: 20150703123020) do
   add_index "items", ["itemable_type", "itemable_id"], name: "index_items_on_itemable_type_and_itemable_id", using: :btree
   add_index "items", ["user_id"], name: "index_items_on_user_id", using: :btree
 
+  create_table "order_items", force: :cascade do |t|
+    t.integer  "order_id"
+    t.integer  "item_id"
+    t.string   "price"
+    t.integer  "quantity"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "order_items", ["item_id"], name: "index_order_items_on_item_id", using: :btree
+  add_index "order_items", ["order_id"], name: "index_order_items_on_order_id", using: :btree
+
   create_table "order_statuses", force: :cascade do |t|
     t.string   "name"
     t.string   "code"
@@ -138,6 +150,19 @@ ActiveRecord::Schema.define(version: 20150703123020) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  create_table "orders", force: :cascade do |t|
+    t.string   "order_total"
+    t.integer  "seller_id"
+    t.integer  "customer_id"
+    t.integer  "order_status_id"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+  end
+
+  add_index "orders", ["customer_id"], name: "index_orders_on_customer_id", using: :btree
+  add_index "orders", ["order_status_id"], name: "index_orders_on_order_status_id", using: :btree
+  add_index "orders", ["seller_id"], name: "index_orders_on_seller_id", using: :btree
 
   create_table "shopping_cart_items", force: :cascade do |t|
     t.integer  "owner_id"
@@ -207,6 +232,9 @@ ActiveRecord::Schema.define(version: 20150703123020) do
   add_foreign_key "btc_account_balances", "btc_accounts"
   add_foreign_key "btc_accounts", "users"
   add_foreign_key "items", "users"
+  add_foreign_key "order_items", "items"
+  add_foreign_key "order_items", "orders"
+  add_foreign_key "orders", "order_statuses"
   add_foreign_key "shopping_carts", "users"
   add_foreign_key "transactions", "users"
 end
