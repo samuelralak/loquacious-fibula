@@ -1,7 +1,9 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
-#
-# Examples:
-#
-#   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
-#   Mayor.create(name: 'Emanuel', city: cities.first)
+order_statuses = ['pending', 'completed', 'cancelled', 'refunded', 'declined']
+
+order_statuses.map { |order_status|
+    OrderStatus.create!(
+        name: order_status,
+        code: order_status.upcase.gsub(' ', '-'),
+        is_active: true
+    )
+}
