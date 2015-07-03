@@ -9,7 +9,7 @@ class ShoppingCartController < ApplicationController
 				@total = @total + cart_item.item.try(:price).to_f
 			end
 
-			@total = ("%.20f" % @total).sub(/\.?0*$/, "")
+			@total = ("%f" % @total).sub(/\.?0*$/, "")
 		end
 	end
 
