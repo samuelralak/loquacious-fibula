@@ -18,6 +18,7 @@ Rails.application.routes.draw do
   post '/add_cards',        to: 'credit_cards#process_bin',       as: 'process_bin'
   post '/add_to_cart',      to: 'shopping_cart#add_to_cart',      as: 'add_to_cart'
   post '/remove_from_cart', to: 'shopping_cart#remove_from_cart', as: 'remove_from_cart'
+  post '/checkout', to: 'order_events#checkout', as: 'checkout'
 
   root 'activities#index'
 end
