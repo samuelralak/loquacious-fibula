@@ -1,15 +1,18 @@
 Rails.application.routes.draw do
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
-  resources :credit_cards
+
   resources :items
+  resources :orders
   resources :activities
+  resources :credit_cards
 
   devise_for :users
 
   get  '/buy',  	   to: 'items#buy',  			         as: 'buy_items'
   get  '/sell', 	   to: 'items#sell', 			         as: 'sell_items'
   get  '/deposit',     to: 'deposits#show',                  as: 'deposit'
+  get  '/checkout',    to: 'order_events#checkout',          as: 'checkout'
   get  '/deposits',    to: 'deposits#index',                 as: 'deposits'
   get  '/view_cart',   to: 'shopping_cart#view_cart',        as: 'view_cart'
 
@@ -18,7 +21,7 @@ Rails.application.routes.draw do
   post '/add_cards',        to: 'credit_cards#process_bin',       as: 'process_bin'
   post '/add_to_cart',      to: 'shopping_cart#add_to_cart',      as: 'add_to_cart'
   post '/remove_from_cart', to: 'shopping_cart#remove_from_cart', as: 'remove_from_cart'
-  post '/checkout', to: 'order_events#checkout', as: 'checkout'
+
 
   root 'activities#index'
 end

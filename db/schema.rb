@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150703131659) do
+ActiveRecord::Schema.define(version: 20150704131430) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -153,17 +153,17 @@ ActiveRecord::Schema.define(version: 20150703131659) do
 
   create_table "orders", force: :cascade do |t|
     t.string   "order_total"
-    t.integer  "seller_id"
     t.integer  "customer_id"
     t.integer  "order_status_id"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
-    t.string   "state"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+    t.string   "aasm_state"
+    t.integer  "shopping_cart_id"
   end
 
   add_index "orders", ["customer_id"], name: "index_orders_on_customer_id", using: :btree
   add_index "orders", ["order_status_id"], name: "index_orders_on_order_status_id", using: :btree
-  add_index "orders", ["seller_id"], name: "index_orders_on_seller_id", using: :btree
+  add_index "orders", ["shopping_cart_id"], name: "index_orders_on_shopping_cart_id", using: :btree
 
   create_table "shopping_cart_items", force: :cascade do |t|
     t.integer  "owner_id"
@@ -236,6 +236,7 @@ ActiveRecord::Schema.define(version: 20150703131659) do
   add_foreign_key "order_items", "items"
   add_foreign_key "order_items", "orders"
   add_foreign_key "orders", "order_statuses"
+  add_foreign_key "orders", "shopping_carts"
   add_foreign_key "shopping_carts", "users"
   add_foreign_key "transactions", "users"
 end
