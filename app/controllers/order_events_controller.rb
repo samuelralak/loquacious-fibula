@@ -12,7 +12,7 @@ class OrderEventsController < ApplicationController
             btc_account_balance.available_balance) > params[:total]
             # create order with initial status of pending
             order = Order.create(
-                order_total: params[:total], customer_id: shopping_cart.user.id, shopping_cart_id: shopping_cart.id }
+                order_total: params[:total], customer_id: shopping_cart.user.id
             )
 
             # get shopping cart items
@@ -34,7 +34,7 @@ class OrderEventsController < ApplicationController
                 )
 
                 # create order items
-                order.order_item.create(
+                order.order_items.create(
                     item_id: sci.item.id, price: sci.item.price, quantity: sci.quantity
                 )
             }

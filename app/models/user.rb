@@ -11,9 +11,7 @@ class User < ActiveRecord::Base
 	has_many :transactions, inverse_of: :user
 	has_many :activities, inverse_of: :user
 	has_many :items, inverse_of: :user
-	has_many :purchases, foreign_key: "customer_id", class_name: "Order", dependent: :destroy
-	has_many :sellers, through: :purchases, source: :seller
-	has_many :orders, foreign_key: "seller_id", dependent: :destroy
+	has_many :orders, foreign_key: "customer_id", dependent: :destroy
 	has_many :customers, through: :orders, source: :customer
 
 

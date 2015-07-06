@@ -2,10 +2,10 @@ class Order < ActiveRecord::Base
     include AASM
 
     belongs_to :order_status
-    belongs_to :seller, class_name: "User"
 	belongs_to :customer, class_name: "User"
 
-	validates :seller_id, presence: true
+    has_many :order_items
+
 	validates :customer_id, presence: true
 
     aasm :whiny_transitions => false do

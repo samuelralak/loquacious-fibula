@@ -8,13 +8,13 @@ module ApplicationHelper
   #style flash messages, error messages and alerts
   def bootstrap_class_for(flash_type)
     if flash_type == "alert"
-      "alert alert-dismissable alert-danger alert-icon"
+      "alert alert-dismissable alert-danger"
 
     elsif flash_type == "notice"
-      "alert alert-dismissable alert-success alert-icon"
+      "alert alert-dismissable alert-success"
 
     elsif flash_type == "warning"
-      "alert alert-dismissable alert-warning alert-icon"
+      "alert alert-dismissable alert-warning"
 
     else
       flash_type.to_s

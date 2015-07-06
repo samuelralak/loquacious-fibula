@@ -45,8 +45,18 @@ class ShoppingCartController < ApplicationController
   		end
 
   		respond_to do |format|
-				# format.html { redirect_to buy_items_path }
-				format.json { render json: { cart_item_count: @cart.shopping_cart_items.count, item_price: @item.price} }
-			end
+			# format.html { redirect_to buy_items_path }
+			format.json { render json: { cart_item_count: @cart.shopping_cart_items.count, item_price: @item.price} }
+		end
   	end
+
+	def clear_cart
+		@cart.clear
+	    @cart.destroy
+
+	    respond_to do |format|
+	      format.html { redirect_to buy_items_path }
+	      format.json { head :no_content }
+	    end
+	end
 end

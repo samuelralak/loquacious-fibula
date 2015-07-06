@@ -15,6 +15,7 @@ Rails.application.routes.draw do
   get  '/checkout',    to: 'order_events#checkout',          as: 'checkout'
   get  '/deposits',    to: 'deposits#index',                 as: 'deposits'
   get  '/view_cart',   to: 'shopping_cart#view_cart',        as: 'view_cart'
+  get  '/clear_cart',  to: 'shopping_cart#clear_cart',       as: 'clear_cart'
 
   get  '/blockchain_callback', to: 'application#blockchain_callback', as: 'blockchain_callback'
 
