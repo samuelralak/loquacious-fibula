@@ -12,9 +12,60 @@
 				<div class="app-body">
 					<div class="center-block center-box">
 						<div class="row">
-                            <div class="box">
+							<div class="col-md-12" style="margin-bottom: 5px;">
+								<div class="pull-left">
+									<form class="form-inline">
+										<div class="form-group">
+											<label class="sr-only">Search</label>
+											<input type="text" class="form-control" id="inputPassword2" placeholder="Search orders" style="width: 300px !important;">
+										</div>
+										<button type="submit" class="btn btn-default"><%= fa_icon 'search' %></button>
+									</form>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-12">
+								<div class="card">
+									<div class="card-header">
+										<h2>My Orders <br />
+											<small>
+												Recent orders
+											</small>
+										</h2>
+									</div>
 
-                            </div>
+									<div class="table-responsive">
+										<table id="data-table-selection" class="table table-striped">
+											<thead>
+												<tr>
+													<th data-column-id="id" data-type="numeric" data-identifier="true">
+														<%= check_box_tag 'accept' %>
+													</th>
+													<th data-column-id="type">TOTAL</th>
+													<th data-column-id="bin" data-order="desc">ITEMS</th>
+													<th data-column-id="bin" data-order="desc">STATUS</th>
+													<th data-column-id="bin" data-order="desc">DATE</th>
+													<th>VIEW</th>
+												</tr>
+											</thead>
+
+											<tbody>
+												<%- @orders.each do |order| %>
+													<tr>
+														<td><%= check_box_tag 'accept' %></td>
+														<td><%= order.order_total %></td>
+														<td><%= order.order_items.count %></td>
+														<td><%= order.aasm_state %></td>
+														<td><%= order.created_at.strftime("%a, %d %b %Y") %></td>
+														<td><%= link_to fa_icon('eye'), '#', class: 'btn btn-sm btn-default' %></td>
+													</tr>
+												<% end -%>
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</div>
                         </div>
                     </div>
                 </div>
