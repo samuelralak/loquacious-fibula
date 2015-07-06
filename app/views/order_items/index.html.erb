@@ -13,11 +13,14 @@
 					<div class="center-block center-box">
 						<div class="row">
 							<div class="col-md-12" style="margin-bottom: 5px;">
+                                <div class="pull-right">
+                                    <%= link_to "#{fa_icon 'chevron-left'}&nbsp;Back".html_safe, orders_path, class: 'btn btn-default' %>
+                                </div>
 								<div class="pull-left">
 									<form class="form-inline">
 										<div class="form-group">
 											<label class="sr-only">Search</label>
-											<input type="text" class="form-control" id="inputPassword2" placeholder="Search orders" style="width: 300px !important;">
+											<input type="text" class="form-control" id="inputPassword2" placeholder="Search items" style="width: 300px !important;">
 										</div>
 										<button type="submit" class="btn btn-default"><%= fa_icon 'search' %></button>
 									</form>
@@ -28,10 +31,7 @@
 							<div class="col-md-12">
 								<div class="card">
 									<div class="card-header">
-										<h2>My Orders <br />
-											<small>
-												Recent orders
-											</small>
+										<h2>Order items <br />
 										</h2>
 									</div>
 
@@ -42,24 +42,23 @@
 													<th data-column-id="id" data-type="numeric" data-identifier="true">
 														<%= check_box_tag 'accept' %>
 													</th>
-													<th data-column-id="type">TOTAL <%= fa_icon 'bitcoin' %></th>
-													<th data-column-id="bin" data-order="desc">ITEMS</th>
-													<th data-column-id="bin" data-order="desc">STATUS</th>
-													<th data-column-id="bin" data-order="desc">DATE</th>
-													<th>VIEW</th>
+													<th data-column-id="type">ITEM</th>
+													<th data-column-id="bin" data-order="desc">CARD TYPE</th>
+													<th data-column-id="bin" data-order="desc">COUNTRY</th>
+													<th data-column-id="bin" data-order="desc">PRICE <%= fa_icon 'bitcoin' %></th>
 												</tr>
 											</thead>
 
 											<tbody>
-												<%- @orders.each do |order| %>
-													<tr>
-														<td><%= check_box_tag 'accept' %></td>
-														<td><%= order.order_total %></td>
-														<td><%= order.order_items.count %></td>
-														<td><%= order.aasm_state %></td>
-														<td><%= order.created_at.strftime("%a, %d %b %Y") %></td>
-														<td><%= link_to fa_icon('eye'), order_order_items_path(order), class: 'btn btn-sm btn-default' %></td>
-													</tr>
+												<%- @order_items.each do |order_item| %>
+                                                    <tr>
+                                                        <td><%= check_box_tag 'accept' %></td>
+                                                        <td><%= "#{order_item.item.itemable.card_number}|#{order_item.item.itemable.expiry.strftime("%m%Y")}|#{order_item.item.itemable.cvv}" %></td>
+                                                        <td><%= order_item.item.itemable.card_type %></td>
+				                                        <td><%= flag_list 16 do flags "#{order_item.item.itemable.country_code}".parameterize.underscore.to_sym end %></td>
+				                                        <td><%= order_item.item.price %></td>
+                                                    </tr>
+
 												<% end -%>
 											</tbody>
 										</table>

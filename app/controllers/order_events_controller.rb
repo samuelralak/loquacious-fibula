@@ -53,7 +53,7 @@ class OrderEventsController < ApplicationController
             # redirect to orders page
             respond_to do |format|
                 flash[:warning] = "You have 15 minutes to check the validity of your cards"
-                format.html { redirect_to orders_path }
+                format.html { redirect_to order_order_items_path(order) }
                 format.js
             end
         else

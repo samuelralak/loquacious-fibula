@@ -3,9 +3,12 @@ Rails.application.routes.draw do
   ActiveAdmin.routes(self)
 
   resources :items
-  resources :orders
   resources :activities
   resources :credit_cards
+
+  resources :orders do
+      resources :order_items
+  end
 
   devise_for :users
 
