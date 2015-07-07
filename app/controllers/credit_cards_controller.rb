@@ -27,10 +27,10 @@ class CreditCardsController < ApplicationController
         @credit_cards = params[:credit_cards]
 
         @credit_cards.each do |cc|
-            expiry_date = cc["'expiry'"].map{|k,v| v}.join("-").to_date
+            # expiry_date = cc["'expiry'"].map{|k,v| v}.join("-").to_date
 
             card = CreditCard.create!(
-                bin: cc["'bin'"], card_number: cc["'card_number'"], card_holder: cc["'card_holder'"], cvv: cc["'cvv'"], expiry: expiry_date,
+                bin: cc["'bin'"], card_number: cc["'card_number'"], card_holder: cc["'card_holder'"], cvv: cc["'cvv'"], expiry: cc["'expiry'"],
                 brand: cc["'brand'"], card_type: cc["'card_type'"], bank: cc["'bank'"], country_code: cc["'country_code'"],
                 country_name: cc["'country_name'"]
             )
@@ -80,28 +80,65 @@ class CreditCardsController < ApplicationController
             # read file content
             contents = params[:file].read
             # read each line of content
-            
-            logger.info "########## READING UPLOAD FILE: "
+            contents.each_line do |line|
+                card = Hash.new
+                logger.info "########## READING EACH LINE: #{line.chomp.inspect}"
+                # convert to array
+                line = line.chomp.split("|")
 
-            logger.info contents.inspect
+                # create a hash with credit card details
+                card = card.merge!(
+                    card_number: line[0], expiry: line[1], cvv: line[2].to_i
+                )
+
+                # do a bin check
+                response = HTTParty.get("http://www.binlist.net/json/#{card[:card_number][0..5]}")
+
+                if response.code.eql?(200)
+                    response_body = JSON.parse(response.body, symbolize_names: true)
+                    logger.info "########## RESPONSE FROM BIN CHECK: #{response_body}"
+                    # merge response to credit card hash
+                    card = card.merge!(response_body)
+                end
+
+                # merge the hash into the credit card array
+                @credit_cards << card
+            end
+
+            logger.info @credit_cards.inspect
         elsif params[:file] && params[:file].respond_to?(:path)
             logger.info "########## READING FILE PATH: "
             contents = File.read(params[:file].path)
             logger.info "########## FILE PATH CONTENTS: #{contents.inspect}"
         elsif params[:bin]
             params[:bin].each do |p|
-                response = HTTParty.get("http://www.binlist.net/json/#{p}")
+                card = Hash.new
+                p = p.split("|")
+
+                # create a hash with credit card details
+                card = card.merge!(
+                    card_number: p[0], expiry: p[1], cvv: p[2].to_i
+                )
+
+                # do a bin check
+                response = HTTParty.get("http://www.binlist.net/json/#{card[:card_number][0..5]}")
 
                 if response.code.eql?(200)
                     response_body = JSON.parse(response.body, symbolize_names: true)
-                    @credit_cards << response_body
+                    logger.info "########## RESPONSE FROM BIN CHECK: #{response_body}"
+                    # merge response to credit card hash
+                    card = card.merge!(response_body)
                 end
+
+                # merge the hash into the credit card array
+                @credit_cards << card
             end
 
             if @credit_cards.size.eql?(0)
                 flash[:error] = "No results were found. please ensure that you entered a valid BIN number"
                 redirect_to sell_items_url
             end
+            logger.info @credit_cards.inspect
         else
             logger.info "########## NO PARAM: "
         end

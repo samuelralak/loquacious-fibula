@@ -4,7 +4,7 @@
 	<div class="content-splitter">
 		<section id="content-main" class="content-main">
 			<div class="content-app">
-				<%= render 'layouts/secondary_header', flash: flash %> 
+				<%= render 'layouts/secondary_header', flash: flash %>
 				<div class="app-body">
 					 <!-- app content here -->
 					 <div class="center-block center-box">
@@ -38,8 +38,8 @@
 							 				<span class="pb-watermark">
 							 					<i class="icon ion-ios7-information"></i>
 							 				</span>
-							 			</a>	
-							 		</div>	
+							 			</a>
+							 		</div>
 						 		</div>
 					 		<% else %>
 						 		<div class="col-md-12">
@@ -51,7 +51,7 @@
 	                            				</small>
 	                            			</h2>
 	                        			</div>
-	                        
+
 	                        			<div class="table-responsive">
 	                            			<table id="data-table-selection" class="table table-striped">
 	                                			<thead>
@@ -80,7 +80,7 @@
 				                                        </td>
 				                                        <td><%= item.itemable.brand %></td>
 				                                        <td><%= item.itemable.card_type %></td>
-				                                        <td><%= item.itemable.expiry.strftime("%m-%Y") %></td>
+				                                        <td><%= item.itemable.expiry %></td>
 				                                        <td><%= item.itemable.bank %></td>
 				                                        <td><%= flag_list 16 do flags "#{item.itemable.country_code}".parameterize.underscore.to_sym end %></td>
 				                                        <td><%= item.user.username %></td>

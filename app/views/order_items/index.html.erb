@@ -53,7 +53,7 @@
 												<%- @order_items.each do |order_item| %>
                                                     <tr>
                                                         <td><%= check_box_tag 'accept' %></td>
-                                                        <td><%= "#{order_item.item.itemable.card_number}|#{order_item.item.itemable.expiry.strftime("%m%Y")}|#{order_item.item.itemable.cvv}" %></td>
+                                                        <td><%= "#{order_item.item.itemable.card_number}|#{order_item.item.itemable.expiry}|#{order_item.item.itemable.cvv}" %></td>
                                                         <td><%= order_item.item.itemable.card_type %></td>
 				                                        <td><%= flag_list 16 do flags "#{order_item.item.itemable.country_code}".parameterize.underscore.to_sym end %></td>
 				                                        <td><%= order_item.item.price %></td>
