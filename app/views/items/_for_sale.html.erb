@@ -1,0 +1,72 @@
+<% if @items.blank? %>
+    <div class="col-md-12">
+        <div class="panel panel-default magic-element isotope-item">
+            <a href="#" class="panel-body-heading bg-asbestos full-line">
+                <div class="pb-object pb-object-circle">
+                    <i class="pbo-icon icon ion-ios7-help-outline text-inverse"></i>
+                </div>
+                <h3 class="pb-title text-inverse">
+                    No Items
+                    <small class="text-inverse">You currently have no items to sell. Please add some</small>
+                </h3>
+                <span class="pb-watermark">
+                    <i class="icon ion-ios7-information"></i>
+                </span>
+            </a>
+        </div>
+    </div>
+<% else %>
+    <div class="col-md-12">
+        <div class="card">
+           <div class="card-header">
+               <div class="pull-right">
+                   <%= link_to "#{fa_icon 'edit'} Edit".html_safe,  '#', class: "btn btn-primary btn-sm" %>
+                   <%= link_to "#{fa_icon 'trash'}".html_safe,  '#', class: "btn btn-danger btn-sm" %>
+               </div>
+               <h2>My Items <br />
+                   <small>
+                       Ensure that the data attribute [data-identifier="true"] is set on one column header.
+                   </small>
+               </h2>
+           </div>
+
+           <div class="table-responsive">
+               <table id="data-table-selection" class="table table-striped">
+                   <thead>
+                       <tr>
+                           <th data-column-id="id" data-type="numeric" data-identifier="true">
+                               <%= check_box_tag 'accept' %>
+                           </th>
+                           <th data-column-id="type">ITEM</th>
+                           <th data-column-id="bin" data-order="desc">TYPE</th>
+                           <th data-column-id="bin" data-order="desc">COUNTRY</th>
+                           <th data-column-id="bin" data-order="desc">DATE ADDED</th>
+                           <th data-column-id="bin" data-order="desc">PRICE(<%= fa_icon 'bitcoin' %>)</th>
+                           <th colspan="3"></th>
+                       </tr>
+                   </thead>
+
+                   <tbody>
+                       <%- collection.each do |item| %>
+                       <tr>
+                           <td><%= check_box_tag 'accept' %></td>
+                           <td>
+                               <%= "#{item.itemable.card_number}|#{item.itemable.expiry}|#{item.itemable.cvv}" %>
+                           </td>
+                           <td><%= item.itemable.card_type %></td>
+                           <td><%= flag_list 16 do flags "#{item.itemable.country_code}".parameterize.underscore.to_sym end %></td>
+                           <td><%= item.itemable.created_at.strftime("%a, %d %b %Y") %></td>
+                           <td><%= item.price %></td>
+                           <td>
+                               <%= link_to "#{fa_icon 'eye'}".html_safe,  item, class: "btn btn-default btn-sm" %>
+                               <%= link_to "#{fa_icon 'edit'}".html_safe, edit_item_path(item), class: "btn btn-primary btn-sm" %>
+                               <%= link_to "#{fa_icon 'trash'}".html_safe, item, method: :delete, data: { confirm: 'Are you sure?' } , class: "btn btn-danger btn-sm" %>
+                           </td>
+                       </tr>
+                        <%end -%>
+                   </tbody>
+               </table>
+           </div>
+       </div>
+    </div>
+<% end %>

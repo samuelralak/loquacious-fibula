@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'seller_request/create'
+
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
 

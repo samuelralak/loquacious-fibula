@@ -66,7 +66,10 @@ class ItemsController < ApplicationController
   end
 
   def sell
-    @items = current_user.items.all
+      unless current_user.can_sell
+          flash[:warning] = "You are not allowed to sell"
+      end
+      @items = current_user.items.all
   end
 
   def buy
