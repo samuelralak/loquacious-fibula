@@ -43,9 +43,9 @@ module ApplicationHelper
     id = SecureRandom.base64(10)
     html = <<-HTML
       <div class="form-group" id: "group#{id}" >
-        <label class="col-sm-2 control-label">BIN/IIN:</label>
+        <label class="col-sm-2 control-label">Card:</label>
         <div class="col-sm-8">
-          <input type='text', name="bin[]", placeholder="first 6 digits of your card number e.g 431940", class="form-control">
+         <input type='text', name="bin[]", placeholder="card_number|expiry|cvv", class="form-control">
         </div>
         <div class="col-sm-2" style="padding-top: 10px !important;">
           <a href='#' class='remove_fields' id="#{id}" style="color: #e74c3c !important;"><i class="fa fa-close"></i> remove </a>

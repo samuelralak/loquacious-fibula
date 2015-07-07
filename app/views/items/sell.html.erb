@@ -104,31 +104,4 @@
 	</div>
 </section>
 
-<!-- Modal -->
-<div class="modal fade" id="binModal" tabindex="-1" role="dialog" aria-labelledby="binModal">
-	<div class="modal-dialog" role="document">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				<h4 class="modal-title" id="myModalLabel">Modal title</h4>
-			</div>
-			<%= form_tag(process_bin_path, method: :post, class: "form-horizontal",  id: "binForm") do %>
-			<div class="modal-body">
-					<div class="form-group">
-						<label class="col-sm-2 control-label">BIN/IIN:</label>
-						<div class="col-sm-8">
-							<input type='text', name="bin[]", placeholder="first 6 digits of your card number e.g 431940", class="form-control">
-						</div>
-					</div>
-
-					<%= link_to_add_field "#{fa_icon 'plus-circle'} Add field".html_safe %>
-			</div>
-
-			<div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				<button data-disable-with="Processing..." name="button" type="submit" class="btn btn-primary">Process</button>
-			</div>
-			<% end %>
-		</div>
-	</div>
-</div>
+<%= render 'items/add_card_modal' %>

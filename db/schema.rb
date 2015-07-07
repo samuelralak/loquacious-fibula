@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150704151445) do
+ActiveRecord::Schema.define(version: 20150706195833) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -98,7 +98,7 @@ ActiveRecord::Schema.define(version: 20150704151445) do
     t.string   "card_number"
     t.string   "card_holder"
     t.integer  "cvv"
-    t.date     "expiry"
+    t.string   "expiry"
     t.string   "brand"
     t.string   "card_type"
     t.string   "bank"
