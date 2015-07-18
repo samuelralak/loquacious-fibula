@@ -44,13 +44,17 @@ namespace :deploy do
   end
 
   desc "Remote console"
-  task :console, :roles => :app do
-    run_interactively "bundle exec rails console #{rails_env}"
+  task :console do
+    on roles(:app) do
+      run_interactively  "bundle exec rails console #{rails_env}"
+    end
   end
 
   desc "Remote dbconsole"
-  task :dbconsole, :roles => :app do
-    run_interactively "bundle exec rails dbconsole #{rails_env}"
+  task :dbconsole do
+    on roles(:app) do
+      run_interactively "bundle exec rails dbconsole #{rails_env}"
+    end
   end
 
   after :publishing, 'deploy:restart'
