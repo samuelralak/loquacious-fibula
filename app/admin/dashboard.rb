@@ -23,10 +23,10 @@ ActiveAdmin.register_page "Dashboard" do
        end
 
        column do
-           panel "New users" do
+           panel "Seller Requests" do
              ul do
-               User.order('created_at desc').map do |user|
-                 li link_to(user.username, admin_user_path(user))
+               SellerRequest.order('created_at desc').map do |seller_request|
+                 li "#{seller_request.user.username} | #{seller_request.user.email} | #{link_to('confirm', edit_admin_user_path(seller_request.user))}".html_safe
                end
              end
            end

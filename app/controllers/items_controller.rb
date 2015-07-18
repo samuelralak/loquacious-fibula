@@ -67,9 +67,11 @@ class ItemsController < ApplicationController
 
   def sell
     if !current_user.can_sell && current_user.seller_request.nil?
-      flash[:warning] = "You are not allowed to sell"
-    elsif current_user.seller_request
-      flash[:info] = "You have already sent a request to become a seller"
+      flash.now[:warning] = "You are not allowed to sell"
+
+    elsif !current_user.can_sell && current_user.seller_request
+      flash.now[:info] = "You have already sent a request to become a seller"
+      
     else
       @items = current_user.items.all
     end
