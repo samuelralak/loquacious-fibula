@@ -17,3 +17,13 @@ order_types.map { |order_type|
         is_active: true
     )
 }
+
+admins = AdminUser.all
+
+admins.map { |admin|
+  AdminUser.where(email: admin.email).first_or_create(
+    email: 'admin@example.com',
+    password: 'password',
+    password_confirmation: 'password',
+  )
+}
