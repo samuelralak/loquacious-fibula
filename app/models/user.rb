@@ -33,8 +33,9 @@ class User < ActiveRecord::Base
 
 	private
 		def create_btc_account
+			label = SecureRandom.uuid
 			wallet = Blockchain::Wallet.new(ENV['BLOCKCHAIN_IDENTIFIER'], ENV['BLOCKCHAIN_PASSWORD'])
-			response = wallet.new_address(self.username)
+			response = wallet.new_address(label)
 
 			unless response.nil?
 				# create account

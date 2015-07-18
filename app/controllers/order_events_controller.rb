@@ -4,11 +4,11 @@ class OrderEventsController < ApplicationController
         shopping_cart = ShoppingCart.find(params[:cart_id])
 
         # get balances from BlockIo API
-        api_balance = BlockIo.get_address_balance(:addresses => current_user.btc_account.address)
+        api_balance = @wallet.get_address(current_user.btc_account.address, confirmations = 1).balance
         btc_account_balance = current_user.btc_account.btc_account_balance
 
         if btc_account_balance && (
-            api_balance['data']['available_balance'] &&
+            api_balance &&
             btc_account_balance.available_balance) > params[:total]
             # create order with initial status of pending
             order = Order.create(
@@ -20,17 +20,16 @@ class OrderEventsController < ApplicationController
 
             shopping_cart_items.map { |sci|
                 # transfer coins from buyer's address to seller's address
-                BlockIo.withdraw_from_addresses(
-                    :amounts => sci.item.price,
-                    :from_addresses => shopping_cart.user.btc_account.address,
-                    :to_addresses => sci.item.user.btc_account.address
+                @wallet.send(
+                    sci.item.user.btc_account.address,
+                    (sci.item.price.to_f*100000000).to_i,
+                    from_address: shopping_cart.user.btc_account.address
                 )
 
                 # update seller's balance -  debit item price to available_balance
-                seller_balance = BlockIo.get_address_balance(:addresses => sci.item.user.btc_account.address)
+                seller_balance = @wallet.get_address(sci.item.user.btc_account.address, confirmations = 1).balance
                 sci.item.user.btc_account.btc_account_balance.update(
-                    available_balance: seller_balance['data']['available_balance'],
-                    pending_received_balance: seller_balance['data']['pending_received_balance']
+                    available_balance: seller_balance
                 )
 
                 # create order items
@@ -40,10 +39,9 @@ class OrderEventsController < ApplicationController
             }
 
             # update buyer's balance - credit the total amount from buyer's available_balance
-            buyer_balance = BlockIo.get_address_balance(:addresses => shopping_cart.user.btc_account.address)
+            buyer_balance = @wallet.get_address(shopping_cart.user.btc_account.address, confirmations = 1).balance
             shopping_cart.user.btc_account.btc_account_balance.update(
-                available_balance: buyer_balance['data']['available_balance'],
-                pending_received_balance: buyer_balance['data']['pending_received_balance']
+                available_balance: buyer_balance
             )
 
             # clear and delete cart

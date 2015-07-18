@@ -5,6 +5,12 @@ module ApplicationHelper
         bitcoin = satoshi/100000000*1
         bitcoin
     end
+
+    def bitcoin_to_satoshi(bitcoin)
+      satoshi = 0
+      satoshi = bitcoin*100000000
+      satoshi.to_i
+    end
   #style flash messages, error messages and alerts
   def bootstrap_class_for(flash_type)
     if flash_type == "alert"

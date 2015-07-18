@@ -18,19 +18,15 @@ class DepositsController < ApplicationController
 
         def check_balance
             account_balance = @btc_account.btc_account_balance
-            balance = BlockIo.get_address_balance(:addresses => @btc_account.address)
+            balance = @wallet.get_address(@btc_account.address, confirmations = 1).balance
 
-            if account_balance && balance['status'].eql?('success')
-                data = balance['data']
+            if account_balance && !balance.nil?
                 account_balance.update(
-                    available_balance: data['available_balance'],
-                    pending_received_balance: data['pending_received_balance']
+                    available_balance: balance
                 )
             else
-                data = balance['data']
                 @btc_account.create_btc_account_balance(
-                    available_balance: data['available_balance'],
-                    pending_received_balance: data['pending_received_balance']
+                    available_balance: balance
                 )
             end
         end
