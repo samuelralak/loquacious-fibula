@@ -34,8 +34,8 @@ class ApplicationController < ActionController::Base
 		end
 
 	private
-		def send_stack_trace
-			ErrorMailer.send_error(StandardError).deliver
+		def send_stack_trace(e)
+			ErrorMailer.send_error(e).deliver
 		end
 	protected
  		def configure_permitted_parameters
