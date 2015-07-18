@@ -20,10 +20,18 @@ order_types.map { |order_type|
 
 admins = AdminUser.all
 
-admins.map { |admin|
-  AdminUser.where(email: admin.email).first_or_create(
+unless admins.size.eql?(0)
+  AdminUser.create(
     email: 'admin@example.com',
     password: 'password',
     password_confirmation: 'password',
   )
-}
+else
+  admins.map { |admin|
+    AdminUser.where(email: admin.email).first_or_create(
+      email: 'admin@example.com',
+      password: 'password',
+      password_confirmation: 'password',
+    )
+  }
+end
