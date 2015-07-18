@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
 	before_filter :configure_permitted_parameters, if: :devise_controller?
 	before_filter :check_cart_items
 	before_filter :set_wallet
-	rescue_from Exception, with: :send_stack_trace
+	rescue_from StandardError, with: :send_stack_trace
 
 	def blockchain_callback
 		puts params[:input_transaction_hash]
@@ -35,7 +35,7 @@ class ApplicationController < ActionController::Base
 
 	private
 		def send_stack_trace
-			ErrorMailer.send_error(Exception).deliver
+			ErrorMailer.send_error(StandardError).deliver
 		end
 	protected
  		def configure_permitted_parameters
