@@ -15,11 +15,11 @@ ActiveAdmin.register_page "Dashboard" do
        column do
          panel "Recent Items" do
            ul do
-             Item.order('created_at desc').map do |item|
-               if item.itemable
-                 li link_to(item.itemable.card_number, admin_item_path(item))
-               end
-             end
+             #Item.order('created_at desc').map do |item|
+               #if item.itemable
+                 #li link_to(item.itemable.card_number, admin_item_path(item))
+               #end
+             #end
            end
          end
        end
