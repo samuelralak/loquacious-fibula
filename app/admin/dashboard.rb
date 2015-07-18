@@ -27,14 +27,13 @@ ActiveAdmin.register_page "Dashboard" do
        column do
            panel "Seller Requests" do
              ul do
-               #SellerRequest.order('created_at desc').map do |seller_request|
-                 #unless seller_request.user && seller_request.user.can_sell
-                    #li "#{seller_request.user.try(:username)} | #{seller_request.user.try(:email)} | #{link_to('confirm', edit_admin_user_path(seller_request.user))}".html_safe
-                 #else
-                      #{}"no seller requests"
-                 #end
-
-               #end
+               SellerRequest.order('created_at desc').map do |seller_request|
+                 unless !seller_request.user && seller_request.user.try(:can_sell)
+                    li "#{seller_request.user.try(:username)} | #{seller_request.user.try(:email)} | #{link_to('confirm', edit_admin_user_path(seller_request.user))}".html_safe
+                 else
+                      "no seller requests"
+                 end
+               end
              end
            end
        end
