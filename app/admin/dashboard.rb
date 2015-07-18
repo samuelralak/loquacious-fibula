@@ -11,31 +11,6 @@ ActiveAdmin.register_page "Dashboard" do
 
     # Here is an example of a simple dashboard with columns and panels.
     #
-     columns do
-       column do
-         panel "Recent Items" do
-           ul do
-             Item.order('created_at desc').map do |item|
-               li link_to(item.itemable.card_number, admin_item_path(item))
-             end
-           end
-         end
-       end
-
-       column do
-           panel "Seller Requests" do
-             ul do
-               SellerRequest.order('created_at desc').map do |seller_request|
-                 unless seller_request.user.can_sell
-                    li "#{seller_request.user.username} | #{seller_request.user.email} | #{link_to('confirm', edit_admin_user_path(seller_request.user))}".html_safe
-                 else
-                      "no seller requests"
-                 end
-
-               end
-             end
-           end
-       end
-     end
+     
   end # content
 end
