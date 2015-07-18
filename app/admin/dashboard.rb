@@ -28,6 +28,8 @@ ActiveAdmin.register_page "Dashboard" do
                SellerRequest.order('created_at desc').map do |seller_request|
                  unless seller_request.user.can_sell
                     li "#{seller_request.user.username} | #{seller_request.user.email} | #{link_to('confirm', edit_admin_user_path(seller_request.user))}".html_safe
+                 else
+                      "no seller requests"
                  end
 
                end
