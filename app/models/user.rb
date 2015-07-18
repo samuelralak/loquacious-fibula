@@ -5,6 +5,7 @@ class User < ActiveRecord::Base
 		:rememberable, :trackable, :validatable,
 		:authentication_keys => [:login]
 
+	has_one :seller_request, inverse_of: :user
 	has_one	:shopping_cart, inverse_of: :user
 	has_one	:btc_account, inverse_of: :user
 
