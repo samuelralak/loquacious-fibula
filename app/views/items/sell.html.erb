@@ -11,7 +11,7 @@
 					 	<div class="row">
 							<%- unless current_user.can_sell %>
 								<div class="col-md-12" style="margin-bottom: 12px;">
-									<%= link_to 'become a seller', '#', class: 'btn btn-success'%>
+									<%= link_to 'become a seller', become_seller_path, method: :post, class: 'btn btn-success'%>
 								</div>
 							<% else %>
 						 		<div class="col-md-12" style="margin-bottom: 12px;">
