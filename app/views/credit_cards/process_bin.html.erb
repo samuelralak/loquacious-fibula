@@ -25,21 +25,23 @@
 											<%= hidden_field_tag "credit_cards[]['country_name']", card[:country_name] %>
 											<%= hidden_field_tag "credit_cards[]['bank']", card[:bank] %>
 											<%= hidden_field_tag "credit_cards[]['card_type']", card[:card_type] %>
+											<%= hidden_field_tag "credit_cards[]['card_category']", card[:card_category] %>
 
-											<%= field_set_tag "#{card[:card_number]}|#{card[:expiry]}|#{card[:cvv]}" do %>
+											<%= field_set_tag "#{card[:card_number]}|#{card[:expiry]}|#{card[:cvv]} - #{card[:card_category]}" do %>
+											<div class="form-group">
+												<label class="col-sm-2 control-label">Price (<%= fa_icon 'bitcoin' %>)</label>
+												<div class="col-sm-10">
+													<%= text_field_tag  "credit_cards[]['price']", nil, placeholder: '0.00', class: 'form-control' %>
+												</div>
+											</div>
 												<div class="form-group">
-													<label class="col-sm-2 control-label">Card holder</label>
+													<label class="col-sm-2 control-label">Card info</label>
 													<div class="col-sm-10">
-														<%= text_field_tag  "credit_cards[]['card_holder']", nil, placeholder: 'Card holder', class: 'form-control' %>
+														<%= text_area_tag  "credit_cards[]['card_info']", nil, placeholder: 'Card info', class: 'form-control' %>
 													</div>
 												</div>
 
-												<div class="form-group">
-													<label class="col-sm-2 control-label">Price (<%= fa_icon 'bitcoin' %>)</label>
-													<div class="col-sm-10">
-														<%= text_field_tag  "credit_cards[]['price']", nil, placeholder: '0.00', class: 'form-control' %>
-													</div>
-												</div>
+
 											<% end -%>
 
 											<hr />
