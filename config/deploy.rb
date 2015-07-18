@@ -43,6 +43,21 @@ namespace :deploy do
     end
   end
 
+  after :publishing, 'deploy:restart'
+  after :finishing, 'deploy:cleanup'
+
+  after :restart, :clear_cache do
+    on roles(:web), in: :groups, limit: 3, wait: 10 do
+      # Here we can do anything such as:
+      # within release_path do
+      #   execute :rake, 'cache:clear'
+      # end
+    end
+  end
+
+end
+
+namespace :rails do
   desc "Remote console"
   task :console do
     on roles(:app) do
@@ -56,19 +71,6 @@ namespace :deploy do
       run_interactively "bundle exec rails dbconsole #{rails_env}"
     end
   end
-
-  after :publishing, 'deploy:restart'
-  after :finishing, 'deploy:cleanup'
-
-  after :restart, :clear_cache do
-    on roles(:web), in: :groups, limit: 3, wait: 10 do
-      # Here we can do anything such as:
-      # within release_path do
-      #   execute :rake, 'cache:clear'
-      # end
-    end
-  end
-
 end
 
 def run_interactively(command)
