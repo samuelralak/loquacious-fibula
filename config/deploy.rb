@@ -43,9 +43,19 @@ namespace :deploy do
     end
   end
 
+  desc "Remote console"
+  task :console, :roles => :app do
+    run_interactively "bundle exec rails console #{rails_env}"
+  end
+
+  desc "Remote dbconsole"
+  task :dbconsole, :roles => :app do
+    run_interactively "bundle exec rails dbconsole #{rails_env}"
+  end
+
   after :publishing, 'deploy:restart'
   after :finishing, 'deploy:cleanup'
-  
+
   after :restart, :clear_cache do
     on roles(:web), in: :groups, limit: 3, wait: 10 do
       # Here we can do anything such as:
@@ -55,4 +65,9 @@ namespace :deploy do
     end
   end
 
+end
+
+def run_interactively(command)
+  server ||= find_servers_for_task(current_task).first
+  exec %Q(ssh deployer@185.81.158.43 -t '#{command}')
 end
