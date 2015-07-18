@@ -47,6 +47,7 @@
 													<th data-column-id="bin" data-order="desc">STATUS</th>
 													<th data-column-id="bin" data-order="desc">DATE</th>
 													<th>VIEW</th>
+													<th></th>
 												</tr>
 											</thead>
 
@@ -59,6 +60,7 @@
 														<td><%= order.aasm_state %></td>
 														<td><%= order.created_at.strftime("%a, %d %b %Y") %></td>
 														<td><%= link_to fa_icon('eye'), order_order_items_path(order), class: 'btn btn-sm btn-default' %></td>
+														<td><%= link_to 'check', '#', class: 'btn btn-sm btn-warning' %></td>
 													</tr>
 												<% end -%>
 											</tbody>
