@@ -1,19 +1,47 @@
-<p id="notice"><%= notice %></p>
+<section id="content" class="content content-lg">
+  <%= render 'layouts/main_header', flash: flash %>
 
-<p>
-  <strong>Itemable:</strong>
-  <%= @item.itemable %>
-</p>
+  <div class="content-splitter">
+      <section id="content-main" class="content-main">
+        <div class="content-app">
+          <div class="app-header">
+            <h3 class="app-title">Card Details</h3>
+          </div>
+          <%= render 'layouts/notice', flash: flash %>
 
-<p>
-  <strong>Price:</strong>
-  <%= @item.price %>
-</p>
-
-<p>
-  <strong>User:</strong>
-  <%= @item.user %>
-</p>
-
-<%= link_to 'Edit', edit_item_path(@item) %> |
-<%= link_to 'Back', items_path %>
+          <div class="app-body">
+            <div class="center-block center-box">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="box">
+                    <div class="pull-right">
+                      <%= link_to 'Edit', edit_item_path(@item), class: 'btn btn-info btn-sm' %>
+                      <%= link_to 'Back', sell_items_path, class: 'btn btn-default btn-sm'%>
+  						 			</div>
+                    <h3>Card details</h3>
+                    <hr />
+                    <div class="row">
+                      <div class="col-md-4 deposits"><b>Card</b></div>
+                      <div class="col-md-8 deposits"><%= "#{@item.itemable.card_number}|#{@item.itemable.expiry}|#{@item.itemable.cvv}" %></div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-4 deposits"><b>Card type</b></div>
+                      <div class="col-md-8 deposits"><%= "#{@item.itemable.card_type}" %></div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-4 deposits"><b>Card info</b></div>
+                      <div class="col-md-8 deposits"><%= "#{@item.itemable.card_info}" %></div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-4 deposits"><b>Price</b></div>
+                      <div class="col-md-8 deposits"><%= "#{@item.price}" %></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      <section>
+    </div>
+</div>
