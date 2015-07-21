@@ -16,6 +16,10 @@
 								<div class="box">
                                     <h3>Account details</h3>
                                     <hr />
+																		<div class="row">
+																			<div class="col-md-4 deposits"><b>Label</b></div>
+																			<div class="col-md-8 deposits"><%= @btc_account.label %></div>
+																		</div>
                                     <div class="row">
 																			<div class="col-md-4 deposits"><b>Address</b></div>
 																			<div class="col-md-8 deposits">
@@ -24,8 +28,9 @@
 																					</div>
 																					<i style="color: #3498db"><%= fa_icon 'info-circle' %> deposit coins to the above address</i>
 																			</div>
-                                        <!-- <div class="col-md-4 deposits"><b>Label</b></div>
-                                        <div class="col-md-8 deposits"><%= @btc_account.label %></div> -->
+																		</div>
+																		<div class="row">
+                                        <!--  -->
 
                                         <div class="col-md-4 deposits"><b>Available balance</b></div>
                                         <div class="col-md-8 deposits"><%= fa_icon 'bitcoin' %>&nbsp;<%= satoshi_to_bitcoin(@btc_account.btc_account_balance.available_balance) %></div>
