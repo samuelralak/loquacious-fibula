@@ -79,20 +79,26 @@ class CreditCardsController < ApplicationController
                 card = card.merge!(
                     card_number: line[0], expiry: line[1], cvv: line[2].to_i
                 )
+                # validate cards
+                if !card[:card_number].mb_chars.length.eql?(16)
+                  next
+                else
+                  next if @credit_cards.any? { |h| h[:card_number].eql?(card[:card_number]) } ||
+                    @credit_cards.any? { |h| h[:cvv].eql?(card[:cvv]) }
 
-                # do a bin check
-                next if @credit_cards.any? { |h| h[:card_number].eql?(card[:card_number]) }
-                response = HTTParty.get("http://www.binlist.net/json/#{card[:card_number][0..5]}")
+                  # do a bin check
+                  response = HTTParty.get("http://www.binlist.net/json/#{card[:card_number][0..5]}")
 
-                if response.code.eql?(200)
-                    response_body = JSON.parse(response.body, symbolize_names: true)
-                    logger.info "########## RESPONSE FROM BIN CHECK: #{response_body}"
-                    # merge response to credit card hash
-                    card = card.merge!(response_body)
+                  if response.code.eql?(200)
+                      response_body = JSON.parse(response.body, symbolize_names: true)
+                      logger.info "########## RESPONSE FROM BIN CHECK: #{response_body}"
+                      # merge response to credit card hash
+                      card = card.merge!(response_body)
+                  end
+
+                  # merge the hash into the credit card array
+                  @credit_cards << card
                 end
-
-                # merge the hash into the credit card array
-                @credit_cards << card
             end
 
             logger.info @credit_cards.inspect
@@ -110,28 +116,34 @@ class CreditCardsController < ApplicationController
                     card_number: p[0], expiry: p[1], cvv: p[2].to_i
                 )
 
-                # do a bin check
-                next if @credit_cards.any? { |h| h[:card_number].eql?(card[:card_number]) }
-                response = HTTParty.get("http://www.binlist.net/json/#{card[:card_number][0..5]}")
+                # validate cards
+                if !card[:card_number].mb_chars.length.eql?(16)
+                  next
+                else
+                  next if  @credit_cards.any? { |h| h[:card_number].eql?(card[:card_number]) } ||
+                    @credit_cards.any? { |h| h[:cvv].eql?(card[:cvv]) }
 
-                if response.code.eql?(200)
-                    response_body = JSON.parse(response.body, symbolize_names: true)
-                    logger.info "########## RESPONSE FROM BIN CHECK: #{response_body}"
-                    # merge response to credit card hash
-                    card = card.merge!(response_body)
+                  # do a bin check
+                  response = HTTParty.get("http://www.binlist.net/json/#{card[:card_number][0..5]}")
+
+                  if response.code.eql?(200)
+                      response_body = JSON.parse(response.body, symbolize_names: true)
+                      logger.info "########## RESPONSE FROM BIN CHECK: #{response_body}"
+                      # merge response to credit card hash
+                      card = card.merge!(response_body)
+                  end
+
+                  # merge the hash into the credit card array
+                  @credit_cards << card
                 end
-
-                # merge the hash into the credit card array
-                @credit_cards << card
             end
-
-            if @credit_cards.size.eql?(0)
-                flash[:error] = "No results were found. please ensure that you entered a valid BIN number"
-                redirect_to sell_items_url
-            end
-            logger.info @credit_cards.inspect
         else
             logger.info "########## NO PARAM: "
+        end
+
+        if @credit_cards.size.eql?(0)
+            flash[:error] = "Please ensure that you entered a valid credit card"
+            redirect_to sell_items_url
         end
     end
 
