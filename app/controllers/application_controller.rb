@@ -35,7 +35,7 @@ class ApplicationController < ActionController::Base
 
 	private
 		def send_stack_trace(e)
-			ErrorMailer.send_error(e).deliver
+			ErrorMailer.send_error(e.backtrace).deliver_now
 		end
 	protected
  		def configure_permitted_parameters

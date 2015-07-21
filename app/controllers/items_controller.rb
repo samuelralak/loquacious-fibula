@@ -20,6 +20,7 @@ class ItemsController < ApplicationController
 
   # GET /items/1/edit
   def edit
+    @item.itemable
   end
 
   # POST /items
@@ -71,7 +72,7 @@ class ItemsController < ApplicationController
 
     elsif !current_user.can_sell && current_user.seller_request
       flash.now[:info] = "You have already sent a request to become a seller"
-      
+
     else
       @items = current_user.items.all
     end
@@ -89,6 +90,8 @@ class ItemsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def item_params
-      params.require(:item).permit(:itemable_id, :itemable_type, :price, :user_id)
+      params.require(:item).permit(
+        :itemable_id, :itemable_type, :price, :user_id, itemable_attributes: [:id,
+          :card_holder, :card_number, :cvv, :expiry, :card_info])
     end
 end
