@@ -68,30 +68,20 @@ class CreditCardsController < ApplicationController
 
     def process_bin
         @credit_cards = []
-        # step 1: read file content
-        # step 2: read each line
-        # step 3: convert each line into an array
-        # step 4: loop the array
-        # step 5: insert each element with into a hash value with appropriate key
-        # step 6: insert everything into an array
-
 
         if params[:file] && params[:file].respond_to?(:read)
-            # read file content
             contents = params[:file].read
-            # read each line of content
+
             contents.each_line do |line|
                 card = Hash.new
-                logger.info "########## READING EACH LINE: #{line.chomp.inspect}"
-                # convert to array
                 line = line.chomp.split("|")
 
-                # create a hash with credit card details
                 card = card.merge!(
                     card_number: line[0], expiry: line[1], cvv: line[2].to_i
                 )
 
                 # do a bin check
+                next if @credit_cards.any? { |h| h[:card_number].eql?(card[:card_number]) }
                 response = HTTParty.get("http://www.binlist.net/json/#{card[:card_number][0..5]}")
 
                 if response.code.eql?(200)
@@ -121,6 +111,7 @@ class CreditCardsController < ApplicationController
                 )
 
                 # do a bin check
+                next if @credit_cards.any? { |h| h[:card_number].eql?(card[:card_number]) }
                 response = HTTParty.get("http://www.binlist.net/json/#{card[:card_number][0..5]}")
 
                 if response.code.eql?(200)
