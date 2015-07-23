@@ -1,6 +1,6 @@
 class DepositsController < ApplicationController
     before_action :authenticate_user!
-    before_action :set_btc_account, only: [:show]
+    before_action :set_btc_account
     # before_action :check_transactions, only: [:show]
     before_action :check_balance
 
@@ -9,6 +9,21 @@ class DepositsController < ApplicationController
 
     def show
         @transactions = current_user.transactions.order('time')
+    end
+
+    def send_coins
+      @address = params[:address]
+      @coins = params[:coins]
+
+      begin
+        @response = @wallet.send(@address, (@coins.to_f*100000000).to_i,
+            from_address: current_user.btc_account.address
+        )
+        check_balance
+      rescue Blockchain::APIException => e
+        @error = true
+        @exception = e
+      end
     end
 
     private

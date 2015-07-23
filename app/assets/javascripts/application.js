@@ -13,5 +13,6 @@
 //= require jquery
 //= require jquery_ujs
 //= require bootstrap-sprockets
+//= require sweet-alert
 //= require sweet-alert-confirm
 //= require_tree .

@@ -1,5 +1,5 @@
 <section id="content" class="content content-lg">
-	<%= render 'layouts/main_header', flash: flash %>
+	<%= render 'layouts/main_header' %>
 
 	<div class="content-splitter">
 		<section id="content-main" class="content-main">
@@ -14,7 +14,10 @@
 						<div class="row">
 							<div class="col-md-12">
 								<div class="box">
-                                    <h3>Account details</h3>
+										<div class="pull-right">
+											<%= link_to "#{fa_icon 'paper-plane'} send coins".html_safe, '#', class: 'btn btn-info btn-sm', data: { toggle: 'modal', target: '#myModal'} %>
+										</div>
+                                    <h4>Account details</h4>
                                     <hr />
 																		<div class="row">
 																			<div class="col-md-4 deposits"><b>Label</b></div>

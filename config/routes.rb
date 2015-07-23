@@ -23,8 +23,9 @@ Rails.application.routes.draw do
   get  '/blockchain_callback', to: 'application#blockchain_callback', as: 'blockchain_callback'
 
   post '/add_cards',        to: 'credit_cards#process_bin',       as: 'process_bin'
+  post '/send_coins',       to: 'deposits#send_coins',            as: 'send_coins'
   post '/add_to_cart',      to: 'shopping_cart#add_to_cart',      as: 'add_to_cart'
-  post '/become_seller',    to: 'seller_request#create',         as: 'become_seller'
+  post '/become_seller',    to: 'seller_request#create',          as: 'become_seller'
   post '/remove_from_cart', to: 'shopping_cart#remove_from_cart', as: 'remove_from_cart'
 
 

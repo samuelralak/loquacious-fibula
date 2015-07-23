@@ -35,7 +35,11 @@ class ApplicationController < ActionController::Base
 
 	private
 		def send_stack_trace(e)
-			ErrorMailer.send_error(e).deliver_now
+			if Rails.env.eql?('production')
+				ErrorMailer.send_error(e).deliver_now
+			else
+				raise e
+			end
 		end
 	protected
  		def configure_permitted_parameters
