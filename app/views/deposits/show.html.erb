@@ -33,10 +33,12 @@
 																			</div>
 																		</div>
 																		<div class="row">
-                                        <!--  -->
-
                                         <div class="col-md-4 deposits"><b>Available balance</b></div>
                                         <div class="col-md-8 deposits"><%= fa_icon 'bitcoin' %>&nbsp;<%= satoshi_to_bitcoin(@btc_account.btc_account_balance.available_balance) %></div>
+                                    </div>
+																		<div class="row">
+                                        <div class="col-md-4 deposits"><b>Pending balance</b></div>
+                                        <div class="col-md-8 deposits"><%= fa_icon 'bitcoin' %>&nbsp;<%= satoshi_to_bitcoin(@btc_account.btc_account_balance.pending_received_balance) %></div>
                                     </div>
                                 </div>
                             </div>
