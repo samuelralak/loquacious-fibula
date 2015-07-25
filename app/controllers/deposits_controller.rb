@@ -16,7 +16,6 @@ class DepositsController < ApplicationController
       @coins = params[:coins]
 
       begin
-        @success = true
         @wallet.send(@address, (@coins.to_f*100000000).to_i,
             from_address: current_user.btc_account.address
         )
