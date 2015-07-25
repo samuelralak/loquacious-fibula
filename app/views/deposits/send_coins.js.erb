@@ -4,7 +4,9 @@ console.log("RESPONSE: <%= @response %>");
 if (<%= @error %>) {
   $('#myModal').modal('hide')
   sweetAlert("Oops...", "<%= @exception %>!", "error");
-} else {
+}
+
+if (<%= @success %>) {
   $('#myModal').modal('hide')
   sweetAlert("Success!", "You have successfully transfered <%= @coins %> coins to <%= @address %>", "success");
 }

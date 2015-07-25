@@ -20,7 +20,7 @@
 					 						<input type="text"
 												class="light-table-filter form-control" id="inputPassword2"
 												placeholder="Search credit card by bin, brand, seller, bank or type"
-												data-table="order-table" 
+												data-table="order-table"
 												style="width: 300px !important;">
 					 					</div>
 					 					<button type="submit" class="btn btn-default"><%= fa_icon 'search' %></button>
@@ -83,7 +83,7 @@
 				                                        	<%= item.itemable.bin %>
 				                                        </td>
 				                                        <td><%= item.itemable.brand %></td>
-				                                        <td><%= item.itemable.card_type %></td>
+				                                        <td><%= item.itemable.card_type %>&nbsp;<%= item.itemable.card_category %></td>
 				                                        <td><%= item.itemable.expiry %></td>
 				                                        <td><%= item.itemable.bank %></td>
 				                                        <td><%= flag_list 16 do flags "#{item.itemable.country_code}".parameterize.underscore.to_sym end %></td>
