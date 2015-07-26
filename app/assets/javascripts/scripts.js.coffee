@@ -55,3 +55,23 @@ jQuery ->
 
 	cb_toggle(document.getElementsByName('item_ids[]'))
 	cb_toggle(document.getElementsByName('cc_ids[]'))
+
+	# add multiple items to cart
+	$('#addMultipleToCart').on 'click', (event) ->
+		item_ids = Array()
+
+		$('[name="cc_ids[]"]:checked').each () ->
+			item_ids.push($(this).val())
+
+		if item_ids.length is 0
+			sweetAlert("Warning!", "You have not selected any items to buy", "warning");
+		else
+			$.ajax
+				url: "/add_to_cart"
+				type: 'POST'
+				data:
+					ids: item_ids
+				success: (data, status, response) ->
+					console.log data
+					$('#cartItems').text(data.cart_item_count)
+					toastr.success('Items successfully added to cart', {timeOut: 1000})

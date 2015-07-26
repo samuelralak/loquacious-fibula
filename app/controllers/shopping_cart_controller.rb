@@ -22,19 +22,25 @@ class ShoppingCartController < ApplicationController
 			@cart = current_user.create_shopping_cart!
 		end
 
-		@item = Item.find(params[:id])
+		if params[:ids]
+			items = params[:ids]
 
-		if @item
-			@cart.add(@item, @item.price)
-			@success = "Item successfully added to cart"
+			items.each { |item_id|
+				item = Item.find(item_id.to_i)
+				@cart.add(item, item.price)
+			}
 		else
-			@error = "you have not selected any item"
+			item = Item.find(params[:id])
+			@cart.add(item, item.price)
 		end
 
 		respond_to do |format|
-			# format.html { redirect_to buy_items_path }
 			format.json { render json: { cart_item_count: @cart.shopping_cart_items.count } }
 		end
+	end
+
+	def add_multiple_to_cart
+
 	end
 
   	def remove_from_cart
