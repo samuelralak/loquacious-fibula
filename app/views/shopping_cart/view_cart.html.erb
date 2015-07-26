@@ -57,7 +57,7 @@
 		                        				<%= link_to "#{fa_icon 'arrow-circle-o-left'} Continue shopping".html_safe,  buy_items_path, class: "btn btn-primary btn-sm" %>
 		                        			</div>
 		                        			<div class="pull-right">
-		                        				<%= link_to "Checkout #{fa_icon 'arrow-circle-o-right'} ".html_safe,  checkout_path(cart_id: @cart.id, total: @total), class: "btn btn-success btn-sm", data: {confirm: 'Are you sure?',
+		                        				<%= link_to "Checkout #{fa_icon 'arrow-circle-o-right'} ".html_safe,  checkout_path(cart_id: @cart.id, total: @total),method: :post , class: "btn btn-success btn-sm", data: {confirm: 'Are you sure?',
 													:'confirm-button-text' => 'Proceed to Checkout',
 													:'cancel-button-text' => 'Cancel',
 													:'confirm-button-color' => '#66CD00',
