@@ -1,4 +1,5 @@
 class OrderEventsController < ApplicationController
+
     def checkout
         # Find the shopping cart
         shopping_cart = ShoppingCart.find(params[:cart_id])
@@ -7,9 +8,7 @@ class OrderEventsController < ApplicationController
         api_balance = @wallet.get_address(current_user.btc_account.address, confirmations = 1).balance
         btc_account_balance = current_user.btc_account.btc_account_balance
 
-        if btc_account_balance && (
-            api_balance &&
-            btc_account_balance.available_balance) > params[:total]
+        begin
             # create order with initial status of pending
             order = Order.create(
                 order_total: params[:total], customer_id: shopping_cart.user.id
@@ -54,8 +53,8 @@ class OrderEventsController < ApplicationController
                 format.html { redirect_to order_order_items_path(order) }
                 format.js
             end
-        else
-            flash[:error] = "You have insufficient funds."
+        rescue Blockchain::APIException => e
+            flash.now[:error] = e
             redirect_to view_cart_path
         end
     end
