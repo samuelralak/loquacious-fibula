@@ -12,8 +12,9 @@ Rails.application.routes.draw do
 
   devise_for :users
 
-  get  '/buy',  	     to: 'items#buy',  			         as: 'buy_items'
-  get  '/sell', 	     to: 'items#sell', 			         as: 'sell_items'
+  get  '/buy',  	   to: 'items#buy',  			   as: 'buy_items'
+  get  '/sell', 	   to: 'items#sell', 			   as: 'sell_items'
+  get  '/check/:order_item_id', to: 'orders#check', 			   as: 'check'
   get  '/deposit',     to: 'deposits#show',            as: 'deposit'
   get  '/deposits',    to: 'deposits#index',           as: 'deposits'
   get  '/view_cart',   to: 'shopping_cart#view_cart',  as: 'view_cart'
