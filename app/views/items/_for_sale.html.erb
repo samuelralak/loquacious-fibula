@@ -24,7 +24,7 @@
                    <%= link_to "#{fa_icon 'trash'}".html_safe,  '#', class: "btn btn-danger btn-sm" %>
                </div>
                <h2>My Items <br />
-                  
+
                </h2>
            </div>
 
@@ -33,7 +33,7 @@
                    <thead>
                        <tr>
                            <th data-column-id="id" data-type="numeric" data-identifier="true">
-                               <%= check_box_tag 'accept' %>
+                               <%= check_box_tag 'select_all', nil, false, class: "selectAll"  %>
                            </th>
                            <th data-column-id="type">ITEM</th>
                            <th data-column-id="bin" data-order="desc">TYPE</th>
@@ -47,7 +47,7 @@
                    <tbody>
                        <%- collection.each do |item| %>
                        <tr>
-                           <td><%= check_box_tag 'accept' %></td>
+                           <td><%= check_box_tag 'item_ids[]', item.id %></td>
                            <td>
                                <%= "#{item.itemable.card_number}|#{item.itemable.expiry}|#{item.itemable.cvv}" %>
                            </td>

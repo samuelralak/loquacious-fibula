@@ -61,7 +61,7 @@
 	                                			<thead>
 	                                    			<tr>
 	                                        			<th data-column-id="id" data-type="numeric" data-identifier="true">
-	                                        				<%= check_box_tag 'accept' %>
+	                                        				<%= check_box_tag 'select_all', nil, false, class: "selectAll"  %>
 	                                        			</th>
 	                                        			<th data-column-id="type">BIN</th>
 	                                        			<th data-column-id="bin" data-order="desc">BRAND</th>
@@ -78,7 +78,7 @@
 	                                			<tbody>
 	                                				<%- @items.each do |item| %>
 				                                    <tr>
-				                                        <td><%= check_box_tag 'accept' %></td>
+				                                        <td><%= check_box_tag 'cc_ids[]', item.id %></td>
 				                                        <td>
 				                                        	<%= item.itemable.bin %>
 				                                        </td>
