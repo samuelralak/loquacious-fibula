@@ -20,8 +20,7 @@
         <div class="card">
            <div class="card-header">
                <div class="pull-right">
-                   <%= link_to "#{fa_icon 'edit'} Edit".html_safe,  '#', class: "btn btn-primary btn-sm" %>
-                   <%= link_to "#{fa_icon 'trash'}".html_safe,  '#', class: "btn btn-danger btn-sm" %>
+                   <%= link_to "#{fa_icon 'trash'} Delete".html_safe,  '#', class: "btn btn-danger btn-sm", id: 'deleteAll' %>
                </div>
                <h2>My Items <br />
 
@@ -46,7 +45,7 @@
 
                    <tbody>
                        <%- collection.each do |item| %>
-                       <tr>
+                       <tr id="row_#{item.id}">
                            <td><%= check_box_tag 'item_ids[]', item.id %></td>
                            <td>
                                <%= "#{item.itemable.card_number}|#{item.itemable.expiry}|#{item.itemable.cvv}" %>

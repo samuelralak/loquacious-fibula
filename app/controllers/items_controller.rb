@@ -56,14 +56,40 @@ class ItemsController < ApplicationController
   # DELETE /items/1
   # DELETE /items/1.json
   def destroy
-    @itemable = @item.itemable
-    @item.destroy
-    @itemable.destroy
+      if params[:ids]
+          params[:ids].map { |e|
+              item = Item.find(e)
+              itemable = item.itemable
+              item.destroy
+              itemable.destroy
+          }
+      else
+          @itemable = @item.itemable
+          @item.destroy
+          @itemable.destroy
+      end
 
-    respond_to do |format|
-      format.html { redirect_to sell_items_url, notice: 'Item was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+      respond_to do |format|
+          format.html { redirect_to sell_items_url, notice: 'Item was successfully destroyed.' }
+          format.json { head :no_content }
+      end
+  end
+
+  def destroy_multiple
+      if params[:ids]
+          ids = params[:ids].map(&:to_i)
+          ids.map { |e|
+              item = Item.find(e)
+              itemable = item.itemable
+              item.destroy
+              itemable.destroy
+          }
+      end
+
+      respond_to do |format|
+          format.html { redirect_to sell_items_url, notice: 'Item was successfully destroyed.' }
+          format.json { render json: {ids: ids  }}
+      end
   end
 
   def sell

@@ -28,7 +28,7 @@ Rails.application.routes.draw do
   post '/add_to_cart',      to: 'shopping_cart#add_to_cart',      as: 'add_to_cart'
   post '/become_seller',    to: 'seller_request#create',          as: 'become_seller'
   post '/remove_from_cart', to: 'shopping_cart#remove_from_cart', as: 'remove_from_cart'
-
+  post '/delete_multiple_items', to: 'items#destroy_multiple', as: 'delete_multiple_items'
 
   root 'activities#index'
 end

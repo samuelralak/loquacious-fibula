@@ -75,3 +75,24 @@ jQuery ->
 					console.log data
 					$('#cartItems').text(data.cart_item_count)
 					toastr.success('Items successfully added to cart', {timeOut: 1000})
+
+	# delete multiple cards
+	$('#deleteAll').on 'click', (event) ->
+		item_ids = Array()
+
+		$('[name="item_ids[]"]:checked').each () ->
+			item_ids.push($(this).val())
+
+		if item_ids.length is 0
+			sweetAlert("Oops!", "Please select Items to delete", "error")
+		else
+			$.ajax
+				url: "/delete_multiple_items"
+				type: 'POST'
+				data:
+					ids: item_ids
+				success: (data, status, response) ->
+					console.log data
+					$.each data.ids, (key, value) ->
+						$("row_#{value}").hide()
+					toastr.success('Items successfully deleted', {timeOut: 1000})
