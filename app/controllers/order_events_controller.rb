@@ -1,6 +1,7 @@
 class OrderEventsController < ApplicationController
 
     def checkout
+        @exception = nil
         # Find the shopping cart
         shopping_cart = ShoppingCart.find(params[:cart_id])
 
@@ -54,9 +55,12 @@ class OrderEventsController < ApplicationController
                 format.js
             end
         rescue Blockchain::APIException => e
-            flash.now[:error] = e
-            redirect_to view_cart_path
+            respond_to do |format|
+                flash[:error] = e.to_s
+                format.html { redirect_to view_cart_path }
+            end
         end
+
     end
 
     def refund
