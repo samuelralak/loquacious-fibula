@@ -35,15 +35,17 @@
 
 											<tbody>
 												<% @cart.shopping_cart_items.each do |cart_item| %>
-													<tr id="<%= cart_item.id %>">
-														<td><%= check_box_tag 'accept' %></td>
-														<td><%= cart_item %></td>
-														<td>
-															<%= "#{cart_item.item.itemable.bin}|#{cart_item.item.itemable.country_name.upcase.gsub(' ', '')}|#{cart_item.item.itemable.expiry}|#{cart_item.item.user.username.upcase}" %>
-														</td>
-														<td><%= "#{fa_icon 'bitcoin'} #{cart_item.item.price}".html_safe %></td>
-														<td><%= link_to "#{fa_icon 'trash'}".html_safe,  '#', class: "removeFromCart btn btn-danger btn-sm", data: { id: cart_item.item.id } %></td>
-													</tr>
+													<% if cart_item.item %>
+														<tr id="<%= cart_item.id %>">
+															<td><%= check_box_tag 'accept' %></td>
+															<td><%= cart_item.item.itemable.card_type %></td>
+															<td>
+																<%= "#{cart_item.item.itemable.bin}|#{cart_item.item.itemable.country_name.upcase.gsub(' ', '')}|#{cart_item.item.itemable.expiry}|#{cart_item.item.user.username.upcase}" %>
+															</td>
+															<td><%= "#{fa_icon 'bitcoin'} #{cart_item.item.price}".html_safe %></td>
+															<td><%= link_to "#{fa_icon 'trash'}".html_safe,  '#', class: "removeFromCart btn btn-danger btn-sm", data: { id: cart_item.item.id } %></td>
+														</tr>
+													<% end %>
 												<% end %>
 												<tr>
 													<td colspan="3" align="right"><b>TOTAL:</b></td>
