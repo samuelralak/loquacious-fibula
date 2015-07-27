@@ -25,7 +25,6 @@
 										<table class="table table-striped">
 											<thead>
 												<tr>
-													<th></th>
 													<th>TYPE</th>
 													<th>INFO</th>
 													<th>PRICE</th>
@@ -37,8 +36,7 @@
 												<% @cart.shopping_cart_items.each do |cart_item| %>
 													<% if cart_item.item %>
 														<tr id="<%= cart_item.id %>">
-															<td><%= check_box_tag 'accept' %></td>
-															<td><%= cart_item.item.itemable.card_type %></td>
+															<td><%= "#{cart_item.item.itemable.card_type} #{cart_item.item.itemable.card_category}" %></td>
 															<td>
 																<%= "#{cart_item.item.itemable.bin}|#{cart_item.item.itemable.country_name.upcase.gsub(' ', '')}|#{cart_item.item.itemable.expiry}|#{cart_item.item.user.username.upcase}" %>
 															</td>
