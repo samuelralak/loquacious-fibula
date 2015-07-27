@@ -4,7 +4,7 @@ class ShoppingCartController < ApplicationController
 	def view_cart
 		@total = 0.00
 
-		if @cart
+		if @cart && @cart.item
 			@cart.shopping_cart_items.each do |cart_item|
 				@total = @total + cart_item.item.try(:price).to_f
 			end
