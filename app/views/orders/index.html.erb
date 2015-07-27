@@ -54,14 +54,14 @@
 
 											<tbody>
 												<%- @orders.each do |order| %>
-													<tr>
+													<tr id="row_#{order.id}">
 														<td><%= check_box_tag 'accept' %></td>
 														<td><%= order.order_total %></td>
 														<td><%= order.order_items.count %></td>
-														<td><%= order.aasm_state %></td>
+														<td id="data_#{order.id}"><%= order_status_label(order.aasm_state) %></td>
 														<td><%= order.created_at.strftime("%a, %d %b %Y") %></td>
 														<td><%= link_to fa_icon('eye'), order_order_items_path(order), class: 'btn btn-sm btn-default' %></td>
-														<td><%= link_to 'check', check_path(order), method: :get, remote: true, class: 'btn btn-sm btn-warning' %></td>
+														<td><%= link_to 'check', check_path(order), method: :get, remote: true, class: 'btn btn-sm btn-warning', id: "btn_#{order.id}" %></td>
 													</tr>
 												<% end -%>
 											</tbody>
