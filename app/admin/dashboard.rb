@@ -28,7 +28,7 @@ ActiveAdmin.register_page "Dashboard" do
            panel "Seller Requests" do
              ul do
                SellerRequest.where(status: 'PENDING').order('created_at desc').map do |seller_request|
-                 li "#{seller_request.user.try(:username)} | #{seller_request.user.try(:email)} | #{seller_request.user ? link_to('confirm', edit_admin_user_path(seller_request.try(:user))) : seller_request.id}".html_safe
+                 li "#{seller_request.user.try(:username)} | #{seller_request.user.try(:email)} | #{seller_request.user ? link_to('confirm', edit_admin_seller_request_path(seller_request)) : seller_request.id}".html_safe
                end
              end
            end

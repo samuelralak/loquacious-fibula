@@ -1,8 +1,8 @@
 ActiveAdmin.register SellerRequest do
-    permit_params :status, :user
+    permit_params :status, :user_id, :seller_request_status_id
     index do
         column :user
-        column :status
+        column :seller_request_status
         column :created_at
         actions
     end
