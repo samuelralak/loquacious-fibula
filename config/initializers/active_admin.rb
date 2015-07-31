@@ -24,7 +24,7 @@ ActiveAdmin.setup do |config|
   # will be added to.
   #
   # eg:
-  #   config.default_namespace = :hello_world
+  # config.default_namespace = :__x_admin
   #
   # This will create resources in the HelloWorld module and
   # will namespace routes to /hello_world/*
@@ -33,7 +33,7 @@ ActiveAdmin.setup do |config|
   #   config.default_namespace = false
   #
   # Default:
-  # config.default_namespace = :admin
+  config.default_namespace = :root_x_admi_n
   #
   # You can customize the settings for each namespace by using
   # a namespace block. For example, to change the site title
