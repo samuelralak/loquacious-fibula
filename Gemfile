@@ -22,6 +22,7 @@ gem 'turbolinks'
 gem 'jbuilder', '~> 2.0'
 gem 'sweet-alert'
 gem 'sweet-alert-confirm'
+gem 'jquery-ui-rails'
 
 # authentication
 gem 'devise', '~> 3.5.1'

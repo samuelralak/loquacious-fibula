@@ -62,21 +62,21 @@ module ApplicationHelper
     link_to(name, '#', class: 'add_fields', style: 'margin-left: 17px', data: {id: id, fields: html.gsub("\n", "")})
   end
 
-  def order_status_label(status)
+  def order_status_label(status, id)
       case status
         when "pending"
             html = <<-HTML
-                <span class="label label-default">pending</span>
+                <span id="span_#{id}" class="label label-default">pending</span>
             HTML
             html.html_safe
         when "declined"
             html = <<-HTML
-                <span class="label label-danger">declined</span>
+                <span id="span_#{id}" class="label label-danger">declined</span>
             HTML
             html.html_safe
         when "completed"
             html = <<-HTML
-                <span class="label label-success">completed</span>
+                <span id="span_#{id}" class="label label-success">completed</span>
             HTML
             html.html_safe
         end

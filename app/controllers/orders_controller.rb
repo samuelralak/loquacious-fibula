@@ -23,13 +23,13 @@ class OrdersController < ApplicationController
         case @status
             when "live"
                 logger.info "######## ITS LIVE"
-                # @order.complete!
+                @order.complete!
             when "die"
                 logger.info "######## ITS DEAD"
-                # @order.decline!
+                @order.decline!
             when "invalid"
                 logger.info "######## ITS INVALID"
-                # @order.decline!
+                @order.decline!
             end
 
         respond_to do |format|

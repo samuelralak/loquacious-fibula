@@ -1,4 +1,24 @@
 $(document).ready(function() {
     console.log("RESPONSE: <%= @status %>");
-    $( "#btn_<%= @order.id%>" ).addClass( "disabled" );
+    console.log("ORDER: <%= @order.id %>");
+
+    var status =  "<%= @status %>"
+    console.log("STATUS: " + status );
+    if (status === "invalid") {
+        $( "#btn_<%= @order.id%>" ).addClass( "disabled" );
+        $( "#span_<%= @order.id%>" ).switchClass( "label-default", "label-danger", 1000, "easeInOutQuad" );
+        $( "#span_<%= @order.id%>" ).text( "declined" );
+    }
+
+    if (status === "live") {
+        $( "#btn_<%= @order.id%>" ).addClass( "disabled" );
+        $( "#span_<%= @order.id%>" ).switchClass( "label-default", "label-success", 1000, "easeInOutQuad" );
+        $( "#span_<%= @order.id%>" ).text( "completed" );
+    }
+
+    if (status === "die") {
+        $( "#btn_<%= @order.id%>" ).addClass( "disabled" );
+        $( "#span_<%= @order.id%>" ).switchClass( "label-default", "label-danger", 1000, "easeInOutQuad" );
+        $( "#span_<%= @order.id%>" ).text( "declined" );
+    }
 });
