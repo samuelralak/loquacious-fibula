@@ -28,10 +28,12 @@ class ShoppingCartController < ApplicationController
 			items.each { |item_id|
 				item = Item.find(item_id.to_i)
 				@cart.add(item, item.price)
+				item.lock!
 			}
 		else
 			item = Item.find(params[:id])
 			@cart.add(item, item.price)
+			item.lock!
 		end
 
 		respond_to do |format|
@@ -48,6 +50,7 @@ class ShoppingCartController < ApplicationController
 
   		if @item
   			@cart.remove(@item, @cart.shopping_cart_items.find_by(item: @item).quantity)
+			@item.activate!
   		end
 
   		respond_to do |format|
@@ -57,8 +60,14 @@ class ShoppingCartController < ApplicationController
   	end
 
 	def clear_cart
-		@cart.clear
-	    @cart.destroy
+		unless @cart.shopping_cart_items.empty?
+			@cart.shopping_cart_items.map { |e|
+				item = Item.find(e.item_id)
+				item.activate!
+			}
+			@cart.clear
+		    @cart.destroy
+		end
 
 	    respond_to do |format|
 	      format.html { redirect_to buy_items_path }

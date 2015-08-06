@@ -20,6 +20,10 @@ class Item < ActiveRecord::Base
             transitions :from => [:active, :locked], :to => :sold
         end
 
+        event :activate do
+            transitions :from => :locked, :to => :active
+        end
+
         event :deactivate do
             transitions :from => [:active, :locked], :to => :inactive
         end
