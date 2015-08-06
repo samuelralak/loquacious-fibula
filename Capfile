@@ -22,7 +22,7 @@ require 'capistrano/rails/assets'
 require 'capistrano/rails/migrations'
 require 'capistrano/rvm'
 set :rvm_type, :user
-set :rvm_ruby_version, '2.1.4p265'
+set :rvm_ruby_version, '2.2.1'
 # require 'capistrano/rbenv'
 # require 'capistrano/chruby'
 
