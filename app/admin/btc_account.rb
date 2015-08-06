@@ -3,8 +3,8 @@ ActiveAdmin.register BtcAccount do
         column :user
         column :label
         column :address
-        column :available_balance
-        column :pending_received_balance
+        column :btc_account_balance['available_balance']
+        column :btc_account_balance
     end
 
 # See permitted parameters documentation:
