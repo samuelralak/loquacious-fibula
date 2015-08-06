@@ -81,4 +81,29 @@ module ApplicationHelper
             html.html_safe
         end
   end
+
+  def item_status_label(status, id)
+      case status
+      when "active"
+            html = <<-HTML
+                <span id="span_#{id}" class="label label-primary">active</span>
+            HTML
+            html.html_safe
+        when "inactive"
+            html = <<-HTML
+                <span id="span_#{id}" class="label label-danger">inactive</span>
+            HTML
+            html.html_safe
+        when "locked"
+            html = <<-HTML
+                <span id="span_#{id}" class="label label-warning">locked</span>
+            HTML
+            html.html_safe
+        when "sold"
+                html = <<-HTML
+                    <span id="span_#{id}" class="label label-success">sold</span>
+                HTML
+                html.html_safe
+        end
+  end
 end

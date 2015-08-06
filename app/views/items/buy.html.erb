@@ -19,7 +19,7 @@
 					 						<label class="sr-only">Search</label>
 					 						<input type="text"
 												class="light-table-filter form-control" id="inputPassword2"
-												placeholder="Search credit card by bin, brand, seller, bank or type"
+												placeholder="Search by bin, brand, seller, bank or type"
 												data-table="order-table"
 												style="width: 300px !important;">
 					 					</div>
@@ -89,7 +89,7 @@
 				                                        <td><%= item.itemable.bank %></td>
 				                                        <td><%= flag_list 16 do flags "#{item.itemable.country_code}".parameterize.underscore.to_sym end %></td>
 				                                        <td><%= item.user.username %></td>
-														<td><%= item.aasm_state %></td>
+														<td><%= item_status_label(item.aasm_state, item.id) %></td>
 				                                        <td style="color: #e74c3c"><%= "#{fa_icon 'bitcoin'} #{item.price}".html_safe %></td>
 
 														<td>

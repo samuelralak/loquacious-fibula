@@ -62,6 +62,9 @@ gem 'capistrano-rails-collection'
 # Add this if you're using rvm
 gem 'capistrano-rvm', github: "capistrano/rvm"
 
+# background processing
+gem 'sidekiq'
+
 group :development, :test do
   gem 'byebug'
   gem 'web-console', '~> 2.0'

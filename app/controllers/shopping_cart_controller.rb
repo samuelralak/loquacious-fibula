@@ -27,13 +27,19 @@ class ShoppingCartController < ApplicationController
 
 			items.each { |item_id|
 				item = Item.find(item_id.to_i)
-				@cart.add(item, item.price)
-				item.lock!
+				if item.aasm_state.eql?("active")
+					@cart.add(item, item.price)
+					item.lock!
+					EventsWorker.perform_in(10.seconds, item.id)
+				end
 			}
 		else
 			item = Item.find(params[:id])
-			@cart.add(item, item.price)
-			item.lock!
+			if item.aasm_state.eql?("active")
+				@cart.add(item, item.price)
+				item.lock!
+				EventsWorker.perform_in(10.seconds, item.id)
+			end
 		end
 
 		respond_to do |format|
