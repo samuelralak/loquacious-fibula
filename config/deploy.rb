@@ -87,5 +87,5 @@ namespace :inspeqtor do
     end
 end
 
-before 'deploy:starting', 'inspeqtor:start'
-after 'deploy:finished', 'inspeqtor:finish'
+# before 'deploy:starting', 'inspeqtor:start'
+# after 'deploy:finished', 'inspeqtor:finish'
