@@ -1,6 +1,27 @@
 class Item < ActiveRecord::Base
-  belongs_to :itemable, polymorphic: true
-  belongs_to :user
+    include AASM
 
-  accepts_nested_attributes_for :itemable
+    belongs_to :itemable, polymorphic: true
+    belongs_to :user
+
+    accepts_nested_attributes_for :itemable
+
+    aasm :whiny_transitions => false do
+        state :active, :initial => true
+        state :locked
+        state :sold
+        state :inactive
+
+        event :lock do
+            transitions :from => :active, :to => :locked
+        end
+
+        event :sell do
+            transitions :from => [:active, :locked], :to => :sold
+        end
+
+        event :deactivate do
+            transitions :from => [:active, :locked], :to => :inactive
+        end
+    end
 end

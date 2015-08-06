@@ -118,9 +118,9 @@ ActiveRecord::Schema.define(version: 20150806125917) do
     t.string   "itemable_type"
     t.string   "price"
     t.integer  "user_id"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
-    t.string   "aasm_state"
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
+    t.string   "aasm_state",    default: "active", null: false
   end
 
   add_index "items", ["itemable_type", "itemable_id"], name: "index_items_on_itemable_type_and_itemable_id", using: :btree
