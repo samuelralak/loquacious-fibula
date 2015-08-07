@@ -30,7 +30,7 @@ class ShoppingCartController < ApplicationController
 				if item.aasm_state.eql?("active")
 					@cart.add(item, item.price)
 					item.lock!
-					EventsWorker.perform_in(10.seconds, item.id)
+					EventsWorker.perform_in(40.seconds, item.id)
 				end
 			}
 		else
@@ -38,7 +38,7 @@ class ShoppingCartController < ApplicationController
 			if item.aasm_state.eql?("active")
 				@cart.add(item, item.price)
 				item.lock!
-				EventsWorker.perform_in(10.seconds, item.id)
+				EventsWorker.perform_in(40.seconds, item.id)
 			end
 		end
 
