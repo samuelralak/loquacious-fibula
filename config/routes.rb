@@ -1,3 +1,5 @@
+require 'sidekiq/web'
+
 Rails.application.routes.draw do
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
@@ -31,4 +33,5 @@ Rails.application.routes.draw do
   post '/delete_multiple_items', to: 'items#destroy_multiple', as: 'delete_multiple_items'
 
   root 'activities#index'
+  mount Sidekiq::Web => '/sidekiq'
 end

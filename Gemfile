@@ -64,6 +64,8 @@ gem 'capistrano-rvm', github: "capistrano/rvm"
 
 # background processing
 gem 'sidekiq'
+gem 'sinatra', require: false
+gem 'slim'
 
 group :development, :test do
   gem 'byebug'
