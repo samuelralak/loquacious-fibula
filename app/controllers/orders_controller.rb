@@ -30,12 +30,17 @@ class OrdersController < ApplicationController
             when "live"
                 logger.info "######## ITS LIVE"
                 @order.complete!
+                disable_check(@order)
             when "die"
                 logger.info "######## ITS DEAD"
                 @order.decline!
+                disable_check(@order)
+                RefundWorker.perform_async(@order.id)
             when "invalid"
                 logger.info "######## ITS INVALID"
                 @order.decline!
+                disable_check(@order)
+                RefundWorker.perform_async(@order.id)
             end
 
         respond_to do |format|
@@ -44,6 +49,11 @@ class OrdersController < ApplicationController
     end
 
     private
+        def disable_check(order)
+            order.order_items.first.item.can_check = false
+            order.order_items.first.item.save!
+        end
+
         def get_orders
             @orders = Order.where(customer_id: current_user.id).order('created_at desc')
         end
