@@ -53,16 +53,18 @@
 
 											<tbody>
 												<%- @orders.each do |order| %>
-													<tr id="row_<%= order.id %>">
-														<td><%= check_box_tag 'accept' %></td>
-														<td><%= order.order_total %></td>
-														<td><%= order.order_items.count %></td>
-														<td>
-															<%= order_status_label(order.aasm_state, order.id) %></td>
-														<td><%= order.created_at.strftime("%a, %d %b %Y") %></td>
-														<td><%= link_to fa_icon('eye'), order_order_items_path(order), class: 'btn btn-sm btn-default' %></td>
+													<%- unless order.order_items.count.eql?(0) %>
+														<tr id="row_<%= order.id %>">
+															<td><%= check_box_tag 'accept' %></td>
+															<td><%= order.order_total %></td>
+															<td><%= order.order_items.count %></td>
+															<td>
+																<%= order_status_label(order.aasm_state, order.id) %></td>
+															<td><%= order.created_at.strftime("%a, %d %b %Y") %></td>
+															<td><%= link_to fa_icon('eye'), order_order_items_path(order), class: 'btn btn-sm btn-default' %></td>
 
-													</tr>
+														</tr>
+													<% end -%>
 												<% end -%>
 											</tbody>
 										</table>
