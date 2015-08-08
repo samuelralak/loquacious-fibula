@@ -37,7 +37,7 @@ class DepositsController < ApplicationController
             available_balance = @wallet.get_address(@btc_account.address, confirmations = 1).balance
             # pending_balance = @wallet.get_address(@btc_account.address, confirmations = 0).balance
 
-            if account_balance && (!available_balance.nil? && !pending_balance.nil?)
+            if account_balance && !available_balance.nil?
                 account_balance.update(
                     available_balance: available_balance,
                     # pending_received_balance: pending_balance
