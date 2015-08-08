@@ -61,7 +61,7 @@
     														<td><%= link_to 'check', check_path(order),
     															method: :get,
     															remote: true,
-    															 class: "btn btn-sm btn-warning #{order.aasm_state.eql?('pending') ? '' : 'disabled'}",
+    															 class: "btn btn-sm btn-warning #{order.order_items.first.item.can_check ? '' : 'disabled'}",
     																id: "btn_#{order.id}" %>
     														</td>
     													</tr>

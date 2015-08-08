@@ -36,6 +36,8 @@ class OrderEventsController < ApplicationController
                 order.order_items.create(
                     item_id: sci.item.id, price: sci.item.price, quantity: sci.quantity
                 )
+
+                CheckerWorker.perform_in(900.seconds, sci.item.id)
             }
 
             # update buyer's balance - credit the total amount from buyer's available_balance
