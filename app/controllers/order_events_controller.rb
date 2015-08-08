@@ -1,5 +1,5 @@
 class OrderEventsController < ApplicationController
-
+    before_action :authenticate_user!
     def checkout
         @exception = nil
         # Find the shopping cart

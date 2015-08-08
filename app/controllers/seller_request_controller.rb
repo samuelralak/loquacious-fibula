@@ -1,4 +1,5 @@
 class SellerRequestController < ApplicationController
+    before_action :authenticate_user!
   def create
     @request = current_user.build_seller_request
     @request.status = "PENDING"

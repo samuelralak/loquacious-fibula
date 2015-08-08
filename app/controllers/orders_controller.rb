@@ -1,4 +1,5 @@
 class OrdersController < ApplicationController
+    before_action :authenticate_user!
     before_action :get_orders, only: [:index, :check_cards]
 
     def index
@@ -10,6 +11,10 @@ class OrdersController < ApplicationController
     end
 
     def check_cards
+
+    end
+
+    def sales
 
     end
 
