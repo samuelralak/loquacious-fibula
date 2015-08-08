@@ -1,10 +1,16 @@
 class OrdersController < ApplicationController
+    before_action :get_orders, only: [:index, :check_cards]
+
     def index
-        @orders = Order.where(customer_id: current_user.id).order('created_at desc')
+
     end
 
     def show
         @order = current_user.orders.find(params[:id])
+    end
+
+    def check_cards
+
     end
 
     def check
@@ -36,4 +42,9 @@ class OrdersController < ApplicationController
             format.js
         end
     end
+
+    private
+        def get_orders
+            @orders = Order.where(customer_id: current_user.id).order('created_at desc')
+        end
 end

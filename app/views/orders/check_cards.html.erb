@@ -1,0 +1,81 @@
+<section id="content" class="content content-lg">
+	<%= render 'layouts/main_header', flash: flash %>
+
+	<div class="content-splitter">
+		<section id="content-main" class="content-main">
+			<div class="content-app">
+				<%= render 'layouts/secondary_header', flash: flash %>
+				<div class="app-body">
+					<div class="center-block center-box">
+						<div class="row">
+							<div class="col-md-12" style="margin-bottom: 5px;">
+								<div class="pull-left">
+									<form class="form-inline">
+										<div class="form-group">
+											<label class="sr-only">Search</label>
+											<input type="text"
+												class="light-table-filter form-control" id="inputPassword2"
+												placeholder="Search "
+												data-table="order-table"
+												style="width: 300px !important;">
+										</div>
+										<button type="submit" class="btn btn-default"><%= fa_icon 'search' %></button>
+									</form>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-12">
+								<div class="card">
+									<div class="card-header">
+										<h2>My Orders <br />
+										</h2>
+									</div>
+
+									<div class="table-responsive">
+										<table id="data-table-selection" class="order-table table table-striped">
+											<thead>
+												<tr>
+													<th>ITEM</th>
+                                                    <th>BRAND</th>
+                                                    <th>TYPE</th>
+                                                    <th>BANK</th>
+                                                    <th>COUNTRY</th>
+													<th>STATUS</th>
+													<th></th>
+												</tr>
+											</thead>
+
+											<tbody>
+												<%- @orders.each do |order| %>
+                                                    <%- unless order.order_items.count.eql?(0) %>
+    													<tr id="row_<%= order.id %>">
+    														<td><%= "#{order.order_items.first.item.itemable.card_number}|#{order.order_items.first.item.itemable.expiry}|#{order.order_items.first.item.itemable.cvv}" %></td>
+    														<td><%= fa_icon "cc-#{order.order_items.first.item.itemable.brand.downcase}" %></td>
+                                                            <td><%= order.order_items.first.item.itemable.card_type %>&nbsp;<%= order.order_items.first.item.itemable.card_category %></td>
+                                                            <td><%= order.order_items.first.item.itemable.bank %></td>
+                                                            <td><%= flag_list 16 do flags "#{order.order_items.first.item.itemable.country_code}".parameterize.underscore.to_sym end %></td>
+    														<td>
+    															<%= order_status_label(order.aasm_state, order.id) %>
+                                                            </td>
+    														<td><%= link_to 'check', check_path(order),
+    															method: :get,
+    															remote: true,
+    															 class: "btn btn-sm btn-warning #{order.aasm_state.eql?('pending') ? '' : 'disabled'}",
+    																id: "btn_#{order.id}" %>
+    														</td>
+    													</tr>
+                                                    <% end -%>
+												<% end -%>
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</section>
