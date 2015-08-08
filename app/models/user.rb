@@ -2,7 +2,7 @@ class User < ActiveRecord::Base
 	# Include default devise modules. Others available are:
 	# :confirmable, :lockable, :timeoutable and :omniauthable
 	devise :database_authenticatable, :registerable,
-		:rememberable, :trackable, :validatable,
+		:rememberable, :trackable, :validatable, :timeoutable,
 		:authentication_keys => [:login]
 
 	has_one :seller_request, inverse_of: :user
@@ -30,6 +30,10 @@ class User < ActiveRecord::Base
 			where(conditions.to_hash).first
     	end
   	end
+
+	def timeout_in
+		1800.seconds
+	end
 
 	private
 		def create_btc_account
