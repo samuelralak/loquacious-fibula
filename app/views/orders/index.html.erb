@@ -48,7 +48,6 @@
 													<th data-column-id="bin" data-order="desc">STATUS</th>
 													<th data-column-id="bin" data-order="desc">DATE</th>
 													<th>VIEW</th>
-													<th></th>
 												</tr>
 											</thead>
 
@@ -62,12 +61,7 @@
 															<%= order_status_label(order.aasm_state, order.id) %></td>
 														<td><%= order.created_at.strftime("%a, %d %b %Y") %></td>
 														<td><%= link_to fa_icon('eye'), order_order_items_path(order), class: 'btn btn-sm btn-default' %></td>
-														<td><%= link_to 'check', check_path(order),
-															method: :get,
-															remote: true,
-															 class: "btn btn-sm btn-warning #{order.aasm_state.eql?('pending') ? '' : 'disabled'}",
-																id: "btn_#{order.id}" %>
-														</td>
+
 													</tr>
 												<% end -%>
 											</tbody>
