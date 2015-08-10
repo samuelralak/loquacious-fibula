@@ -40,7 +40,12 @@ class OrdersController < ApplicationController
                 # expiry = expiry.insert(2, '|')
             end
         else
-            expiry = expiry.insert(2, '|')
+            if expiry.length.eql?(4)
+                expiry = expiry.insert(2, '|')
+                expiry = expiry.insert(3, '20')
+            else
+                expiry = expiry.insert(2, '|')
+            end
         end
 
         cc = "#{item.itemable.card_number.to_i}|#{expiry}|#{item.itemable.cvv}"
