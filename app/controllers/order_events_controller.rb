@@ -23,13 +23,15 @@ class OrderEventsController < ApplicationController
                 @wallet.send(
                     sci.item.user.btc_account.address,
                     (sci.item.price.to_f*100000000).to_i,
-                    from_address: shopping_cart.user.btc_account.address
+                    from_address: current_user.btc_account.address
                 )
 
                 # update seller's balance -  debit item price to available_balance
-                seller_balance = @wallet.get_address(sci.item.user.btc_account.address, confirmations = 1).balance
+                seller_av_balance = @wallet.get_address(sci.item.user.btc_account.address, confirmations = 1).balance
+                seller_pe_balance = @wallet.get_address(sci.item.user.btc_account.address, confirmations = 0).balance
                 sci.item.user.btc_account.btc_account_balance.update(
-                    available_balance: seller_balance
+                    available_balance: seller_av_balance,
+                    pending_received_balance: seller_pe_balance
                 )
 
                 # create order items
@@ -41,9 +43,11 @@ class OrderEventsController < ApplicationController
             }
 
             # update buyer's balance - credit the total amount from buyer's available_balance
-            balance = @wallet.get_address(shopping_cart.user.btc_account.address, confirmations = 0).balance
-            shopping_cart.user.btc_account.btc_account_balance.update(
-                available_balance: buyer_balance
+            buyer_av_balance = @wallet.get_address(current_user.btc_account.address, confirmations = 1).balance
+            buyer_pe_balance = @wallet.get_address(current_user.btc_account.address, confirmations = 1).balance
+            current_user.btc_account.btc_account_balance.update(
+                available_balance: buyer_av_balance,
+                pending_received_balance: buyer_pe_balance
             )
 
             # clear and delete cart
