@@ -13,8 +13,8 @@
 				<%= link_to "SELL", sell_items_path %>
 			</li>
 
-			<li class="<%= controller_name.eql?('orders') && action_name.eql?('check_cards') ? 'active': '' %>">
-				<%= link_to "CHECK", check_cards_path %>
+			<li class="<%= controller_name.eql?('orders') && action_name.eql?('index') ? 'active': '' %>">
+				<%= link_to "ORDERS", orders_path %>
 			</li>
 		</ul>
 	</div>

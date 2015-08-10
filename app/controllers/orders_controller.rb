@@ -21,10 +21,34 @@ class OrdersController < ApplicationController
     def check
         @order = Order.find(params[:order_item_id])
         item = @order.order_items.first.item
-        cc = "#{item.itemable.card_number.to_i}|#{item.itemable.expiry.insert(2, '|')}|#{item.itemable.cvv}"
+        expiry = item.itemable.expiry
+
+        if "/".in?(expiry) || "|".in?(expiry)
+            if expiry.length.eql?(7)
+                expiry = expiry.gsub('/', '|')
+            elsif expiry.length.eql?(6)
+                expiry = expiry.gsub('/', '|')
+                expiry = expiry.insert(0, '0')
+            elsif expiry.length.eql?(5)
+                expiry = expiry.gsub('/', '|')
+                expiry = expiry.insert(3, '20')
+            elsif expiry.length.eql?(4)
+                expiry = expiry.gsub('/', '|')
+                expiry = expiry.insert(0, '0')
+                expiry = expiry.insert(3, '20')
+            else
+                # expiry = expiry.insert(2, '|')
+            end
+        else
+            expiry = expiry.insert(2, '|')
+        end
+
+        cc = "#{item.itemable.card_number.to_i}|#{expiry}|#{item.itemable.cvv}"
+        logger.info "######## CREDIT: #{cc}"
         @response = HTTParty.get("http://www.ug-market.com/ugm/xcheck.php?user=g0rx9&pwd=rootxroot&gate=checkcvv9&cc=#{cc}")
         # convert response to string
         @response = @response.to_s
+        logger.info "######## RESPONSE: #{@response}"
         # partition string
         @response = @response.partition('_')
         # get status from partition response
@@ -33,23 +57,86 @@ class OrdersController < ApplicationController
 
         case @status
             when "live"
-                logger.info "######## ITS LIVE"
-                @order.complete!
-                disable_check(@order)
+                begin
+                    logger.info "######## ITS LIVE"
+                    @order.complete!
+                    disable_check(@order)
+
+                    # transfer bitcoins from buyer's account to webmaster's address
+                    @wallet.send(
+                        ENV['DEFAULT_BTC_ADDRESS'], 100000, from_address: current_user.btc_account.address
+                    )
+
+                    # get buyer's balance
+                    balance = @wallet.get_address(current_user.btc_account.address, confirmations = 1)
+
+                    # update buyer's balance
+                    current_user.btc_account.btc_account_balance.update(
+                        available_balance:balance
+                    )
+                rescue Blockchain::APIException => e
+                    flash[:error] = e.to_s
+                end
             when "die"
-                logger.info "######## ITS DEAD"
-                @order.decline!
-                disable_check(@order)
-                RefundWorker.perform_async(@order.id)
+                begin
+                    logger.info "######## ITS DEAD"
+                    @order.decline!
+                    disable_check(@order)
+                    # transfer bitcoins from buyer's account to webmaster's address
+                    @wallet.send(
+                        ENV['DEFAULT_BTC_ADDRESS'], 100000, from_address: current_user.btc_account.address
+                    )
+
+                    # get buyer's balance
+                    balance = @wallet.get_address(current_user.btc_account.address, confirmations = 1)
+
+                    # update buyer's balance
+                    current_user.btc_account.btc_account_balance.update(
+                        available_balance:balance
+                    )
+
+                    # process refund
+                    RefundWorker.perform_async(@order.id)
+
+                    flash[:notice] = "Check failed your refund is being processed"
+                rescue
+                    flash[:error] = e.to_s
+                end
             when "invalid"
-                logger.info "######## ITS INVALID"
-                @order.decline!
-                disable_check(@order)
-                RefundWorker.perform_async(@order.id)
+                begin
+                    logger.info "######## ITS INVALID"
+                    @order.decline!
+                    disable_check(@order)
+                    logger.info "######## ITS DEAD"
+                    @order.decline!
+                    disable_check(@order)
+                    # transfer bitcoins from buyer's account to webmaster's address
+                    @wallet.send(
+                        ENV['DEFAULT_BTC_ADDRESS'], 100000, from_address: current_user.btc_account.address
+                    )
+
+                    # get buyer's balance
+                    balance = @wallet.get_address(current_user.btc_account.address, confirmations = 1)
+
+                    # update buyer's balance
+                    current_user.btc_account.btc_account_balance.update(
+                        available_balance:balance
+                    )
+
+                    # process refund
+                    RefundWorker.perform_async(@order.id)
+
+                    flash[:notice] = "Check failed your refund is being processed"
+                rescue
+                    flash[:error] = e.to_s
+                end
+                # RefundWorker.perform_async(@order.id)
+            when "error"
+                flash[:error] = "Checker services currently unavailable please try again later"
             end
 
         respond_to do |format|
-            format.js
+            format.html { redirect_to orders_path }
         end
     end
 

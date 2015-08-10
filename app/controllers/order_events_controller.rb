@@ -41,7 +41,7 @@ class OrderEventsController < ApplicationController
             }
 
             # update buyer's balance - credit the total amount from buyer's available_balance
-            buyer_balance = @wallet.get_address(shopping_cart.user.btc_account.address, confirmations = 1).balance
+            balance = @wallet.get_address(shopping_cart.user.btc_account.address, confirmations = 0).balance
             shopping_cart.user.btc_account.btc_account_balance.update(
                 available_balance: buyer_balance
             )
@@ -53,7 +53,7 @@ class OrderEventsController < ApplicationController
             # redirect to orders page
             respond_to do |format|
                 flash[:warning] = "You have 15 minutes to check the validity of your cards"
-                format.html { redirect_to check_cards_path }
+                format.html { redirect_to orders_path }
                 format.js
             end
         rescue Blockchain::APIException => e
