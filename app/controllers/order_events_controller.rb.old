@@ -1,0 +1,101 @@
+class OrderEventsController < ApplicationController
+    before_action :authenticate_user!
+    def checkout
+        checkout = Checkout.new(cart_id: params[:cart_id], total: params[:total])
+
+        begin
+            credit_buyer = Checkout.credit_buyer
+            debit_seller = Checkout.debit_seller
+            create_order = Checkout.create_order
+            destroy_cart = Checkout.destroy_cart
+
+            # redirect to orders page
+            respond_to do |format|
+                flash[:warning] = "Your order is pending confirmation from admin. You will be refunded if declined."
+                format.html { redirect_to orders_path }
+                format.js
+            end
+        rescue Exception => e
+            
+        end
+
+        @exception = nil
+        # Find the shopping cart
+        shopping_cart = ShoppingCart.find(params[:cart_id])
+
+        # get balances from BlockIo API
+        api_balance = @wallet.get_address(current_user.btc_account.address, confirmations = 1).balance
+        btc_account_balance = current_user.btc_account.btc_account_balance
+
+        begin
+            # create order with initial status of pending
+            order = Order.create(
+                order_total: params[:total], customer_id: shopping_cart.user.id
+            )
+
+            # get shopping cart items
+            shopping_cart_items = shopping_cart.shopping_cart_items.all
+
+            shopping_cart_items.map { |sci|
+                # transfer coins from buyer's address to seller's address
+                @wallet.send(
+                    sci.item.user.btc_account.address,
+                    (sci.item.price.to_f*100000000).to_i,
+                    from_address: current_user.btc_account.address
+                )
+
+                # update seller's balance -  debit item price to available_balance
+                seller_av_balance = @wallet.get_address(sci.item.user.btc_account.address, confirmations = 1).balance
+                seller_pe_balance = @wallet.get_address(sci.item.user.btc_account.address, confirmations = 0).balance
+                sci.item.user.btc_account.btc_account_balance.update(
+                    available_balance: seller_av_balance,
+                    pending_received_balance: seller_pe_balance
+                )
+
+                # create order items
+                order.create_order_item(
+                    item_id: sci.item.id, price: sci.item.price, quantity: sci.quantity
+                )
+
+                # CheckerWorker.perform_in(900.seconds, sci.item.id)
+            }
+
+            # update buyer's balance - credit the total amount from buyer's available_balance
+            buyer_av_balance = @wallet.get_address(current_user.btc_account.address, confirmations = 1).balance
+            buyer_pe_balance = @wallet.get_address(current_user.btc_account.address, confirmations = 1).balance
+            current_user.btc_account.btc_account_balance.update(
+                available_balance: buyer_pe_balance,
+                pending_received_balance: buyer_pe_balance
+            )
+
+            # clear and delete cart
+            shopping_cart.clear
+            shopping_cart.destroy
+
+            # redirect to orders page
+            respond_to do |format|
+                flash[:warning] = "Your order is pending confirmation from admin. You will be refunded if declined. Blockchain transaction fees apply"
+                format.html { redirect_to orders_path }
+                format.js
+            end
+        rescue Blockchain::APIException => e
+            respond_to do |format|
+                flash[:error] = e.to_s
+                format.html { redirect_to view_cart_path }
+            end
+        end
+
+    end
+
+    def refund
+
+    end
+
+    def dispute
+
+    end
+
+    def cancel
+
+    end
+end

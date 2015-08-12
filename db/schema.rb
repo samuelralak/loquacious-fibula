@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150808122255) do
+ActiveRecord::Schema.define(version: 20150812223822) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -79,6 +79,7 @@ ActiveRecord::Schema.define(version: 20150808122255) do
     t.integer  "btc_account_id"
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
+    t.string   "server_balance"
   end
 
   add_index "btc_account_balances", ["btc_account_id"], name: "index_btc_account_balances_on_btc_account_id", using: :btree
@@ -248,6 +249,28 @@ ActiveRecord::Schema.define(version: 20150808122255) do
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   add_index "users", ["username"], name: "index_users_on_username", unique: true, using: :btree
 
+  create_table "withdrawal_request_statuses", force: :cascade do |t|
+    t.string   "name"
+    t.string   "code"
+    t.boolean  "is_active"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "withdrawal_requests", force: :cascade do |t|
+    t.string   "send_to_address"
+    t.string   "amount"
+    t.boolean  "is_done",                      default: false
+    t.integer  "user_id"
+    t.datetime "created_at",                                   null: false
+    t.datetime "updated_at",                                   null: false
+    t.integer  "withdrawal_request_status_id"
+    t.text     "status_reason"
+  end
+
+  add_index "withdrawal_requests", ["user_id"], name: "index_withdrawal_requests_on_user_id", using: :btree
+  add_index "withdrawal_requests", ["withdrawal_request_status_id"], name: "index_withdrawal_requests_on_withdrawal_request_status_id", using: :btree
+
   add_foreign_key "activities", "admin_users"
   add_foreign_key "activities", "users"
   add_foreign_key "broadcasts", "admin_users"
@@ -261,4 +284,6 @@ ActiveRecord::Schema.define(version: 20150808122255) do
   add_foreign_key "seller_requests", "users"
   add_foreign_key "shopping_carts", "users"
   add_foreign_key "transactions", "users"
+  add_foreign_key "withdrawal_requests", "users"
+  add_foreign_key "withdrawal_requests", "withdrawal_request_statuses"
 end

@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  send_to_address: MyString
+  amount: MyString
+  is_done: false
+  user_id: 
+
+two:
+  send_to_address: MyString
+  amount: MyString
+  is_done: false
+  user_id: 

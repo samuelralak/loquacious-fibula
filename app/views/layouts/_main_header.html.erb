@@ -23,7 +23,7 @@
 					</li>
     				<li>
 						<a href="<%= deposit_path %>">
-							<%= fa_icon "bitcoin" %> <%= current_user.btc_account.btc_account_balance.nil? ? 0.0 : satoshi_to_bitcoin(current_user.btc_account.btc_account_balance.try(:available_balance)) %>
+							<%= fa_icon "bitcoin" %> <%= current_user.btc_account.btc_account_balance.nil? ? 0.0 : current_user.btc_account.btc_account_balance.try(:available_balance) %>
 						</a>
 					</li>
     				<li class="dropdown">

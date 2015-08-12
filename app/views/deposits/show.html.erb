@@ -15,7 +15,7 @@
 							<div class="col-md-12">
 								<div class="box">
 										<div class="pull-right">
-											<%= link_to "#{fa_icon 'paper-plane'} send coins".html_safe, '#', class: 'btn btn-info btn-sm', data: { toggle: 'modal', target: '#myModal'} %>
+											<%= link_to "#{fa_icon 'paper-plane'} request coins".html_safe, '#', class: 'btn btn-info btn-sm', data: { toggle: 'modal', target: '#myModal'} %>
 										</div>
                                     <h4>Account details</h4>
                                     <hr />
@@ -34,7 +34,7 @@
 																		</div>
 																		<div class="row">
                                         <div class="col-md-4 deposits"><b>Available balance</b></div>
-                                        <div class="col-md-8 deposits"><%= fa_icon 'bitcoin' %>&nbsp;<%= satoshi_to_bitcoin(@btc_account.btc_account_balance.available_balance) %></div>
+                                        <div class="col-md-8 deposits"><%= fa_icon 'bitcoin' %>&nbsp;<%= @btc_account.btc_account_balance.available_balance %></div>
                                     </div>
 																		
                                 </div>

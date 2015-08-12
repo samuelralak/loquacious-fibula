@@ -12,16 +12,28 @@ class DepositsController < ApplicationController
     end
 
     def send_coins
-      @address = params[:address]
-      @coins = params[:coins]
+      address = params[:address]
+      coins = params[:coins]
 
       begin
-        @error = false
-        @wallet.send(@address, (@coins.to_f*100000000).to_i,
-            from_address: current_user.btc_account.address
-        )
-        check_balance
-      rescue Blockchain::APIException => e
+        request = WithdrawalRequest.find_by(user_id: current_user.id)
+
+        if coins.to_f <= current_user.btc_account.btc_account_balance.available_balance.to_f
+            if request && !request.is_done
+                raise 'You still have a pending Withdrawal Request'
+            else
+                WithdrawalRequest.create!(
+                    send_to_address: address,
+                    amount: coins,
+                    user_id: current_user.id,
+                    withdrawal_request_status_id: WithdrawalRequestStatus.find_by(code: 'PENDING').id
+                )
+                @error = false
+            end
+        else
+            raise 'Insufficient funds'
+        end
+      rescue StandardError => e
         @error = true
         @exception = e
       end
@@ -34,19 +46,32 @@ class DepositsController < ApplicationController
 
         def check_balance
             account_balance = @btc_account.btc_account_balance
-            current_av_balance = @btc_account.btc_account_balance.available_balance
-            available_balance = @wallet.get_address(@btc_account.address, confirmations = 1)
-            pending_balance = @wallet.get_address(@btc_account.address, confirmations = 0).balance
+            current_server_balance = @wallet.get_address(@btc_account.address, confirmations = 1)
 
-            if account_balance && !available_balance.nil?
-                account_balance.update(
-                    available_balance: available_balance.balance.eql?(current_av_balance) ? available_balance : current_av_balance,
-                    pending_received_balance: pending_balance
-                )
+            if account_balance
+                initial_server_balance = @btc_account.btc_account_balance.server_balance
+                
+                if initial_server_balance.nil?
+                    account_balance.update(
+                        available_balance: (current_server_balance.balance.to_f/100000000)*1,
+                        server_balance: current_server_balance.balance
+                    )
+                else
+                    if current_server_balance.balance.to_f > initial_server_balance
+                        current_server_balance = (current_server_balance.balance.to_f/100000000)*1
+                        difference = current_server_balance - initial_server_balance.to_f
+                        new_balance = account_balance.available_balance.to_f + difference
+
+                        account_balance.update(
+                            available_balance: new_balance,
+                            server_balance: current_server_balance.balance
+                        ) 
+                    end
+                end
             else
                 @btc_account.create_btc_account_balance(
-                  available_balance: available_balance.balance,
-                  pending_received_balance: pending_balance
+                    available_balance: (current_server_balance.balance.to_f/100000000)*1,
+                    server_balance: current_server_balance.balance
                 )
             end
         end

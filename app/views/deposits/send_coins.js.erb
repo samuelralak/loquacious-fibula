@@ -6,5 +6,5 @@ if (<%= @error %>) {
   sweetAlert("Oops...", "<%= @exception %>!", "error");
 } else {
   $('#myModal').modal('hide')
-  sweetAlert("Success!", "You have successfully transfered <%= @coins %> coins to <%= @address %>", "success");
+  sweetAlert("Success!", "Request successfully sent", "success");
 }

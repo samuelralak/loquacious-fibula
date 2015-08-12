@@ -14,6 +14,7 @@ class User < ActiveRecord::Base
 	has_many :items, inverse_of: :user
 	has_many :orders, foreign_key: "customer_id", dependent: :destroy
 	has_many :customers, through: :orders, source: :customer
+	has_many :withdrawal_requests, inverse_of: :user, dependent: :destroy
 
 	after_create :create_btc_account
 
