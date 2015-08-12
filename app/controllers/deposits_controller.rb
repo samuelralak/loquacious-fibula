@@ -57,7 +57,7 @@ class DepositsController < ApplicationController
                         server_balance: current_server_balance.balance
                     )
                 else
-                    if current_server_balance.balance.to_f > initial_server_balance
+                    if current_server_balance.balance.to_f > initial_server_balance.to_f
                         current_server_balance = (current_server_balance.balance.to_f/100000000)*1
                         difference = current_server_balance - initial_server_balance.to_f
                         new_balance = account_balance.available_balance.to_f + difference
