@@ -33,7 +33,6 @@ class ApplicationController < ActionController::Base
 			@wallet = Blockchain::Wallet.new(ENV['BLOCKCHAIN_IDENTIFIER'], ENV['BLOCKCHAIN_PASSWORD'])
 		end
 
-	private
 		def send_stack_trace(e)
 			if Rails.env.eql?('production')
 				ErrorMailer.send_error(e).deliver_now
@@ -41,6 +40,7 @@ class ApplicationController < ActionController::Base
 				raise e
 			end
 		end
+		
 	protected
  		def configure_permitted_parameters
 			devise_parameter_sanitizer.for(:sign_up) { |u|

@@ -48,32 +48,27 @@
 
 											<tbody>
 												<%- @orders.each do |order| %>
-													<%- unless order.order_items.count.eql?(0) %>
+													<%- unless order.order_item.nil? %>
 														<tr id="row_<%= order.id %>">
 															<td style="color: #3498db">
-																<%= "#{order.order_items.first.item.itemable.card_number}
-																|#{order.order_items.first.item.itemable.expiry}
-																|#{order.order_items.first.item.itemable.cvv}
-																|#{order.order_items.first.item.itemable.card_holder}
-																|#{order.order_items.first.item.itemable.card_info}
-																|#{order.order_items.first.item.itemable.zip}
-																|#{order.order_items.first.item.itemable.country_name}" %></td>
+																<%= "#{order.order_item.item.itemable.card_number}
+																|#{order.order_item.item.itemable.expiry}
+																|#{order.order_item.item.itemable.cvv}
+																|#{order.order_item.item.itemable.card_holder}
+																|#{order.order_item.item.itemable.card_info}
+																|#{order.order_item.item.itemable.zip}
+																|#{order.order_item.item.itemable.country_name}" %></td>
 															<td>
-																<%= "#{order.order_items.first.item.itemable.country_name}
-																#{order.order_items.first.item.itemable.card_type}
-																#{order.order_items.first.item.itemable.card_category}
-																#{order.order_items.first.item.itemable.brand}" %></td>
+																<%= "#{order.order_item.item.itemable.country_name}
+																#{order.order_item.item.itemable.card_type}
+																#{order.order_item.item.itemable.card_category}
+																#{order.order_item.item.itemable.brand}" %></td>
 															<td>
-																<%= order.order_items.first.item.user.username %></td>
+																<%= order.order_item.item.user.username %></td>
 															<td><%= order.created_at.strftime("%a, %d %b %Y") %></td>
 															<td>no report</td>
 															<td>
-																<%= "#{order.aasm_state.eql?('pending')}" ? "#{link_to 'check', check_path(order), class: 'btn btn-xs btn-warning', data: {confirm: 'Are you sure?',
-																	:'confirm-button-text' => 'Check card',
-																	:'cancel-button-text' => 'Cancel',
-																	:'confirm-button-color' => '#66CD00',
-																	:'sweet-alert-type' => 'info',
-																	text: "Ƀ 0.001 will be deducted from your account.*transaction fees will also apply"}}".html_safe : "#{order_status_label(order.aasm_state, order.id)}".html_safe %></td>
+																<%=  "#{order_status_label(order.aasm_state, order.id)}".html_safe %></td>
 
 														</tr>
 													<% end -%>

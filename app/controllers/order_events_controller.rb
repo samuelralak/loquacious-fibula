@@ -35,18 +35,18 @@ class OrderEventsController < ApplicationController
                 )
 
                 # create order items
-                order.order_items.create(
+                order.create_order_item(
                     item_id: sci.item.id, price: sci.item.price, quantity: sci.quantity
                 )
 
-                CheckerWorker.perform_in(900.seconds, sci.item.id)
+                # CheckerWorker.perform_in(900.seconds, sci.item.id)
             }
 
             # update buyer's balance - credit the total amount from buyer's available_balance
             buyer_av_balance = @wallet.get_address(current_user.btc_account.address, confirmations = 1).balance
             buyer_pe_balance = @wallet.get_address(current_user.btc_account.address, confirmations = 1).balance
             current_user.btc_account.btc_account_balance.update(
-                available_balance: buyer_av_balance,
+                available_balance: buyer_pe_balance,
                 pending_received_balance: buyer_pe_balance
             )
 
@@ -56,7 +56,7 @@ class OrderEventsController < ApplicationController
 
             # redirect to orders page
             respond_to do |format|
-                flash[:warning] = "You have 15 minutes to check the validity of your cards"
+                flash[:warning] = "Your order is pending confirmation from admin. You will be refunded if declined. Blockchain transaction fees apply"
                 format.html { redirect_to orders_path }
                 format.js
             end
