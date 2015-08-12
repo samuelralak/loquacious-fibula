@@ -11,7 +11,7 @@ class Order < ActiveRecord::Base
     after_update :check_status
 
     aasm :whiny_transitions => false do
-        state :pending, :initial => true, :before_enter => :do_something
+        state :pending, :initial => true, :before_enter => :assign_order_status
         state :completed
         state :cancelled
         state :disputed
