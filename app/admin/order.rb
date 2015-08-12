@@ -2,6 +2,7 @@ ActiveAdmin.register Order do
 	permit_params :order_status_id
 
 	index do
+        selectable_column
         column :order_total
         column :customer
         column :created_at

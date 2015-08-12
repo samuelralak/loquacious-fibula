@@ -1,6 +1,8 @@
 ActiveAdmin.register SellerRequest do
     permit_params :status, :user_id, :seller_request_status_id
+    
     index do
+    	selectable_column
         column :user
         column :seller_request_status
         column :created_at

@@ -2,6 +2,7 @@ ActiveAdmin.register BtcAccount do
     actions :all, except: [:create, :update, :destroy, :edit]
 
     index do
+        selectable_column
         column :user
         column :label
         column :address

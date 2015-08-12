@@ -2,6 +2,7 @@ ActiveAdmin.register WithdrawalRequest do
 	permit_params :is_done, :withdrawal_request_status, :status_reason
 
 	index do
+		selectable_column
         column :user
         column :amount
         column :send_to_address
