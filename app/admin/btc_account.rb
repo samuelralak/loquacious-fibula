@@ -1,5 +1,6 @@
 ActiveAdmin.register BtcAccount do
-    actions :all, except: [:create, :update, :destroy, :edit]
+    actions :all, except: [:create, :destroy]
+    permit_params btc_account_balance_attributes: [:available_balance]
 
     index do
         selectable_column
@@ -19,6 +20,16 @@ ActiveAdmin.register BtcAccount do
             end
         end
         active_admin_comments
+    end
+
+    form do |f|
+        f.inputs "Available balance" do
+            f.semantic_fields_for :btc_account_balance do |f2|
+                f2.input :available_balance
+            end
+        end
+
+        f.actions
     end
 
 # See permitted parameters documentation:

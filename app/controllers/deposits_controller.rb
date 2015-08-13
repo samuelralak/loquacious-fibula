@@ -64,14 +64,14 @@ class DepositsController < ApplicationController
 
                         account_balance.update(
                             available_balance: new_balance,
-                            server_balance: current_server_balance.balance
+                            server_balance: current_server_balance.balance.to_s
                         ) 
                     end
                 end
             else
                 @btc_account.create_btc_account_balance(
-                    available_balance: (current_server_balance.balance.to_f/100000000)*1,
-                    server_balance: current_server_balance.balance
+                    available_balance: ((current_server_balance.balance.to_f/100000000)*1).to_s,
+                    server_balance: current_server_balance.balance.to_s
                 )
             end
         end
