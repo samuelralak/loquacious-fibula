@@ -12,14 +12,14 @@ class Order < ActiveRecord::Base
 
     aasm :whiny_transitions => false do
         state :pending, :initial => true, :before_enter => :assign_order_status
-        state :completed
+        state :confirmed
         state :cancelled
         state :disputed
         state :refunded
         state :declined
 
-        event :complete do
-            transitions :from => :pending, :to => :completed
+        event :confirm do
+            transitions :from => :pending, :to => :confirmed
         end
 
         event :cancel do
@@ -31,14 +31,14 @@ class Order < ActiveRecord::Base
         end
 
         event :refund do
-            transitions :from => :disputed, :to => :refunded
-        end
-
-        event :decline do
             after do
                 refund_buyer(self.id)
             end
 
+            transitions :from => [:pending, :disputed], :to => :refunded
+        end
+
+        event :decline do
             transitions :from => [:pending, :disputed], :to => :declined
         end
     end
@@ -71,12 +71,12 @@ class Order < ActiveRecord::Base
 
     private
         def check_status
-            if self.order_status_id.eql?(OrderStatus.find_by(code: "DECLINED").id)
-                self.decline!
+            if self.order_status_id.eql?(OrderStatus.find_by(code: "REFUNDED").id)
+                self.refund!
             end
 
-            if self.order_status_id.eql?(OrderStatus.find_by(code: "COMPLETED").id)
-                self.complete!
+            if self.order_status_id.eql?(OrderStatus.find_by(code: "CONFIRMED").id)
+                self.confirm!
             end
         end
 end
