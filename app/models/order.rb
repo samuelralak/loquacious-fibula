@@ -12,14 +12,14 @@ class Order < ActiveRecord::Base
 
     aasm :whiny_transitions => false do
         state :pending, :initial => true, :before_enter => :assign_order_status
-        state :confirmed
+        state :completed
         state :cancelled
         state :disputed
         state :refunded
         state :declined
 
-        event :confirm do
-            transitions :from => :pending, :to => :confirmed
+        event :complete do
+            transitions :from => :pending, :to => :completed
         end
 
         event :cancel do
@@ -75,7 +75,7 @@ class Order < ActiveRecord::Base
                 self.refund!
             end
 
-            if self.order_status_id.eql?(OrderStatus.find_by(code: "CONFIRMED").id)
+            if self.order_status_id.eql?(OrderStatus.find_by(code: "COMPLETED").id)
                 self.confirm!
             end
         end
