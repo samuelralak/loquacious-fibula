@@ -51,7 +51,7 @@ class DepositsController < ApplicationController
             if account_balance
                 initial_server_balance = @btc_account.btc_account_balance.server_balance
                 
-                if initial_server_balance.nil?
+                if initial_server_balance.nil? || initial_server_balance.empty?
                     account_balance.update(
                         available_balance: (current_server_balance.balance.to_f/100000000)*1,
                         server_balance: current_server_balance.balance
@@ -64,7 +64,7 @@ class DepositsController < ApplicationController
 
                         account_balance.update(
                             available_balance: new_balance,
-                            server_balance: current_server_balance
+                            server_balance: current_server_balance*100000000
                         ) 
                     end
                 end
