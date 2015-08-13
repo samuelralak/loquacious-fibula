@@ -49,15 +49,21 @@ class Order < ActiveRecord::Base
 
     def refund_buyer(order_id)
         order = Order.find(order_id)
-
+        seller = order.order_item.item.user
+        credit_balance = seller.btc_account.btc_account_balance.available_balance.to_f - order.order_item.price.to_f  
+        customer = order.customer
+        debit_balance = customer.btc_account.btc_account_balance.available_balance.to_f + order.order_item.price.to_f
+            
         begin
-            wallet = Blockchain::Wallet.new(ENV['BLOCKCHAIN_IDENTIFIER'], ENV['BLOCKCHAIN_PASSWORD'])
-            wallet.send(
-                order.customer.btc_account.address,
-                (order.order_total.to_f*100000000).to_i,
-                from_address: order.order_item.item.user.btc_account.address
+            # update buyer balance
+            customer.btc_account.btc_account_balance.update(
+                available_balance: debit_balance
             )
-        rescue Blockchain::APIException => e
+            # update seller balance
+            seller.btc_account.btc_account_balance.update(
+                available_balance: credit_balance
+            )
+        rescue StandardError => e
             puts "###### ERROR #{e}" 
             puts "###### BACKTRACE #{e.backtrace}"
         end
