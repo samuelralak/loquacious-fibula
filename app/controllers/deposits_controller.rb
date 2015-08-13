@@ -66,6 +66,10 @@ class DepositsController < ApplicationController
                             available_balance: new_balance,
                             server_balance: current_server_balance*100000000
                         ) 
+                    else
+                        account_balance.update(
+                            server_balance: current_server_balance.balance
+                        )
                     end
                 end
             else
