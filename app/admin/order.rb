@@ -6,7 +6,7 @@ ActiveAdmin.register Order do
         column :order_total
         column :customer
         column :created_at
-        column :aasm_state
+        column :order_status
         actions
     end
 
