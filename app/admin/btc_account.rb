@@ -15,8 +15,8 @@ ActiveAdmin.register BtcAccount do
             row :available_balance do
                 btc_account.btc_account_balance.available_balance
             end
-            row :pending_received_balance do
-                btc_account.btc_account_balance.pending_received_balance
+            row :server_balance do
+                btc_account.btc_account_balance.server_balance
             end
         end
         active_admin_comments
