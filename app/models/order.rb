@@ -76,7 +76,7 @@ class Order < ActiveRecord::Base
             end
 
             if self.order_status_id.eql?(OrderStatus.find_by(code: "COMPLETED").id)
-                self.confirm!
+                self.complete!
             end
         end
 end
