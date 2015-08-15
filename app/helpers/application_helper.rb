@@ -79,6 +79,11 @@ module ApplicationHelper
                 <span id="span_#{id}" class="label label-success">completed</span>
             HTML
             html.html_safe
+        when "refunded"
+            html = <<-HTML
+                <span id="span_#{id}" class="label label-warning">refunded</span>
+            HTML
+            html.html_safe
         end
   end
 
