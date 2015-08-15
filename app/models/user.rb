@@ -9,6 +9,7 @@ class User < ActiveRecord::Base
 	has_one	:shopping_cart, inverse_of: :user
 	has_one	:btc_account, inverse_of: :user
 
+	has_many :reports, inverse_of: :user
 	has_many :transactions, inverse_of: :user
 	has_many :activities, inverse_of: :user
 	has_many :items, inverse_of: :user

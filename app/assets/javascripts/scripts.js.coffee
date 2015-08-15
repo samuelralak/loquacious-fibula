@@ -96,3 +96,8 @@ jQuery ->
 					$.each data.ids, (key, value) ->
 						$("row_#{value}").hide()
 					toastr.success('Items successfully deleted', {timeOut: 1000})
+
+	# report button
+	$('.reportBtn').on 'click', (event) -> 
+		item_id = $(this).data('id')
+		$("input[id=report_item_id]").val(item_id)

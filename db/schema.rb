@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150812223822) do
+ActiveRecord::Schema.define(version: 20150815161128) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -123,6 +123,7 @@ ActiveRecord::Schema.define(version: 20150812223822) do
     t.datetime "updated_at",                       null: false
     t.string   "aasm_state",    default: "active", null: false
     t.boolean  "can_check",     default: true
+    t.boolean  "is_reported"
   end
 
   add_index "items", ["itemable_type", "itemable_id"], name: "index_items_on_itemable_type_and_itemable_id", using: :btree
@@ -167,6 +168,28 @@ ActiveRecord::Schema.define(version: 20150812223822) do
 
   add_index "orders", ["customer_id"], name: "index_orders_on_customer_id", using: :btree
   add_index "orders", ["order_status_id"], name: "index_orders_on_order_status_id", using: :btree
+
+  create_table "report_statuses", force: :cascade do |t|
+    t.string   "name"
+    t.string   "code"
+    t.boolean  "is_active"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "reports", force: :cascade do |t|
+    t.text     "message"
+    t.boolean  "is_reported",      default: false
+    t.integer  "item_id"
+    t.integer  "report_status_id"
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
+    t.integer  "user_id"
+  end
+
+  add_index "reports", ["item_id"], name: "index_reports_on_item_id", using: :btree
+  add_index "reports", ["report_status_id"], name: "index_reports_on_report_status_id", using: :btree
+  add_index "reports", ["user_id"], name: "index_reports_on_user_id", using: :btree
 
   create_table "seller_request_statuses", force: :cascade do |t|
     t.string   "name"
@@ -280,6 +303,9 @@ ActiveRecord::Schema.define(version: 20150812223822) do
   add_foreign_key "order_items", "items"
   add_foreign_key "order_items", "orders"
   add_foreign_key "orders", "order_statuses"
+  add_foreign_key "reports", "items"
+  add_foreign_key "reports", "report_statuses"
+  add_foreign_key "reports", "users"
   add_foreign_key "seller_requests", "seller_request_statuses"
   add_foreign_key "seller_requests", "users"
   add_foreign_key "shopping_carts", "users"

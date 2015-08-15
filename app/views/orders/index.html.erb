@@ -66,7 +66,7 @@
 															<td>
 																<%= order.order_item.item.user.username %></td>
 															<td><%= order.created_at.strftime("%a, %d %b %Y") %></td>
-															<td>no report</td>
+															<td><%= order.order_item.item.is_reported ? "<span style='color: rgb(169, 68, 66)'>reported</span>".html_safe : link_to('report', '#', class: 'reportBtn btn btn-info btn-xs', data: { toggle: 'modal', target: '#reportModal', id: order.order_item.item.id}, id: 'reportButton') %></td>
 															<td>
 																<%=  "#{order_status_label(order.aasm_state, order.id)}".html_safe %></td>
 

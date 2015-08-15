@@ -4,6 +4,8 @@ class Item < ActiveRecord::Base
     belongs_to :itemable, polymorphic: true
     belongs_to :user
 
+    has_one :report, inverse_of: :item, dependent: :destroy
+
     accepts_nested_attributes_for :itemable
 
     aasm :whiny_transitions => false do
