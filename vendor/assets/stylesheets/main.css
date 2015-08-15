@@ -759,6 +759,11 @@ body{
   	-ms-transform-style: preserve-3d;
   	transform-style: preserve-3d;
 }
+
+.navbar-header img {
+  margin-top: -25px;
+}
+
 .sign-container{
 	position: relative;
 }
@@ -771,8 +776,8 @@ body{
 	margin-bottom: 20px;
 }
 .sign-brand-logo img{
-	width: 100px;
-	height: 72px;
+	width: 200px;
+	height: 250px;
 	line-height: 72px;
 }
 .sign-brand-name{
