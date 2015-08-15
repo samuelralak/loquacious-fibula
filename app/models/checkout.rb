@@ -16,6 +16,7 @@ class Checkout
 		else
 			# subtract total from old balance to get new balance
 			new_balance = current_balance.to_f - @total.to_f
+			new_balance = (new_balance).round(5)
 			# update balance
 			account.update!(available_balance: new_balance)
 		end
@@ -35,6 +36,7 @@ class Checkout
 			current_balance = account.available_balance
 			# add item price to current_balance to get new balance
 			new_balance = current_balance.to_f + cart_item.item.price.to_f
+			new_balance = (new_balance).round(5)
 			# update balance
 			account.update!(available_balance: new_balance) 
 		}
