@@ -769,15 +769,15 @@ body{
 }
 .sign-brand{
 	text-align: center;
-	margin-top: 10%;
-	margin-bottom: 10%;
+	margin-top: -5%;
+	margin-bottom: 5%;
 }
 .sign-brand-logo{
 	margin-bottom: 20px;
 }
 .sign-brand-logo img{
-	width: 200px;
-	height: 250px;
+	width: 150px;
+	height: 200px;
 	line-height: 72px;
 }
 .sign-brand-name{
