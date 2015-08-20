@@ -9,11 +9,13 @@ ActiveAdmin.register Order do
         column :order_total
         column :customer
         column :seller do |order|
-            order.order_item.item.user.username
+            order.order_item && order.order_item.item ? order.order_item.item.user.username : ''
         end
         column :order_status
         column :reported do |order|
-            order.order_item.item.is_reported.eql?(true) ? link_to('YES', root_x_admi_n_report_path(order.order_item.item.report.id)) : "NO"
+            if order.order_item && order.order_item.item
+               order.order_item.item.is_reported.eql?(true) ? link_to('YES', root_x_admi_n_report_path(order.order_item.item.report.id)) : "NO" 
+            end
         end
         actions
     end
