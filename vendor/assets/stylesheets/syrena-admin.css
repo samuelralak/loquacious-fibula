@@ -11,17 +11,12 @@
 
 
 
-/**
- * Declaration usage fonts
- */
-/* @import url(http://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300italic,300,400italic,500,500italic,700,700italic,900,900italic); */
-
-
 
 
 /**
  * Include all of default syrena stylesheet
  */
+@import url('fonts.css');
 @import url('main.css');
 @import url('main-large-desktop.css');
 @import url('main-desktop.css');
