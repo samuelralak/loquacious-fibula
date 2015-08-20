@@ -4,7 +4,9 @@ ActiveAdmin.register Order do
 	index do
         selectable_column
         column :item do |order|
-            "#{order.order_item.item.itemable.card_number}|#{order.order_item.item.itemable.expiry}|#{order.order_item.item.itemable.cvv}"
+            if order.order_item && order.order_item.item
+                "#{order.order_item.item.itemable.card_number}|#{order.order_item.item.itemable.expiry}|#{order.order_item.item.itemable.cvv}"
+            end
         end
         column :order_total
         column :customer
