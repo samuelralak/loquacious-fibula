@@ -2,11 +2,13 @@ class SellerRequestController < ApplicationController
     before_action :authenticate_user!
   def create
     @request = current_user.build_seller_request
-    @request.status = "PENDING"
+    @request.seller_request_status_id = SellerRequestStatus.find_by(code: 'PENDING').id
 
     respond_to do |format|
       if @request.save
-        format.html { redirect_to sell_items_url, notice: 'Request sent successfully pending confirmatiob by admin' }
+        @request.user.can_sell = false
+        @request.user.save!
+        format.html { redirect_to sell_items_url, notice: 'Request sent successfully pending confirmation by admin' }
         format.js
       else
         format.html { redirect_to sell_items_url }

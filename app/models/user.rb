@@ -5,14 +5,14 @@ class User < ActiveRecord::Base
 		:rememberable, :trackable, :validatable, :timeoutable,
 		:authentication_keys => [:login]
 
-	has_one :seller_request, inverse_of: :user
-	has_one	:shopping_cart, inverse_of: :user
-	has_one	:btc_account, inverse_of: :user
+	has_one :seller_request, inverse_of: :user, dependent: :destroy
+	has_one	:shopping_cart, inverse_of: :user, dependent: :destroy
+	has_one	:btc_account, inverse_of: :user, dependent: :destroy
 
-	has_many :reports, inverse_of: :user
-	has_many :transactions, inverse_of: :user
-	has_many :activities, inverse_of: :user
-	has_many :items, inverse_of: :user
+	has_many :reports, inverse_of: :user, dependent: :destroy
+	has_many :transactions, inverse_of: :user, dependent: :destroy
+	has_many :activities, inverse_of: :user, dependent: :destroy
+	has_many :items, inverse_of: :user, dependent: :destroy
 	has_many :orders, foreign_key: "customer_id", dependent: :destroy
 	has_many :customers, through: :orders, source: :customer
 	has_many :withdrawal_requests, inverse_of: :user, dependent: :destroy
