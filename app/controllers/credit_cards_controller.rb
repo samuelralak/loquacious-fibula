@@ -69,6 +69,8 @@ class CreditCardsController < ApplicationController
 
     def process_bin
         @credit_cards = []
+        extension = File.extname("#{params[:file].original_filename}")
+        logger.info "#{extension.eql?('.csv')}"
 
         if params[:file] && params[:file].respond_to?(:read)
             contents = params[:file].read
@@ -103,7 +105,7 @@ class CreditCardsController < ApplicationController
             end
 
             logger.info @credit_cards.inspect
-        elsif params[:file] && params[:file].respond_to?(:path)
+        elsif params[:file] && extension.eql?('.csv')
             logger.info "########## READING FILE PATH: "
             contents = File.read(params[:file].path)
             logger.info "########## FILE PATH CONTENTS: #{contents.inspect}"

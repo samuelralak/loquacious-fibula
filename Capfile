@@ -1,11 +1,15 @@
 # Load DSL and Setup Up Stages
 require 'capistrano/setup'
 
+# load puma web server
+require 'capistrano/puma'
+
 # Includes default deployment tasks
 require 'capistrano/deploy'
 
 # Includes default deployment tasks
 require 'capistrano/rails/collection'
+
 
 # Includes tasks from other gems included in your Gemfile
 #

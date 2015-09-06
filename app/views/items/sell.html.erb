@@ -18,18 +18,20 @@
 							<% else %>
 						 		<div class="col-md-12" style="margin-bottom: 12px;">
 						 			<div class="pull-right">
-						 				<%= link_to "#{fa_icon 'plus'} Add CC".html_safe,  '#', class: "btn btn-success", data: { toggle: 'modal', target: '#binModal'} %>
+						 				<%= link_to "#{fa_icon 'plus'} Add CC".html_safe,  '#', class: "btn btn-success btn-sm", data: { toggle: 'modal', target: '#binModal'} %>
+
+						 				<%= link_to "#{fa_icon 'upload'} Import CSV".html_safe,  '#', class: "btn btn-primary btn-sm", data: { toggle: 'modal', target: '#importModal'} %>
 						 			</div>
 						 			<div class="pull-left">
 						 				<form class="form-inline">
 						 					<div class="form-group">
 						 						<label class="sr-only">Search</label>
-						 						<input type="text" class="light-table-filter form-control" id="inputPassword2"
+						 						<input type="text" class="light-table-filter form-control input-sm" id="inputPassword2"
 													placeholder="Search by card number, cvv or type" 
 													style="width: 300px !important;"
 													data-table="order-table" >
 						 					</div>
-						 					<button type="submit" class="btn btn-default"><%= fa_icon 'search' %></button>
+						 					<button type="submit" class="btn btn-default btn-sm"><%= fa_icon 'search' %></button>
 						 				</form>
 						 			</div>
 						 		</div>
