@@ -1,9 +1,6 @@
 # Load DSL and Setup Up Stages
 require 'capistrano/setup'
 
-# load puma web server
-require 'capistrano/puma'
-
 # Includes default deployment tasks
 require 'capistrano/deploy'
 
@@ -25,6 +22,7 @@ require 'capistrano/bundler'
 require 'capistrano/rails/assets'
 require 'capistrano/rails/migrations'
 require 'capistrano/rvm'
+require 'capistrano/puma'
 set :rvm_type, :user
 set :rvm_ruby_version, '2.2.1p85'
 # require 'capistrano/rbenv'

@@ -67,9 +67,12 @@ gem 'sidekiq'
 gem 'sinatra', require: false
 gem 'slim'
 
-# web server
+# web server and deployment
+group :development do
+    gem 'capistrano3-puma',   require: false
+end
+
 gem 'puma'
-gem 'capistrano3-puma'
 
 group :development, :test do
   gem 'byebug'
