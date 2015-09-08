@@ -1,7 +1,7 @@
 # config valid only for Capistrano 3.1
 lock '3.1.0'
 
-server '158.255.1.132', port: 80, roles: [:web, :app, :db], primary: true
+server '158.255.1.132', roles: [:web, :app, :db], primary: true
 
 set :application, 'avtomat_kalashnikova'
 set :deploy_to, "/home/deploy/apps/avtomat_kalashnikova"
