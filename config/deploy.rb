@@ -124,12 +124,12 @@ namespace :sidekiq do
     task :quiet do
         on roles(:app) do
             # Horrible hack to get PID without having to use terrible PID files
-            puts capture("kill -USR1 $(sudo initctl status workers | grep /running | awk '{print $NF}') || :")
+            # puts capture("kill -USR1 $(sudo initctl status workers | grep /running | awk '{print $NF}') || :")
         end
     end
     task :restart do
         on roles(:app) do
-            execute :sudo, :initctl, :restart, :workers
+            # execute :sudo, :initctl, :restart, :workers
         end
     end
 end
