@@ -69,6 +69,7 @@ gem 'slim'
 
 # web server and deployment
 group :development do
+	gem 'capistrano-ssh-doctor', '~> 1.0'
     gem 'capistrano3-puma',   require: false
 end
 

@@ -23,6 +23,7 @@ require 'capistrano/rails/assets'
 require 'capistrano/rails/migrations'
 require 'capistrano/rvm'
 require 'capistrano/puma'
+require 'capistrano/ssh_doctor'
 set :rvm_type, :user
 set :rvm_ruby_version, '2.2.1p85'
 # require 'capistrano/rbenv'
