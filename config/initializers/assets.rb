@@ -4,7 +4,7 @@
 Rails.application.config.assets.version = '1.0'
 
 # Precompile assets production
-Rails.config.assets.precompile = true
+Rails.application.config.assets.precompile = true
 
 # Add additional assets to the asset load path
 # Rails.application.config.assets.paths << Emoji.images_path
