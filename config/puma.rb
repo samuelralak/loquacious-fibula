@@ -3,9 +3,13 @@ threads Integer(ENV['MIN_THREADS']  || 1), Integer(ENV['MAX_THREADS'] || 16)
 
 preload_app!
 
-rackup      DefaultRackup
-port        ENV['PORT']     || 3000
-environment ENV['RACK_ENV'] || 'production'
+# rackup      DefaultRackup
+# port        ENV['PORT']     || 3000
+# environment ENV['RACK_ENV'] || 'production'
+
+# Default to production
+rails_env = ENV['RAILS_ENV'] || "production"
+environment rails_env
 
 on_worker_boot do
   # worker specific setup
