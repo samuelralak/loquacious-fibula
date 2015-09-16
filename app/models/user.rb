@@ -21,6 +21,10 @@ class User < ActiveRecord::Base
 
 	# Virtual attribute for authenticating by either username or email
 	# This is in addition to a real persisted field like 'username'
+
+	validates :username, presence: true
+	validates :username, uniqueness: true
+
 	attr_accessor :login
 
 	def self.find_for_database_authentication(warden_conditions)

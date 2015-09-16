@@ -105,7 +105,7 @@ class ItemsController < ApplicationController
   end
 
   def buy
-    @items = Item.where(["user_id != :owner and aasm_state = :state", { :owner => current_user.id, :state => "active" }]).order("created_at desc")
+    @items = Item.where(["aasm_state = :state", { :state => "active" }]).order("created_at desc")
   end
 
   private
