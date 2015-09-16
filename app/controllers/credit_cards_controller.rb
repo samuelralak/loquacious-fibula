@@ -72,7 +72,7 @@ class CreditCardsController < ApplicationController
         extension = File.extname("#{params[:file].original_filename}")
         logger.info "#{extension.eql?('.csv')}"
 
-        if params[:file] && params[:file].respond_to?(:read)
+        if params[:file] && params[:file].respond_to?(:read) && !extension.eql?('.csv')
             contents = params[:file].read
 
             contents.each_line do |line|
@@ -105,10 +105,43 @@ class CreditCardsController < ApplicationController
             end
 
             logger.info @credit_cards.inspect
+
         elsif params[:file] && extension.eql?('.csv')
-            logger.info "########## READING FILE PATH: "
-            contents = File.read(params[:file].path)
-            logger.info "########## FILE PATH CONTENTS: #{contents.inspect}"
+            CSV.foreach(params[:file].path, headers: true) do |row|
+                card = Hash.new
+                row = row.to_hash
+
+                card = card.merge!(
+                    card_number: row['crypted_number'], expiry: row['expiration'], cvv: row['cvv'].to_i
+                )
+
+                begin
+                    bin_check_response = HTTParty.get("http://www.binlist.net/json/#{card[:card_number][0..5]}")
+                    response_body = JSON.parse(bin_check_response.body, symbolize_names: true)
+                    card = card.merge!(response_body)
+                    card = card.except(:latitude, :longitude, :query_time, :sub_brand)
+
+                    logger.info "############# NEW CARD HASH: #{card.inspect}"
+                    @success = true
+                rescue StandardError => e
+                   @error = e.message
+                end
+
+                card = CreditCard.create! card
+
+                if card.card_category.upcase.eql?("GOLD")
+                    item = card.items.create!(price: 0.04, user_id: current_user.id)
+                elsif card.card_category.upcase.eql?("PREMIUM")
+                    item = card.items.create!(price: 0.03, user_id: current_user.id)
+                elsif card.card_category.upcase.eql?("CLASSIC")
+                    item = card.items.create!(price: 0.2, user_id: current_user.id)
+                elsif card.card_category.upcase.eql?("BUSINESS")
+                    item = card.items.create!(price: 0.03, user_id: current_user.id)
+                else
+                    item = card.items.create!(price: 0.23, user_id: current_user.id) 
+                end
+            end
+
         elsif params[:bin]
             params[:bin].each do |p|
                 card = Hash.new
@@ -145,7 +178,12 @@ class CreditCardsController < ApplicationController
         end
 
         if @credit_cards.size.eql?(0)
-            flash[:error] = "Please ensure that you entered a valid credit card"
+            if @error
+                flash[:error] = @error
+            elsif @success
+                flash[:notice] = "Cards added successfully"
+            end
+
             redirect_to sell_items_url
         end
     end
