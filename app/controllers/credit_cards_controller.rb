@@ -121,24 +121,24 @@ class CreditCardsController < ApplicationController
                     card = card.merge!(response_body)
                     card = card.except(:latitude, :longitude, :query_time, :sub_brand)
 
+                    card = CreditCard.create! card
+
+                    if card.card_category.upcase.eql?("GOLD")
+                        item = card.items.create!(price: 0.04, user_id: current_user.id)
+                    elsif card.card_category.upcase.eql?("PREMIUM")
+                        item = card.items.create!(price: 0.03, user_id: current_user.id)
+                    elsif card.card_category.upcase.eql?("CLASSIC")
+                        item = card.items.create!(price: 0.02, user_id: current_user.id)
+                    elsif card.card_category.upcase.eql?("BUSINESS")
+                        item = card.items.create!(price: 0.03, user_id: current_user.id)
+                    else
+                        item = card.items.create!(price: 0.023, user_id: current_user.id) 
+                    end
+
                     logger.info "############# NEW CARD HASH: #{card.inspect}"
                     @success = true
                 rescue StandardError => e
                    @error = e.message
-                end
-
-                card = CreditCard.create! card
-
-                if card.card_category.upcase.eql?("GOLD")
-                    item = card.items.create!(price: 0.04, user_id: current_user.id)
-                elsif card.card_category.upcase.eql?("PREMIUM")
-                    item = card.items.create!(price: 0.03, user_id: current_user.id)
-                elsif card.card_category.upcase.eql?("CLASSIC")
-                    item = card.items.create!(price: 0.02, user_id: current_user.id)
-                elsif card.card_category.upcase.eql?("BUSINESS")
-                    item = card.items.create!(price: 0.03, user_id: current_user.id)
-                else
-                    item = card.items.create!(price: 0.023, user_id: current_user.id) 
                 end
             end
 
