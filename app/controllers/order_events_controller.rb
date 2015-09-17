@@ -17,6 +17,9 @@ class OrderEventsController < ApplicationController
             end
         rescue StandardError => e
             respond_to do |format|
+                logger.info "####### ERROR: #{e.to_s}"
+                logger.info "####### BACKTRACE: #{e.backtrace}"
+                
                 flash[:error] = e.to_s
                 format.html { redirect_to view_cart_path }
             end
