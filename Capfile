@@ -7,6 +7,8 @@ require 'capistrano/deploy'
 # Includes default deployment tasks
 require 'capistrano/rails/collection'
 
+require 'capistrano/rails/console'
+
 
 # Includes tasks from other gems included in your Gemfile
 #
