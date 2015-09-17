@@ -101,7 +101,7 @@ class OrdersController < ApplicationController
                     )
 
                     # process refund
-                    RefundWorker.perform_async(@order.id)
+                    # RefundWorker.perform_async(@order.id)
 
                     flash[:notice] = "Check failed your refund is being processed"
                 rescue
@@ -129,7 +129,7 @@ class OrdersController < ApplicationController
                     )
 
                     # process refund
-                    RefundWorker.perform_async(@order.id)
+                    # RefundWorker.perform_async(@order.id)
 
                     flash[:notice] = "Check failed your refund is being processed"
                 rescue
