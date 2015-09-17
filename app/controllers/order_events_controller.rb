@@ -18,6 +18,7 @@ class OrderEventsController < ApplicationController
         rescue StandardError => e
             respond_to do |format|
                 flash[:error] = e.to_s
+                ErrorMailer.send_error(e).deliver_now
                 format.html { redirect_to view_cart_path }
             end
         end
