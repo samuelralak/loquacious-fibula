@@ -33,6 +33,9 @@
                 <%= f.password_field :password_confirmation, autocomplete: "off", class: 'form-control', placeholder: 'Confirm password' %>
               </div><!-- /form-group -->
 
+              <p><%= captcha_tag %></p>
+              <p><%= text_field_tag :captcha %></p>
+
               <div class="form-group">
                 <%= f.submit "Sign up", class: 'btn btn-primary btn-block' %>
               </div><!-- /form-group -->

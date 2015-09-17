@@ -26,6 +26,9 @@ gem 'jquery-ui-rails'
 
 # authentication
 gem 'devise', '~> 3.5.1'
+gem 'devise_security_extension'
+gem 'easy_captcha'
+gem 'rails_email_validator'
 
 # docs generator
 gem 'sdoc', '~> 0.4.0', group: :doc

@@ -1,2 +1,3 @@
-<%= "#{fa_icon 'credit-card'}&nbsp; #{link_to activity.user.username, '#'}".html_safe %>
+<%= "#{fa_icon 'credit-card'}&nbsp; #{link_to locals[:activity].user.username, '#'}".html_safe %>
 added a new <span><%= link_to 'credit card', '#' %></span>
+<%= Time.at(@activities[(locals[:index]-1)].created_at.to_i).eql?Time.at(locals[:activity].created_at.to_i) %>

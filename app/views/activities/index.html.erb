@@ -19,7 +19,7 @@
 					 						</div>
 					 					</div>
 
-					 					<% @activities.each do |activity| %>
+					 					<% @activities.each_with_index do |activity, index| %>
 					 						<div class="timeline-entry">
 					 							<div class="timeline-stat">
 					 								<div class="timeline-icon"></div>
@@ -30,7 +30,7 @@
 					 						</div>
 
 					 						<div class="timeline-label">
-												<%= render "activities/#{activity.trackable_type.underscore}/#{activity.action}", activity: activity %>
+												<%= render "activities/#{activity.trackable_type.underscore}/#{activity.action}", :locals => { :activity => activity, :index => index }%>
 					 						</div>
 					 					<% end -%>
 					 				</div>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150815161128) do
+ActiveRecord::Schema.define(version: 20150917185347) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -265,6 +265,10 @@ ActiveRecord::Schema.define(version: 20150815161128) do
     t.integer  "icq_number"
     t.string   "username"
     t.boolean  "can_sell",               default: false
+    t.datetime "expired_at"
+    t.datetime "last_activity_at"
+    t.datetime "password_changed_at"
+    t.string   "unique_session_id"
   end
 
   add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
