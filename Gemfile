@@ -67,6 +67,9 @@ gem 'sidekiq'
 gem 'sinatra', require: false
 gem 'slim'
 
+# pagination
+gem 'kaminari'
+
 # web server and deployment
 group :development do
 	gem 'capistrano-ssh-doctor', '~> 1.0'
