@@ -1,6 +1,6 @@
 ActiveAdmin.register BtcAccount do
     actions :all, except: [:create, :destroy]
-    permit_params btc_account_balance_attributes: [:id, :available_balance, :btc_account_id]
+    permit_params btc_account_balance_attributes: [:id, :available_balance, :server_balance, :btc_account_id]
 
     index do
         selectable_column
@@ -27,6 +27,7 @@ ActiveAdmin.register BtcAccount do
             f.semantic_fields_for :btc_account_balance do |f2|
                 f2.input :btc_account_id, :as => :hidden, :input_html => { :value => btc_account.id }
                 f2.input :available_balance
+                f2.input :server_balance
             end
         end
 

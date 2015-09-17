@@ -54,28 +54,28 @@ class DepositsController < ApplicationController
                 if initial_server_balance.nil?
                     account_balance.update(
                         available_balance: (current_server_balance.balance.to_f/100000000)*1,
-                        server_balance: current_server_balance.balance
+                        server_balance: (current_server_balance.balance.to_f/100000000)*1
                     )
                 else
-                    if current_server_balance.balance.to_f > initial_server_balance.to_f
+                    if ((current_server_balance.balance.to_f/100000000)*1) > initial_server_balance.to_f
                         current_server_balance = (current_server_balance.balance.to_f/100000000)*1
                         difference = current_server_balance - initial_server_balance.to_f
                         new_balance = account_balance.available_balance.to_f + difference
 
                         account_balance.update(
                             available_balance: new_balance,
-                            server_balance: current_server_balance*100000000
+                            server_balance: current_server_balance
                         ) 
                     else
                         account_balance.update(
-                            server_balance: current_server_balance.balance
+                            server_balance: (current_server_balance.balance.to_f/100000000)*1
                         )
                     end
                 end
             else
                 @btc_account.create_btc_account_balance(
                     available_balance: (current_server_balance.balance.to_f/100000000)*1,
-                    server_balance: current_server_balance.balance
+                    server_balance: (current_server_balance.balance.to_f/100000000)*1
                 )
             end
         end
