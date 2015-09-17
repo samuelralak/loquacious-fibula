@@ -29,16 +29,16 @@ class ShoppingCartController < ApplicationController
 				item = Item.find(item_id.to_i)
 				if item.aasm_state.eql?("active") || item.aasm_state.eql?("locked")
 					@cart.add(item, item.price)
-					item.lock!
-					EventsWorker.perform_in(40.seconds, item.id)
+					# item.lock!
+					# EventsWorker.perform_in(40.seconds, item.id)
 				end
 			}
 		else
 			item = Item.find(params[:id])
 			if item.aasm_state.eql?("active") || item.aasm_state.eql?("locked")
 				@cart.add(item, item.price)
-				item.lock!
-				EventsWorker.perform_in(40.seconds, item.id)
+				# item.lock!
+				# EventsWorker.perform_in(40.seconds, item.id)
 			end
 		end
 
