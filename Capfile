@@ -7,7 +7,6 @@ require 'capistrano/deploy'
 # Includes default deployment tasks
 require 'capistrano/rails/collection'
 
-require 'capistrano/rails/console'
 
 
 # Includes tasks from other gems included in your Gemfile
@@ -26,6 +25,7 @@ require 'capistrano/rails/migrations'
 require 'capistrano/rvm'
 require 'capistrano/puma'
 require 'capistrano/ssh_doctor'
+require 'capistrano/rails/console'
 
 set :rvm_type, :user
 set :rvm_ruby_version, '2.2.1'
