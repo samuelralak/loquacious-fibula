@@ -1,6 +1,7 @@
 ActiveAdmin.register User do
     permit_params :can_sell
     index do
+        selectable_column
         column :id
         column :username
         column :email
