@@ -56,7 +56,10 @@ class Checkout
         	order.create_order_item(
                 item_id: cart_item.item.id, price: cart_item.item.price, quantity: cart_item.quantity
             )
-        }
+
+        	puts "####### DEACTIVATING ITEM"
+            cart_item.item.deactivate!
+        }	
 	end
 
 	def destroy_cart

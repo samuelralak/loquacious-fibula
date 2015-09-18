@@ -106,7 +106,7 @@ class ItemsController < ApplicationController
 
   def buy
     # @items = Item.where(["aasm_state = :state", { :state => "active" }]).order("created_at desc").page(params[:page]) 
-    @items = Item.order("created_at desc").page(params[:page]) 
+    @items = Item.where(["aasm_state != :state", { :state => "inactive" }]).order("created_at desc").page(params[:page]) 
   end
 
   private
