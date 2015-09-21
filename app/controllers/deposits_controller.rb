@@ -45,37 +45,52 @@ class DepositsController < ApplicationController
         end
 
         def check_balance
+            active_addresses = Array.new
             account_balance = @btc_account.btc_account_balance
             current_server_balance = @wallet.get_address(@btc_account.address, confirmations = 1)
 
-            if account_balance
-                initial_server_balance = @btc_account.btc_account_balance.server_balance
-                
-                if initial_server_balance.nil?
-                    account_balance.update(
+            @wallet.list_addresses.each do |addr|
+                active_addresses = active_addresses << addr.address
+            end
+
+            logger.info "######### ACTIVE ADDRESSES: #{active_addresses.inspect}"
+            if active_addresses.include?(current_server_balance.address)
+                if account_balance
+                    initial_server_balance = @btc_account.btc_account_balance.server_balance
+                    
+                    if initial_server_balance.nil?
+                        account_balance.update(
+                            available_balance: (current_server_balance.balance.to_f/100000000)*1,
+                            server_balance: (current_server_balance.balance.to_f/100000000)*1
+                        )
+                    else
+                        if ((current_server_balance.balance.to_f/100000000)*1) > initial_server_balance.to_f
+                            current_server_balance = (current_server_balance.balance.to_f/100000000)*1
+                            difference = current_server_balance - initial_server_balance.to_f
+                            new_balance = account_balance.available_balance.to_f + difference
+
+                            account_balance.update(
+                                available_balance: new_balance,
+                                server_balance: current_server_balance
+                            ) 
+                        else
+                            account_balance.update(
+                                server_balance: (current_server_balance.balance.to_f/100000000)*1
+                            )
+                        end
+                    end
+                else
+                    @btc_account.create_btc_account_balance(
                         available_balance: (current_server_balance.balance.to_f/100000000)*1,
                         server_balance: (current_server_balance.balance.to_f/100000000)*1
                     )
-                else
-                    if ((current_server_balance.balance.to_f/100000000)*1) > initial_server_balance.to_f
-                        current_server_balance = (current_server_balance.balance.to_f/100000000)*1
-                        difference = current_server_balance - initial_server_balance.to_f
-                        new_balance = account_balance.available_balance.to_f + difference
-
-                        account_balance.update(
-                            available_balance: new_balance,
-                            server_balance: current_server_balance
-                        ) 
-                    else
-                        account_balance.update(
-                            server_balance: (current_server_balance.balance.to_f/100000000)*1
-                        )
-                    end
                 end
             else
-                @btc_account.create_btc_account_balance(
-                    available_balance: (current_server_balance.balance.to_f/100000000)*1,
-                    server_balance: (current_server_balance.balance.to_f/100000000)*1
+                label = SecureRandom.uuid
+                new_address = @wallet.new_address(label)
+
+                account = @btc_account.update(
+                    label: new_address.label, address: new_address.address
                 )
             end
         end
