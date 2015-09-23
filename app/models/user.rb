@@ -3,7 +3,7 @@ class User < ActiveRecord::Base
 	# :confirmable, :lockable, :timeoutable and :omniauthable, :password_expirable, :validatable
 	devise :database_authenticatable, :registerable,
 		:rememberable, :trackable, :timeoutable, 
-		:secure_validatable, :session_limitable, :expirable,
+		:validatable, :session_limitable, :expirable,
 		:authentication_keys => [:login]
 
 	has_one :seller_request, inverse_of: :user, dependent: :destroy
