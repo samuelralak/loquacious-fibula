@@ -47,12 +47,14 @@ class Checkout
 		# get all shopping cart items
 		cart_items = @cart.shopping_cart_items.all
 		# create order
-		order = Order.create(
-            order_total: @total, 
-            customer_id: @cart.user.id
-        )
+		# order = Order.create(
+  #           order_total: @total, 
+  #           customer_id: @cart.user.id
+  #       )
         # create order items
         cart_items.map { |cart_item|  
+        	order = Order.create(order_total: cart_item.item.price, customer_id: @cart.user.id)
+        	
         	order.create_order_item(
                 item_id: cart_item.item.id, price: cart_item.item.price, quantity: cart_item.quantity
             )
