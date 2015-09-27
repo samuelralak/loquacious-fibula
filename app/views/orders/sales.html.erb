@@ -1,0 +1,88 @@
+<section id="content" class="content content-lg">
+	<%= render 'layouts/main_header', flash: flash %>
+
+	<div class="content-splitter">
+		<section id="content-main" class="content-main">
+			<div class="content-app">
+				<%= render 'layouts/secondary_header', flash: flash %>
+
+				<div class="app-body">
+					<div class="center-block center-box">
+						<div class="row">
+							<div class="col-md-12" style="margin-bottom: 5px;">
+								<div class="pull-left">
+									<form class="form-inline">
+										<div class="form-group">
+											<label class="sr-only">Search</label>
+											<input type="text"
+												class="light-table-filter form-control" id="inputPassword2"
+												placeholder="Search orders by status"
+												data-table="order-table"
+												style="width: 300px !important;">
+										</div>
+										<button type="submit" class="btn btn-default"><%= fa_icon 'search' %></button>
+									</form>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-12">
+								<div class="card">
+									<div class="card-header">
+										<h2>My Sales <br />
+										</h2>
+									</div>
+
+									<div class="table-responsive">
+										<table id="data-table-selection" class="order-table table table-striped">
+											<thead>
+												<tr>
+													<th>DATA</th>
+													<th>INFO</th>
+													<th>BUYER</th>
+													<th>DATE</th>
+													<th>STATUS</th>
+													<th>TOTAL (<%= fa_icon 'bitcoin' %>)</th>
+												</tr>
+											</thead>
+
+											<tbody>
+												<%- @order_items.each do |order_item| %>
+													<%- if order_item.item.user.eql?(current_user) %>
+														<tr id="row_<%= order_item.id %>">
+															<td style="color: #3498db">
+																<%= "#{order_item.item.itemable.card_number}
+																|#{order_item.item.itemable.expiry}
+																|#{order_item.item.itemable.cvv}
+																|#{order_item.item.itemable.card_holder}
+																|#{order_item.item.itemable.card_info}
+																|#{order_item.item.itemable.zip}
+																|#{order_item.item.itemable.country_name}" %></td>
+															<td>
+																<%= "#{order_item.item.itemable.country_name}
+																#{order_item.item.itemable.card_type}
+																#{order_item.item.itemable.card_category}
+																#{order_item.item.itemable.brand}" %></td>
+															<td>
+																<%= order_item.order.customer.username %></td>
+															<td><%= order_item.created_at.strftime("%a, %d %b %Y") %></td>
+															
+															<td>
+																<%=  "#{order_status_label(order_item.order.aasm_state, order_item.id)}".html_safe %></td>
+															<td><%= order_item.price %></td></td>
+
+														</tr>
+													<% end -%>
+												<% end -%>
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</section>

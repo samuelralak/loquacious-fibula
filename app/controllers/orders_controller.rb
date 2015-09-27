@@ -15,7 +15,7 @@ class OrdersController < ApplicationController
     end
 
     def sales
-
+        @order_items = OrderItem.all
     end
 
     def check

@@ -18,6 +18,7 @@ Rails.application.routes.draw do
 
   get  '/buy',  	   to: 'items#buy',  			   as: 'buy_items'
   get  '/sell', 	   to: 'items#sell', 			   as: 'sell_items'
+  get  '/sales',      to: 'orders#sales',         as: 'sales'
   get  '/check/:order_item_id', to: 'orders#check',    as: 'check'
   get  '/deposit',     to: 'deposits#show',            as: 'deposit'
   get  '/deposits',    to: 'deposits#index',           as: 'deposits'
